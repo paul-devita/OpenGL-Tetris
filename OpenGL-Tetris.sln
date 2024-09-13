@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35219.272
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL-Tetris", "OpenGL-Tetris\OpenGL-Tetris.vcxproj", "{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Debug|x64.ActiveCfg = Debug|x64
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Debug|x64.Build.0 = Debug|x64
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Debug|x86.ActiveCfg = Debug|Win32
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Debug|x86.Build.0 = Debug|Win32
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Release|x64.ActiveCfg = Release|x64
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Release|x64.Build.0 = Release|x64
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Release|x86.ActiveCfg = Release|Win32
+		{AEEE0AD3-477C-46F8-9A2A-0FBE5A179BB4}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6C90B17C-D061-4351-946A-4353DD8AB5A6}
+	EndGlobalSection
+EndGlobal
