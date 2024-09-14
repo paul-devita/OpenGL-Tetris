@@ -34,6 +34,12 @@
     <Filter Include="Dependencies\include\KHR">
       <UniqueIdentifier>{b54b1664-2268-4d12-a679-cbf8cfb329c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\render">
+      <UniqueIdentifier>{8d6dcd86-aa4f-4ff0-80fa-77dbe7bbd6ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\math">
+      <UniqueIdentifier>{164492b4-1d5f-4dd7-83dc-5f2581d88740}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\glad.c">
@@ -68,11 +74,17 @@
     <ClInclude Include="..\src\util\resourceManager.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\util\shader.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\util\window.h">
       <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\render\shader.h">
+      <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\mat4.h">
+      <Filter>Header Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\math\vec3.h">
+      <Filter>Header Files\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

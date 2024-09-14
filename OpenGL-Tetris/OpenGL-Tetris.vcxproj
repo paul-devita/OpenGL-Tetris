@@ -143,8 +143,10 @@
     <ClInclude Include="..\dependencies\include\GLFW\glfw3native.h" />
     <ClInclude Include="..\dependencies\include\KHR\khrplatform.h" />
     <ClInclude Include="..\dependencies\include\stb_image.h" />
+    <ClInclude Include="..\src\math\mat4.h" />
+    <ClInclude Include="..\src\math\vec3.h" />
+    <ClInclude Include="..\src\render\shader.h" />
     <ClInclude Include="..\src\util\resourceManager.h" />
-    <ClInclude Include="..\src\util\shader.h" />
     <ClInclude Include="..\src\util\window.h" />
   </ItemGroup>
   <ItemGroup>
