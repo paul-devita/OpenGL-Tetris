@@ -134,6 +134,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="..\src\main.c" />
+    <ClCompile Include="..\src\util\resourceManager.c" />
+    <ClCompile Include="..\src\util\window.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\glad\glad.h" />
@@ -141,9 +143,9 @@
     <ClInclude Include="..\dependencies\include\GLFW\glfw3native.h" />
     <ClInclude Include="..\dependencies\include\KHR\khrplatform.h" />
     <ClInclude Include="..\dependencies\include\stb_image.h" />
-    <ClInclude Include="..\src\include\util\resourceManager.h" />
-    <ClInclude Include="..\src\include\util\shader.h" />
-    <ClInclude Include="..\src\include\util\window.h" />
+    <ClInclude Include="..\src\util\resourceManager.h" />
+    <ClInclude Include="..\src\util\shader.h" />
+    <ClInclude Include="..\src\util\window.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\dependencies\libs\glfw3.lib" />

@@ -42,17 +42,14 @@
     <ClCompile Include="..\src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\util\window.c">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\util\resourceManager.c">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\include\util\resourceManager.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\include\util\window.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\include\util\shader.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\dependencies\include\stb_image.h">
       <Filter>Dependencies\include</Filter>
     </ClInclude>
@@ -67,6 +64,15 @@
     </ClInclude>
     <ClInclude Include="..\dependencies\include\KHR\khrplatform.h">
       <Filter>Dependencies\include\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\resourceManager.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\shader.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\window.h">
+      <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
