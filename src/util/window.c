@@ -6,7 +6,37 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-int windowInit() {
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+	if (key >= 0 && key < KEY_COUNT) {
+		int index = key / (sizeof(unsigned char) * 8);
+		int bit = key % (sizeof(unsigned char) * 8);
+
+		unsigned char setBit = 0x1 << bit;
+
+		if (action == GLFW_PRESS) {
+			keys[index] = (unsigned char)keys[index] | setBit;
+		}
+		else if (action == GLFW_RELEASE) {
+			setBit = ~setBit;
+			keys[index] = (unsigned char)keys[index] & setBit;
+		}
+	}
+}
+
+signed char checkKey(int key) {
+	int index = key / (sizeof(unsigned char) * 8);
+	int bit = key % (sizeof(unsigned char) * 8);
+
+	unsigned char mask = 0x1 << bit;
+	unsigned char result = (unsigned char)keys[index] & mask;
+
+	return result > 0;
+}
+
+signed char windowInit() {
 	if (!glfwInit()) {
 		updateWindowErrorLog(GLFW_INIT_ERROR);
 		return -1;
