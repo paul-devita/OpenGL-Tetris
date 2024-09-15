@@ -15,7 +15,6 @@ char* readTextFile(const char* path) {
 	if (fgets(buffer, TEXT_BUFFER_SIZE, file_ptr) != NULL) {
 		int len = 0;
 
-		//Get length of string saved in buffer
 		for (int i = 0; buffer[i] != '\0'; i++)
 			len++;
 
@@ -26,7 +25,6 @@ char* readTextFile(const char* path) {
 			return NULL;
 		}
 
-		//Copy string from buffer to dynamically allocated dest
 		for (int i = 0; i < len; i++)
 			dest[i] = buffer[i];
 

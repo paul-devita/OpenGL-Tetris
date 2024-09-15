@@ -8,6 +8,4 @@
 
 char* readTextFile(const char* path);
 
-
-
 #endif
