@@ -48,7 +48,9 @@ Returns a negative value on failure, and each value has a different meaning:
 -3 pertains to GLAD load failure
 */
 signed char windowInit();
-
+/*
+Terminates GLFW and deallocates all window-related functionality
+*/
 void windowTerminate();
 
 //------------------------------------------------------------------------------------

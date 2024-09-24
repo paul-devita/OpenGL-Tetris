@@ -53,10 +53,48 @@ unsigned int genShaderProgram(const char* vPath, const char* fPath) {
 	return shaderProgram;
 }
 
-void useShaderProgram(const unsigned int shaderID) {
+void useShaderProgram(unsigned int shaderID) {
 	glUseProgram(shaderID);
 }
 
-void modifyShaderUniform(const unsigned int shaderID, const unsigned char type, void* value) {
-
+void modifyShaderUniform(unsigned int shaderID, const char* name, unsigned char type, const void* value, unsigned char count) {
+	int location = glGetUniformLocation(shaderID, name);
+	
+	switch (type) {
+		case UNIFORM_INT:
+			switch (count) {
+				case 1:
+					glUniform1i(location, *(int*)value);
+					break;
+				case 2:
+					glUniform2i(location, ((int*)value)[0], ((int*)value)[1]);
+					break;
+				case 3:
+					glUniform3i(location, ((int*)value)[0], ((int*)value)[1], ((int*)value)[2]);
+					break;
+				case 4:
+					glUniform4i(location, ((int*)value)[0], ((int*)value)[1], ((int*)value)[2], ((int*)value)[3]);
+					break;
+			}
+			break;
+		case UNIFORM_FLOAT:
+			switch (count) {
+				case 1:
+					glUniform1f(location, *(float*)value);
+					break;
+				case 2:
+					glUniform2f(location, ((float*)value)[0], ((float*)value)[1], ((float*)value)[2]);
+					break;
+				case 3:
+					glUniform3f(location, ((float*)value)[0], ((float*)value)[1], ((float*)value)[2]);
+					break;
+				case 4:
+					glUniform4f(location, ((float*)value)[0], ((float*)value)[1], ((float*)value)[2], ((float*)value)[3]);
+					break;
+			}
+			break;
+		case UNIFORM_MAT4:
+			glUniformMatrix4fv(location, 1, GL_TRUE, value);
+			break;
+	}
 }

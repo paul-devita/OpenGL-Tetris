@@ -134,6 +134,10 @@
   <ItemGroup>
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="..\src\main.c" />
+    <ClCompile Include="..\src\math\mat4.c" />
+    <ClCompile Include="..\src\math\vec3.c" />
+    <ClCompile Include="..\src\render\shader.c" />
+    <ClCompile Include="..\src\util\linkedList.c" />
     <ClCompile Include="..\src\util\resourceManager.c" />
     <ClCompile Include="..\src\util\window.c" />
   </ItemGroup>
@@ -146,7 +150,9 @@
     <ClInclude Include="..\src\math\mat4.h" />
     <ClInclude Include="..\src\math\vec3.h" />
     <ClInclude Include="..\src\render\shader.h" />
+    <ClInclude Include="..\src\util\linkedList.h" />
     <ClInclude Include="..\src\util\resourceManager.h" />
+    <ClInclude Include="..\src\util\typedef.h" />
     <ClInclude Include="..\src\util\window.h" />
   </ItemGroup>
   <ItemGroup>

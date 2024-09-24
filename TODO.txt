@@ -1,0 +1,6 @@
+Things I have to do (in order)
+
+( ) Implement shader.c
+( ) Implement stack.c
+( ) Implement vec3.c
+( ) Implement mat4.c
