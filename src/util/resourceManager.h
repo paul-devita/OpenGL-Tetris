@@ -6,6 +6,8 @@
 
 #define TEXT_BUFFER_SIZE 0x1<<12
 
-char* readTextFile(const char* path);
+char* rm_readTextFile(const char* path);
+
+void rm_freeTextFile(char* file);
 
 #endif

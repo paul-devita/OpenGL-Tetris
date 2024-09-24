@@ -3,14 +3,12 @@
 
 #include <glad/glad.h>
 
+#include "../util/util.h"
 #include "../util/resourceManager.h"
 
+#include "../math/mat4.h"
+
 #define INFO_BUFFER_SIZE 512
-
-#define UNIFORM_INT 0
-#define UNIFORM_FLOAT 1
-
-#define UNIFORM_MAT4 2
 
 /*
 Creates a shader program containing the source code of the provided vertex and fragment shader files.
@@ -23,9 +21,10 @@ Tells OpenGL to use the shader corresponding to the given ID
 */
 void useShaderProgram(const unsigned int shaderID);
 
-/*
-Modifies the value of the specified uniform according to the name of the uniform, type specified, value, and count provided.
-*/
-void modifyShaderUniform(const unsigned int shaderID, const char* name, const unsigned char type, void* value, unsigned char count);
+void modifyShaderUniformf(const unsigned int shaderID, const char* name, const float* value, ubyte count);
+
+void modifyShaderUniformi(const unsigned int shaderID, const char* name, const int* value, ubyte count);
+
+void modiyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name, const mat4 matrix);
 
 #endif

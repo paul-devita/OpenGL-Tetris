@@ -1,6 +1,6 @@
 #include "resourceManager.h"
 
-char* readTextFile(const char* path) {
+char* rm_readTextFile(const char* path) {
 	FILE* file_ptr;
 	char buffer[TEXT_BUFFER_SIZE];
 	char* dest = NULL;
@@ -64,4 +64,8 @@ char* readTextFile(const char* path) {
 
 	fclose(file_ptr);
 	return dest;
+}
+
+void rm_freeTextFile(char* file) {
+	free(file);
 }

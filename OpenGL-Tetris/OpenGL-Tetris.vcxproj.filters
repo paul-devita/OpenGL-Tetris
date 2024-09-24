@@ -66,6 +66,9 @@
     <ClCompile Include="..\src\math\mat4.c">
       <Filter>Header Files\math</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\util\util.c">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -101,7 +104,7 @@
     <ClInclude Include="..\src\util\linkedList.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\util\typedef.h">
+    <ClInclude Include="..\src\util\util.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>

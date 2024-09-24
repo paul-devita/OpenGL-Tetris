@@ -1,7 +1,7 @@
 #ifndef _MAT4_H_
 #define _MAT4_H_
 
-#include "../util/typedef.h"
+#include "../util/util.h"
 
 #include "vec3.h"
 
