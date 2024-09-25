@@ -1,5 +1,7 @@
 #include "mat4.h"
 
+const mat4 IDENTITY_M4 = { {{1.0f, 0, 0, 0}, {0, 1.0f, 0, 0}, {0, 0, 1.0f, 0}, {0, 0, 0, 1.0f}} };
+
 mat4 m4_multiply(mat4 multiplicand, mat4 multiplier) {
 	mat4 product;
 
@@ -31,8 +33,8 @@ mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis) {
 	if (v3_equals(axis, AXIS_X_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
 
-		double angleCos = cos(angle_rad);
-		double angleSin = sqrt(1 - angleCos * angleCos);
+		float angleCos = (float) cos(angle_rad);
+		float angleSin = (float) sqrt(1 - angleCos * angleCos);
 
 		rMatrix.values[1][1] = angleCos;
 		rMatrix.values[1][2] = angleSin;
@@ -44,21 +46,21 @@ mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis) {
 	else if (v3_equals(axis, AXIS_Y_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
 
-		double angleCos = cos(angle_rad);
-		double angleSin = sqrt(1 - angleCos * angleCos);
+		float angleCos = (float) cos(angle_rad);
+		float angleSin = (float) sqrt(1 - angleCos * angleCos);
 
-		rMatrix.values[0][0] = angleCos;
-		rMatrix.values[0][2] = -angleSin;
-		rMatrix.values[2][0] = angleSin;
-		rMatrix.values[2][2] = angleCos;
+		rMatrix.values[0][0] = (float) angleCos;
+		rMatrix.values[0][2] = (float) -angleSin;
+		rMatrix.values[2][0] = (float) angleSin;
+		rMatrix.values[2][2] = (float) angleCos;
 
 		return m4_multiply(matrix, rMatrix);
 	}
 	else if (v3_equals(axis, AXIS_Z_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
 
-		double angleCos = cos(angle_rad);
-		double angleSin = sqrt(1 - angleCos * angleCos);
+		float angleCos = (float) cos(angle_rad);
+		float angleSin = (float) sqrt(1 - angleCos * angleCos);
 
 		rMatrix.values[0][0] = angleCos;
 		rMatrix.values[0][1] = -angleSin;
@@ -71,7 +73,7 @@ mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis) {
 	return matrix;
 }
 
-mat4 m4_scale(mat4 matrix, int scale) {
+mat4 m4_scale(mat4 matrix, float scale) {
 	mat4 sMatrix = IDENTITY_M4;
 
 	sMatrix.values[0][0] = scale;
@@ -84,8 +86,8 @@ mat4 m4_scale(mat4 matrix, int scale) {
 mat4 m4_ortho2D(unsigned int width, unsigned int height) {
 	mat4 result = IDENTITY_M4;
 
-	float scaleX = 2.0 / width;
-	float scaleY = 2.0 / height;
+	float scaleX = 2.0f / (float) width;
+	float scaleY = 2.0f / (float) height;
 
 	float normalizeTranslationX = -1;
 	float normalizeTranslationY = -1;

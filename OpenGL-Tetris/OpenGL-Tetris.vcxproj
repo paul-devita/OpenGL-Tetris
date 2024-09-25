@@ -106,7 +106,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -139,7 +139,6 @@
     <ClCompile Include="..\src\math\mat4.c" />
     <ClCompile Include="..\src\math\vec3.c" />
     <ClCompile Include="..\src\render\shader.c" />
-    <ClCompile Include="..\src\util\linkedList.c" />
     <ClCompile Include="..\src\util\resourceManager.c" />
     <ClCompile Include="..\src\util\util.c" />
     <ClCompile Include="..\src\util\window.c" />
@@ -154,7 +153,6 @@
     <ClInclude Include="..\src\math\mat4.h" />
     <ClInclude Include="..\src\math\vec3.h" />
     <ClInclude Include="..\src\render\shader.h" />
-    <ClInclude Include="..\src\util\linkedList.h" />
     <ClInclude Include="..\src\util\resourceManager.h" />
     <ClInclude Include="..\src\util\util.h" />
     <ClInclude Include="..\src\util\window.h" />

@@ -11,9 +11,9 @@ typedef struct {
 	float values[3];
 } vec3;
 
-const vec3 AXIS_X_V3 = { {1.0f, 0, 0} };
-const vec3 AXIS_Y_V3 = { {0, 1.0f, 0} };
-const vec3 AXIS_Z_V3 = { {0, 0, 1.0f} };
+extern const vec3 AXIS_X_V3;
+extern const vec3 AXIS_Y_V3;
+extern const vec3 AXIS_Z_V3;
 
 /*
 Creates and returns a vec3 values containing the values provided.

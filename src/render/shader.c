@@ -20,7 +20,7 @@ unsigned int genShaderProgram(const char* vPath, const char* fPath) {
 		return 0;
 	}
 
-	char* fShaderSource = readTextFile(fPath);
+	char* fShaderSource = rm_readTextFile(fPath);
 
 	unsigned int fShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fShader, 1, &fShaderSource, NULL);
@@ -108,5 +108,5 @@ void modifyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name,
 		}
 	}
 
-	glUniformMatrix4fv(location, 1, GL_FALSE, &values);
+	glUniformMatrix4fv(location, 1, GL_FALSE, values);
 }

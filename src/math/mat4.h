@@ -1,6 +1,8 @@
 #ifndef _MAT4_H_
 #define _MAT4_H_
 
+#include <math.h>
+
 #include "../util/util.h"
 
 #include "vec3.h"
@@ -11,7 +13,7 @@ typedef struct {
 	float values[4][4];
 } mat4;
 
-const mat4 IDENTITY_M4 = { {{1.0f, 0, 0, 0}, {0, 1.0f, 0, 0}, {0, 0, 1.0f, 0}, {0, 0, 0, 1.0f}} };
+extern const mat4 IDENTITY_M4;
 
 /*
 Multiplies the first matrix by the second and returns their product
@@ -34,7 +36,7 @@ mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis);
 Provides the given matrix transformational scalar properties according to the provided integer value.
 Returns the result.
 */
-mat4 m4_scale(mat4 matrix, int scale);
+mat4 m4_scale(mat4 matrix, float scale);
 
 /*
 Returns an orhographic matrix that covers coordinates ranginging from [0, width] and [0, height] to normalized screen coordinates ranging from [-1, 1]

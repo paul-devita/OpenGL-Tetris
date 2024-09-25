@@ -19,7 +19,7 @@
 
 extern GLFWwindow* window;
 
-extern unsigned char* keys[KEY_COUNT / (sizeof(unsigned char) * 8)];
+extern unsigned char keys[KEY_COUNT / (sizeof(unsigned char) * 8)];
 
 /*
 Called by GLFW when the window is resized by the user

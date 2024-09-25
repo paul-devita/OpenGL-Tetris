@@ -1,5 +1,7 @@
 #include "window.h"
 
+unsigned char keys[KEY_COUNT / (sizeof(unsigned char) * 8)];
+
 GLFWwindow* window = NULL;
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
