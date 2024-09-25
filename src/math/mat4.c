@@ -2,7 +2,7 @@
 
 const mat4 IDENTITY_M4 = { {{1.0f, 0, 0, 0}, {0, 1.0f, 0, 0}, {0, 0, 1.0f, 0}, {0, 0, 0, 1.0f}} };
 
-mat4 m4_multiply(mat4 multiplicand, mat4 multiplier) {
+mat4 m4_multiply(mat4* multiplicand, mat4* multiplier) {
 	mat4 product;
 
 	for (ubyte r = 0; r < SIZE_M4; r++) {
@@ -10,7 +10,7 @@ mat4 m4_multiply(mat4 multiplicand, mat4 multiplier) {
 			float value = 0;
 
 			for (ubyte i = 0; i < SIZE_M4; i++) 
-				value += multiplicand.values[r][i] * multiplier.values[i][c];
+				value += multiplicand->values[r][i] * multiplier->values[i][c];
 			
 			product.values[r][c] = value;
 		}
@@ -19,17 +19,17 @@ mat4 m4_multiply(mat4 multiplicand, mat4 multiplier) {
 	return product;
 }
 
-mat4 m4_translate(mat4 matrix, const vec3 translation) {
+mat4 m4_translate(mat4* matrix, const vec3 translation) {
 	mat4 tMatrix = IDENTITY_M4;
 	
 	tMatrix.values[0][3] = translation.values[X_V3];
 	tMatrix.values[1][3] = translation.values[Y_V3];
 	tMatrix.values[2][3] = translation.values[Z_V3];
 
-	return m4_multiply(matrix, tMatrix);
+	return m4_multiply(matrix, &tMatrix);
 }
 
-mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis) {
+mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis) {
 	if (v3_equals(axis, AXIS_X_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
 
@@ -41,7 +41,7 @@ mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis) {
 		rMatrix.values[2][1] = -angleSin;
 		rMatrix.values[2][2] = angleCos;
 
-		return m4_multiply(matrix, rMatrix);
+		return m4_multiply(matrix, &rMatrix);
 	}
 	else if (v3_equals(axis, AXIS_Y_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
@@ -54,7 +54,7 @@ mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis) {
 		rMatrix.values[2][0] = (float) angleSin;
 		rMatrix.values[2][2] = (float) angleCos;
 
-		return m4_multiply(matrix, rMatrix);
+		return m4_multiply(matrix, &rMatrix);
 	}
 	else if (v3_equals(axis, AXIS_Z_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
@@ -67,20 +67,20 @@ mat4 m4_rotate(mat4 matrix, double angle_rad, const vec3 axis) {
 		rMatrix.values[1][0] = angleSin;
 		rMatrix.values[1][1] = angleCos;
 
-		return m4_multiply(matrix, rMatrix);
+		return m4_multiply(matrix, &rMatrix);
 	}
 
-	return matrix;
+	return *matrix;
 }
 
-mat4 m4_scale(mat4 matrix, float scale) {
+mat4 m4_scale(mat4* matrix, float scale) {
 	mat4 sMatrix = IDENTITY_M4;
 
 	sMatrix.values[0][0] = scale;
 	sMatrix.values[1][1] = scale;
 	sMatrix.values[2][2] = scale;
 
-	return m4_multiply(matrix, sMatrix);
+	return m4_multiply(matrix, &sMatrix);
 }
 
 mat4 m4_ortho2D(unsigned int width, unsigned int height) {

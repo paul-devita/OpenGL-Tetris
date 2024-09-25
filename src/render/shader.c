@@ -100,11 +100,11 @@ void modifyShaderUniformi(const unsigned int shaderID, const char* name, const i
 void modifyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name, const mat4* matrix) {
 	int location = glGetUniformLocation(shaderID, name);
 
-	float values[4][4];
+	float values[16];
 
 	for (ubyte r = 0; r < SIZE_M4; r++) {
 		for (ubyte c = 0; c < SIZE_M4; c++) {
-			values[c][r] = matrix->values[r][c];
+			values[4 * c + r] = matrix->values[r][c];
 		}
 	}
 
