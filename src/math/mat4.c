@@ -80,3 +80,21 @@ mat4 m4_scale(mat4 matrix, int scale) {
 
 	return m4_multiply(matrix, sMatrix);
 }
+
+mat4 m4_ortho2D(unsigned int width, unsigned int height) {
+	mat4 result = IDENTITY_M4;
+
+	float scaleX = 2.0 / width;
+	float scaleY = 2.0 / height;
+
+	float normalizeTranslationX = -1;
+	float normalizeTranslationY = -1;
+
+	result.values[0][0] = scaleX;
+	result.values[1][1] = scaleY;
+
+	result.values[0][3] = normalizeTranslationX;
+	result.values[1][3] = normalizeTranslationY;
+
+	return result;
+}

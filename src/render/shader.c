@@ -78,6 +78,25 @@ void modifyShaderUniformf(const unsigned int shaderID, const char* name, const f
 	}
 }
 
+void modifyShaderUniformi(const unsigned int shaderID, const char* name, const int* value, ubyte count) {
+	int location = glGetUniformLocation(shaderID, name);
+
+	switch (count) {
+		case 1:
+			glUniform1i(location, *value);
+			break;
+		case 2:
+			glUniform2i(location, value[0], value[1]);
+			break;
+		case 3:
+			glUniform3i(location, value[0], value[1], value[2]);
+			break;
+		case 4:
+			glUniform4i(location, value[0], value[1], value[2], value[3]);
+			break;
+	}
+}
+
 void modifyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name, const mat4* matrix) {
 	int location = glGetUniformLocation(shaderID, name);
 

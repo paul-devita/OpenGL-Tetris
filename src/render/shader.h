@@ -25,6 +25,6 @@ void modifyShaderUniformf(const unsigned int shaderID, const char* name, const f
 
 void modifyShaderUniformi(const unsigned int shaderID, const char* name, const int* value, ubyte count);
 
-void modiyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name, const mat4 matrix);
+void modifyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name, const mat4 matrix);
 
 #endif

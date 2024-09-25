@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\game\game.c" />
     <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\math\mat4.c" />
@@ -148,6 +149,7 @@
     <ClInclude Include="..\dependencies\include\GLFW\glfw3native.h" />
     <ClInclude Include="..\dependencies\include\KHR\khrplatform.h" />
     <ClInclude Include="..\dependencies\include\stb_image.h" />
+    <ClInclude Include="..\src\game\game.h" />
     <ClInclude Include="..\src\math\mat4.h" />
     <ClInclude Include="..\src\math\vec3.h" />
     <ClInclude Include="..\src\render\shader.h" />

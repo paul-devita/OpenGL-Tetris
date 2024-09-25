@@ -1,7 +1,7 @@
 #ifndef _VEC3_H_
 #define _VEC3_H_
 
-#include "../util/typedef.h"
+#include "../util/util.h"
 
 #define X_V3 0
 #define Y_V3 1

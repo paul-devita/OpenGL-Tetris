@@ -40,6 +40,9 @@
     <Filter Include="Header Files\math">
       <UniqueIdentifier>{164492b4-1d5f-4dd7-83dc-5f2581d88740}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\game">
+      <UniqueIdentifier>{d2fb3bb0-c602-4651-8c1c-e4995fa1672c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\glad.c">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="..\src\util\util.c">
       <Filter>Header Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\game.c">
+      <Filter>Header Files\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="..\src\util\util.h">
       <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

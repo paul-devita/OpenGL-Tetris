@@ -36,4 +36,9 @@ Returns the result.
 */
 mat4 m4_scale(mat4 matrix, int scale);
 
+/*
+Returns an orhographic matrix that covers coordinates ranginging from [0, width] and [0, height] to normalized screen coordinates ranging from [-1, 1]
+*/
+mat4 m4_ortho2D(unsigned int width, unsigned int height);
+
 #endif
