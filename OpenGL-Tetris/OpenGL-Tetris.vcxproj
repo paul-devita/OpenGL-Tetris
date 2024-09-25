@@ -132,8 +132,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\dependencies\glad.c" />
+    <ClCompile Include="..\dependencies\stb_image.c" />
     <ClCompile Include="..\src\game\game.c" />
-    <ClCompile Include="..\src\glad.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\math\mat4.c" />
     <ClCompile Include="..\src\math\vec3.c" />

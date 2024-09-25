@@ -45,9 +45,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,6 +71,12 @@
     </ClCompile>
     <ClCompile Include="..\src\game\game.c">
       <Filter>Header Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dependencies\glad.c">
+      <Filter>Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dependencies\stb_image.c">
+      <Filter>Dependencies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
