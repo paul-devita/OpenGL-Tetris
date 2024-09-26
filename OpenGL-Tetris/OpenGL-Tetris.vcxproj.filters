@@ -78,6 +78,9 @@
     <ClCompile Include="..\src\render\texture.c">
       <Filter>Header Files\render</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\util\time.c">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="..\src\render\texture.h">
       <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\time.h">
+      <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

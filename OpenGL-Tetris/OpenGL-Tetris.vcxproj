@@ -141,6 +141,7 @@
     <ClCompile Include="..\src\render\shader.c" />
     <ClCompile Include="..\src\render\texture.c" />
     <ClCompile Include="..\src\util\resourceManager.c" />
+    <ClCompile Include="..\src\util\time.c" />
     <ClCompile Include="..\src\util\util.c" />
     <ClCompile Include="..\src\util\window.c" />
   </ItemGroup>
@@ -156,6 +157,7 @@
     <ClInclude Include="..\src\render\shader.h" />
     <ClInclude Include="..\src\render\texture.h" />
     <ClInclude Include="..\src\util\resourceManager.h" />
+    <ClInclude Include="..\src\util\time.h" />
     <ClInclude Include="..\src\util\util.h" />
     <ClInclude Include="..\src\util\window.h" />
   </ItemGroup>

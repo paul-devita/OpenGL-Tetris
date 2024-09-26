@@ -1,19 +1,18 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <stdio.h>
-
 #include "util/window.h"
+#include "util/time.h"
+
 
 int main(int argc, char* argv[]) {
-	if (windowInit() < 0) {
-		char* errorLog = getWindowError();
-		printf(errorLog);
-		clearWindowErrorLog();
-		return -1;
-	}
+	if (windowInit() < 0) { return -1; }
+
+	initTime();
 
 	while (!glfwWindowShouldClose(window)) {
+		updateDeltaTime();
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}

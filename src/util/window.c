@@ -28,7 +28,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	}
 }
 
-signed char checkKey(int key) {
+unsigned char checkKey(int key) {
 	int index = key / (sizeof(unsigned char) * 8);
 	int bit = key % (sizeof(unsigned char) * 8);
 
@@ -40,26 +40,29 @@ signed char checkKey(int key) {
 
 signed char windowInit() {
 	if (!glfwInit()) {
-		updateWindowErrorLog(GLFW_INIT_ERROR);
+		printf("ERROR: failed to init GLFW\n");
 		return -1;
 	}
 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GLFW_MAJOR_VERSION);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GLFW_MINOR_VERSION);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
 	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, SCR_TITLE, NULL, NULL);
 
 	if (!window) {
-		updateWindowErrorLog(GLFW_WINDOW_ERROR);
+		printf("ERROR: failed to create GLFW window\n");
 		return -2;
 	}
 
 	glfwMakeContextCurrent(window);
+
+	glfwSetKeyCallback(window, keyCallback);
 	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		updateWindowErrorLog(GLAD_LOAD_ERROR);
+		printf("ERROR: failed to load GLAD\n");
 		return -3;
 	}
 
@@ -69,39 +72,5 @@ signed char windowInit() {
 }
 
 void windowTerminate() {
-	clearWindowErrorLog();
-
 	glfwTerminate();
-}
-
-//------------------------------------------------------------------------------------
-
-void updateWindowErrorLog(const char* message) {
-	size_t length = 1;
-
-	for (char* c = message; *c != '\0'; c++)
-		length++;
-
-	free(errorLog);
-
-	errorLog = malloc(sizeof(char) * length);
-
-	if (!errorLog) {
-		fprintf(stderr, "ERROR: out of memory\n");
-		return;
-	}
-
-	for (int i = 0; i < length; i++) {
-		char c = message[i];
-
-		errorLog[i] = c;
-	}
-}
-
-char* getWindowError() {
-	return errorLog;
-}
-
-void clearWindowErrorLog() {
-	free(errorLog);
 }

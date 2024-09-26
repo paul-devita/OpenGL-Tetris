@@ -38,7 +38,7 @@ Checks the bit of the designated key.
 Returns a value greated than 0 if the key is pressed.
 Returns 0 if the key is not pressed.
 */
-signed char checkKey(int key);
+unsigned char checkKey(int key);
 
 /*
 Init GLFW and glad and save the created window in the window extern variable.
@@ -47,25 +47,10 @@ Returns a negative value on failure, and each value has a different meaning:
 -2 pertains to GLfW window failure
 -3 pertains to GLAD load failure
 */
-signed char windowInit();
+char windowInit();
 /*
 Terminates GLFW and deallocates all window-related functionality
 */
 void windowTerminate();
-
-//------------------------------------------------------------------------------------
-
-#define GLFW_INIT_ERROR "ERROR: failed to init GLFW\n"
-#define GLFW_WINDOW_ERROR "ERROR: failed to create GLFW window\n"
-
-#define GLAD_LOAD_ERROR "ERROR: failed to load GLAD\n"
-
-static char* errorLog;
-
-void updateWindowErrorLog(const char* message);
-
-char* getWindowError();
-
-void clearWindowErrorLog();
 
 #endif
