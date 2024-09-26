@@ -4,11 +4,11 @@ unsigned char keys[KEY_COUNT / (sizeof(unsigned char) * 8)];
 
 GLFWwindow* window = NULL;
 
-void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
+void win_framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
 
-void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+void win_keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 	}
@@ -28,7 +28,7 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	}
 }
 
-unsigned char checkKey(int key) {
+unsigned char win_checkKey(int key) {
 	int index = key / (sizeof(unsigned char) * 8);
 	int bit = key % (sizeof(unsigned char) * 8);
 
@@ -38,7 +38,7 @@ unsigned char checkKey(int key) {
 	return result > 0;
 }
 
-signed char windowInit() {
+signed char win_windowInit() {
 	if (!glfwInit()) {
 		printf("ERROR: failed to init GLFW\n");
 		return -1;
@@ -58,8 +58,8 @@ signed char windowInit() {
 
 	glfwMakeContextCurrent(window);
 
-	glfwSetKeyCallback(window, keyCallback);
-	glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+	glfwSetKeyCallback(window, win_keyCallback);
+	glfwSetFramebufferSizeCallback(window, win_framebufferSizeCallback);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		printf("ERROR: failed to load GLAD\n");
@@ -71,6 +71,6 @@ signed char windowInit() {
 	return 1;
 }
 
-void windowTerminate() {
+void win_windowTerminate() {
 	glfwTerminate();
 }

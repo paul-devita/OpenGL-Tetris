@@ -9,11 +9,11 @@
 Creates and returns the ID of a texture in OpenGL.
 Frees the given image struct.
 */
-unsigned int genTexture(Image* image);
+unsigned int tx_genTexture(Image* image);
 
 /*
 Binds the texture corresponding to the provided textureID.
 */
-void bindTexture(const unsigned int textureID);
+void tx_bindTexture(const unsigned int textureID);
 
 #endif

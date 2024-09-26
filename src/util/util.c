@@ -1,5 +1,7 @@
 #include "util.h"
 
+const float pi = 3.14159265358979;
+
 float* util_asArray2f(float f1, float f2) {
 	static float arr[2];
 

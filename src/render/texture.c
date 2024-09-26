@@ -1,6 +1,6 @@
 #include "texture.h"
 
-unsigned int genTexture(Image* image) {
+unsigned int tx_genTexture(Image* image) {
 	if (!image) return 0;
 
 	unsigned int result;
@@ -25,6 +25,6 @@ unsigned int genTexture(Image* image) {
 	return result;
 }
 
-void bindTexture(const unsigned int textureID) {
+void tx_bindTexture(const unsigned int textureID) {
 	glBindTexture(GL_TEXTURE_2D, textureID);
 }

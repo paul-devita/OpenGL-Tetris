@@ -1,6 +1,6 @@
 #include "shader.h"
 
-unsigned int genShaderProgram(const char* vPath, const char* fPath) {
+unsigned int sh_genShaderProgram(const char* vPath, const char* fPath) {
 	char* vShaderSource = rm_readTextFile(vPath);
 	
 	char buffer[INFO_BUFFER_SIZE];
@@ -55,11 +55,11 @@ unsigned int genShaderProgram(const char* vPath, const char* fPath) {
 	return shaderProgram;
 }
 
-void useShaderProgram(unsigned int shaderID) {
+void sh_useShaderProgram(unsigned int shaderID) {
 	glUseProgram(shaderID);
 }
 
-void modifyShaderUniformf(const unsigned int shaderID, const char* name, const float* value, ubyte count) {
+void sh_modifyShaderUniformf(const unsigned int shaderID, const char* name, const float* value, ubyte count) {
 	int location = glGetUniformLocation(shaderID, name);
 	
 	switch (count) {
@@ -78,7 +78,7 @@ void modifyShaderUniformf(const unsigned int shaderID, const char* name, const f
 	}
 }
 
-void modifyShaderUniformi(const unsigned int shaderID, const char* name, const int* value, ubyte count) {
+void sh_modifyShaderUniformi(const unsigned int shaderID, const char* name, const int* value, ubyte count) {
 	int location = glGetUniformLocation(shaderID, name);
 
 	switch (count) {
@@ -97,7 +97,7 @@ void modifyShaderUniformi(const unsigned int shaderID, const char* name, const i
 	}
 }
 
-void modifyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name, const mat4* matrix) {
+void sh_modifyShaderUniformMatrix4x4(const unsigned int shaderID, const char* name, const mat4* matrix) {
 	int location = glGetUniformLocation(shaderID, name);
 
 	float values[16];

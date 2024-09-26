@@ -30,7 +30,7 @@ mat4 m4_translate(mat4* matrix, const vec3 translation);
 Provides the given matrix transformation rotational properties according to the provided vec3 value and axis.
 Returns the result.
 */
-mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis);
+mat4 m4_rotate(mat4* matrix, double angle_deg, const vec3 axis);
 
 /*
 Provides the given matrix transformational scalar properties according to the provided integer value.

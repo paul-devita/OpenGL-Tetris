@@ -3,19 +3,19 @@
 static float prevTime = 0;
 static float dTime = 0;
 
-void initTime() {
+void tm_initTime() {
 	float currentTime = (float) glfwGetTime();
 
 	prevTime = currentTime;
 }
 
-void updateDeltaTime() {
+void tm_updateDeltaTime() {
 	float currentTime = (float) glfwGetTime();
 
 	dTime = currentTime - prevTime;
 	prevTime = currentTime;
 }
 
-float deltaTime() {
+float tm_deltaTime() {
 	return dTime;
 }

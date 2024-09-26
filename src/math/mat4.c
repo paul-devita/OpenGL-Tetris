@@ -22,18 +22,18 @@ mat4 m4_multiply(mat4* multiplicand, mat4* multiplier) {
 mat4 m4_translate(mat4* matrix, const vec3 translation) {
 	mat4 tMatrix = IDENTITY_M4;
 	
-	tMatrix.values[0][3] = translation.values[X_V3];
-	tMatrix.values[1][3] = translation.values[Y_V3];
-	tMatrix.values[2][3] = translation.values[Z_V3];
+	tMatrix.values[0][3] = translation.x;
+	tMatrix.values[1][3] = translation.y;
+	tMatrix.values[2][3] = translation.z;
 
 	return m4_multiply(matrix, &tMatrix);
 }
 
-mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis) {
+mat4 m4_rotate(mat4* matrix, double angle_deg, const vec3 axis) {
 	if (v3_equals(axis, AXIS_X_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
 
-		float angleCos = (float) cos(angle_rad);
+		float angleCos = (float) cos(angle_deg * pi / 180.0f);
 		float angleSin = (float) sqrt(1 - angleCos * angleCos);
 
 		rMatrix.values[1][1] = angleCos;
@@ -46,7 +46,7 @@ mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis) {
 	else if (v3_equals(axis, AXIS_Y_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
 
-		float angleCos = (float) cos(angle_rad);
+		float angleCos = (float) cos(angle_deg * pi / 180.0f);
 		float angleSin = (float) sqrt(1 - angleCos * angleCos);
 
 		rMatrix.values[0][0] = (float) angleCos;
@@ -59,7 +59,7 @@ mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis) {
 	else if (v3_equals(axis, AXIS_Z_V3)) {
 		mat4 rMatrix = IDENTITY_M4;
 
-		float angleCos = (float) cos(angle_rad);
+		float angleCos = (float) cos(angle_deg * pi / 180.0f);
 		float angleSin = (float) sqrt(1 - angleCos * angleCos);
 
 		rMatrix.values[0][0] = angleCos;
@@ -76,9 +76,9 @@ mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis) {
 mat4 m4_scale(mat4* matrix, const vec3 scale) {
 	mat4 sMatrix = IDENTITY_M4;
 
-	sMatrix.values[0][0] = scale.values[X_V3];
-	sMatrix.values[1][1] = scale.values[Y_V3];
-	sMatrix.values[2][2] = scale.values[Z_V3];
+	sMatrix.values[0][0] = scale.x;
+	sMatrix.values[1][1] = scale.y;
+	sMatrix.values[2][2] = scale.z;
 
 	return m4_multiply(matrix, &sMatrix);
 }

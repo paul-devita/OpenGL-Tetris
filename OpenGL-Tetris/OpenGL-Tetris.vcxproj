@@ -137,7 +137,9 @@
     <ClCompile Include="..\src\game\game.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\math\mat4.c" />
+    <ClCompile Include="..\src\math\vec2.c" />
     <ClCompile Include="..\src\math\vec3.c" />
+    <ClCompile Include="..\src\render\quad.c" />
     <ClCompile Include="..\src\render\shader.c" />
     <ClCompile Include="..\src\render\texture.c" />
     <ClCompile Include="..\src\util\resourceManager.c" />
@@ -153,7 +155,9 @@
     <ClInclude Include="..\dependencies\include\stb_image.h" />
     <ClInclude Include="..\src\game\game.h" />
     <ClInclude Include="..\src\math\mat4.h" />
+    <ClInclude Include="..\src\math\vec2.h" />
     <ClInclude Include="..\src\math\vec3.h" />
+    <ClInclude Include="..\src\render\quad.h" />
     <ClInclude Include="..\src\render\shader.h" />
     <ClInclude Include="..\src\render\texture.h" />
     <ClInclude Include="..\src\util\resourceManager.h" />

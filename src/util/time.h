@@ -9,17 +9,17 @@ static float dTime;
 /*
 Initializes the timing functionality for the game.
 */
-void initTime();
+void tm_initTime();
 
 /*
 Updates the timing values of the game.
 Called at the start of every frame.
 */
-void updateDeltaTime();
+void tm_updateDeltaTime();
 
 /*
 Returns the time difference between the last frame and the current frame.
 */
-float deltaTime();
+float tm_deltaTime();
 
 #endif

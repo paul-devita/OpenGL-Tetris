@@ -1,22 +1,34 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "game/game.h"
+
 #include "util/window.h"
 #include "util/time.h"
 
+#include "render/quad.h"
+#include "render/shader.h"
+#include "render/texture.h"
+
 
 int main(int argc, char* argv[]) {
-	if (windowInit() < 0) { return -1; }
+	if (win_windowInit() < 0) { return -1; }
 
-	initTime();
+	qd_init();
+	g_init();
+	tm_initTime();
 
 	while (!glfwWindowShouldClose(window)) {
-		updateDeltaTime();
+		tm_updateDeltaTime();
+
+		g_processGameTic(tm_deltaTime());
+
+		g_render();
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
-	windowTerminate();
+	win_windowTerminate();
 	return 0;
 }

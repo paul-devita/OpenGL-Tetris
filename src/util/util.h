@@ -1,6 +1,8 @@
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
+extern const float pi;
+
 typedef unsigned char ubyte;
 
 /*

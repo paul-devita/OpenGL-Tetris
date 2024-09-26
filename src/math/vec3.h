@@ -3,12 +3,10 @@
 
 #include "../util/util.h"
 
-#define X_V3 0
-#define Y_V3 1
-#define Z_V3 2
-
 typedef struct {
-	float values[3];
+	float x;
+	float y;
+	float z;
 } vec3;
 
 extern const vec3 AXIS_X_V3;
