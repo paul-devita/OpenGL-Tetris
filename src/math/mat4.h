@@ -36,7 +36,7 @@ mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis);
 Provides the given matrix transformational scalar properties according to the provided integer value.
 Returns the result.
 */
-mat4 m4_scale(mat4* matrix, float scale);
+mat4 m4_scale(mat4* matrix, const vec3 scale);
 
 /*
 Returns an orhographic matrix that covers coordinates ranginging from [0, width] and [0, height] to normalized screen coordinates ranging from [-1, 1]

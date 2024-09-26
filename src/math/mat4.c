@@ -73,12 +73,12 @@ mat4 m4_rotate(mat4* matrix, double angle_rad, const vec3 axis) {
 	return *matrix;
 }
 
-mat4 m4_scale(mat4* matrix, float scale) {
+mat4 m4_scale(mat4* matrix, const vec3 scale) {
 	mat4 sMatrix = IDENTITY_M4;
 
-	sMatrix.values[0][0] = scale;
-	sMatrix.values[1][1] = scale;
-	sMatrix.values[2][2] = scale;
+	sMatrix.values[0][0] = scale.values[X_V3];
+	sMatrix.values[1][1] = scale.values[Y_V3];
+	sMatrix.values[2][2] = scale.values[Z_V3];
 
 	return m4_multiply(matrix, &sMatrix);
 }

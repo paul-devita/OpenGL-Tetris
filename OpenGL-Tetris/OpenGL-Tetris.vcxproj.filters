@@ -75,6 +75,9 @@
     <ClCompile Include="..\dependencies\stb_image.c">
       <Filter>Dependencies</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\render\texture.c">
+      <Filter>Header Files\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="..\src\game\game.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\render\texture.h">
+      <Filter>Header Files\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

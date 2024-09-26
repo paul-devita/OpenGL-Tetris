@@ -69,3 +69,35 @@ char* rm_readTextFile(const char* path) {
 void rm_freeTextFile(char* file) {
 	free(file);
 }
+
+Image* rm_readImageFile(const char* path) {
+	Image* result = (Image*)malloc(sizeof(Image));
+
+	if (!result) {
+		fprintf(stderr, "ERROR: unable to allocate memory\n");
+		return NULL;
+	}
+
+	int* width = &result->width;
+	int* height = &result->height;
+	int* nrChannels = &result->nrChannels;
+
+	unsigned char* data = stbi_load(path, width, height, nrChannels, 0);
+
+	if (!data) {
+		fprintf(stderr, "ERROR: unable to read image data\n");
+		return NULL;
+	}
+
+	return result;
+}
+
+void rm_freeImage(Image* image) {
+	if (!image) return;
+
+	unsigned char* data = image->data;
+
+	stbi_image_free(data);
+
+	free(image);
+}
