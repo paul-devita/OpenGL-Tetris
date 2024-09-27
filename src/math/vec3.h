@@ -24,4 +24,9 @@ Returns 1 if the two vectors are equal (ie x1 = x2, y2 = y2, and z2 = z2) and 0 
 */
 ubyte v3_equals(const vec3 v1, const vec3 v2);
 
+/*
+Returns the address of a statically allocated array containing the 3 elements of a vec3 struct.
+*/
+float* v3_asArray(const vec3* v);
+
 #endif

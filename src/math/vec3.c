@@ -24,3 +24,13 @@ ubyte v3_equals(const vec3 v1, const vec3 v2) {
 
 	return 1;
 }
+
+float* v3_asArray(const vec3* v) {
+	static float arr[3];
+
+	arr[0] = v->x;
+	arr[1] = v->y;
+	arr[2] = v->z;
+
+	return arr;
+}
