@@ -16,4 +16,9 @@ Binds the texture corresponding to the provided textureID.
 */
 void tx_bindTexture(const unsigned int textureID);
 
+/*
+Sets the active texture
+*/
+void tx_activeTexture(const unsigned char index);
+
 #endif

@@ -38,6 +38,8 @@ void qd_drawRect(unsigned int shaderID, unsigned int textureID, vec2 position, v
 	model = m4_scale(&model, v3_new(scale.x, scale.y, 1.0f));
 
 	sh_modifyShaderUniformMatrix4x4(shaderID, "model", &model);
+
+	tx_activeTexture(0);
 	tx_bindTexture(textureID);
 
 	glBindVertexArray(vertexArrayObject);
