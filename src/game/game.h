@@ -10,8 +10,10 @@
 #include "../render/quad.h"
 
 static unsigned int shaderID;
-
 static unsigned int textureID;
+
+static vec2 pos;
+static vec2 scale;
 
 void g_init();
 

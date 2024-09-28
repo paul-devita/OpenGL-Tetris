@@ -49,6 +49,8 @@ Returns a negative value on failure, and each value has a different meaning:
 */
 char win_windowInit();
 
+void win_clear();
+
 /*
 Terminates GLFW and deallocates all window-related functionality
 */

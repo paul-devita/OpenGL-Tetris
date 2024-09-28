@@ -87,10 +87,10 @@ mat4 m4_ortho2D(unsigned int width, unsigned int height) {
 	mat4 result = IDENTITY_M4;
 
 	float scaleX = 2.0f / (float) width;
-	float scaleY = 2.0f / (float) height;
+	float scaleY = -2.0f / (float) height;
 
 	float normalizeTranslationX = -1;
-	float normalizeTranslationY = -1;
+	float normalizeTranslationY = 1;
 
 	result.values[0][0] = scaleX;
 	result.values[1][1] = scaleY;
