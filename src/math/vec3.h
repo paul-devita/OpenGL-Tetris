@@ -3,6 +3,8 @@
 
 #include "../util/util.h"
 
+#define SIZE_V3 3
+
 typedef struct {
 	float x;
 	float y;

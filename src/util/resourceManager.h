@@ -8,19 +8,23 @@
 
 #define TEXT_BUFFER_SIZE 0x1<<12
 
+#define RM_TRUE 1
+#define RM_FALSE 0
+
 typedef struct {
 	unsigned char* data;
 	int width;
 	int height;
 	int nrChannels;
+	unsigned char alpha;
 } Image;
 
 char* rm_readTextFile(const char* path);
 
 void rm_freeTextFile(char* file);
 
-Image* rm_readImageFile(const char* path);
+Image rm_readImageFile(const char* path, const unsigned char alpha);
 
-void rm_freeImage(Image* image);
+void rm_freeImageData(Image* image);
 
 #endif

@@ -5,11 +5,13 @@
 
 #include "../util/resourceManager.h"
 
+#define TX_TRUE 1
+#define TX_FALSE 0
+
 /*
 Creates and returns the ID of a texture in OpenGL.
-Frees the given image struct.
 */
-unsigned int tx_genTexture(Image* image);
+unsigned int tx_genTexture(const char* path, const unsigned char alpha);
 
 /*
 Binds the texture corresponding to the provided textureID.

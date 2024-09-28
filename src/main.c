@@ -10,7 +10,6 @@
 #include "render/shader.h"
 #include "render/texture.h"
 
-
 int main(int argc, char* argv[]) {
 	if (win_windowInit() < 0) { return -1; }
 

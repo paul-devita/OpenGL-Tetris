@@ -20,8 +20,8 @@ void qd_init() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -38,6 +38,7 @@ void qd_drawRect(unsigned int shaderID, unsigned int textureID, vec2 position, v
 	model = m4_scale(&model, v3_new(scale.x, scale.y, 1.0f));
 
 	sh_modifyShaderUniformMatrix4x4(shaderID, "model", &model);
+	sh_modifyShaderUniformf(shaderID, "spriteColor", v3_asArray(&color), SIZE_V3);
 
 	tx_activeTexture(0);
 	tx_bindTexture(textureID);
