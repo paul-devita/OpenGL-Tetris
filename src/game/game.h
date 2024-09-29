@@ -9,17 +9,25 @@
 #include "../render/texture.h"
 #include "../render/quad.h"
 
-static unsigned int shaderID;
-static unsigned int textureID;
+#define SECONDS_PER_UPDATE 0.1
 
-static vec2 pos;
-static vec2 scale;
+#define GAME_STATE_TITLE 0
+#define GAME_STATE_PLAY 1
+#define GAME_STATE_PAUSED 2
+#define GAME_STATE_OVER 3
+
+static unsigned char state = GAME_STATE_TITLE;
 
 void g_init();
 
 void g_processInput(float deltaTime);
 
-void g_processGameTic(float deltaTime);
+void g_update(float deltaTime);
+
+static void g_updateTitle(float dt);
+static void g_updatePlay(float dt);
+static void g_updatePaused(float dt);
+static void g_updateOver(float dt);
 
 void g_render();
 

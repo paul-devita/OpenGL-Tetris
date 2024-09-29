@@ -1,49 +1,46 @@
 #include "game.h"
 
-vec2 pos = { SCR_WIDTH / 2, SCR_HEIGHT / 2 };
-vec2 scale = { 150, 150 };
 
 void g_init() {
-	shaderID = sh_genShaderProgram("../resources/shaders/vertexShaderSource.vert", "../resources/shaders/fragmentShaderSource.frag");
 
-	sh_useShaderProgram(shaderID);
-
-	mat4 ortho = m4_ortho2D(SCR_WIDTH, SCR_HEIGHT);
-
-	int i = 0;
-
-	sh_modifyShaderUniformi(shaderID, "image", &i, 1);
-	sh_modifyShaderUniformMatrix4x4(shaderID, "ortho", &ortho);
-
-	textureID = tx_genTexture("../resources/textures/awesomeface.png", TX_TRUE);
 }
 
 void g_processInput(float deltaTime) {
-	if (win_checkKey(GLFW_KEY_W)) 
-		pos.y -= 25;
-	if (win_checkKey(GLFW_KEY_S))
-		pos.y += 25;
-	if (win_checkKey(GLFW_KEY_D))
-		pos.x += 25;
-	if (win_checkKey(GLFW_KEY_A))
-		pos.x -= 25;
 
-	if (win_checkKey(GLFW_KEY_E)) {
-		scale.x += 25;
-		scale.y += 25;
-	}
-	if (win_checkKey(GLFW_KEY_Q)) {
-		scale.x -= 25;
-		scale.y -= 25;
+}
+
+void g_update(float deltaTime) {
+	static float updateTimer = 0;
+
+	updateTimer += deltaTime;
+
+	if (updateTimer >= SECONDS_PER_UPDATE) {
+		switch (state) {
+			case GAME_STATE_TITLE:
+
+				break;
+			case GAME_STATE_PLAY:
+
+				break;
+			case GAME_STATE_PAUSED:
+
+				break;
+			case GAME_STATE_OVER:
+
+				break;
+		}
 	}
 }
 
-void g_processGameTic(float deltaTime) {
+static void g_UpdateTitle(float dt) {
+	//Animate press start alpha values
 
+	//Look for enter key press or escape key press
+
+	//Proceed to next game state
 }
 
 void g_render() {
-	vec3 color = { 0, 1, 0 };
+	glClear(GL_COLOR_BUFFER_BIT);
 
-	qd_drawRect(shaderID, textureID, pos, scale, 0, color);
 }

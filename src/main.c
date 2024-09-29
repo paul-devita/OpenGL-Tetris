@@ -19,10 +19,8 @@ int main(int argc, char* argv[]) {
 
 	while (!glfwWindowShouldClose(window)) {
 		tm_updateDeltaTime();
-		win_clear();
 
-		g_processGameTic(tm_deltaTime());
-		g_processInput(tm_deltaTime());
+		g_update(tm_deltaTime());
 
 		g_render();
 		
