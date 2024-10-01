@@ -142,6 +142,7 @@
     <ClCompile Include="..\src\render\quad.c" />
     <ClCompile Include="..\src\render\shader.c" />
     <ClCompile Include="..\src\render\texture.c" />
+    <ClCompile Include="..\src\render\type.c" />
     <ClCompile Include="..\src\util\resourceManager.c" />
     <ClCompile Include="..\src\util\time.c" />
     <ClCompile Include="..\src\util\util.c" />
@@ -160,6 +161,7 @@
     <ClInclude Include="..\src\render\quad.h" />
     <ClInclude Include="..\src\render\shader.h" />
     <ClInclude Include="..\src\render\texture.h" />
+    <ClInclude Include="..\src\render\type.h" />
     <ClInclude Include="..\src\util\resourceManager.h" />
     <ClInclude Include="..\src\util\time.h" />
     <ClInclude Include="..\src\util\util.h" />

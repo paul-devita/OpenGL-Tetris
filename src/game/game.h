@@ -8,6 +8,7 @@
 #include "../render/shader.h"
 #include "../render/texture.h"
 #include "../render/quad.h"
+#include "../render/type.h"
 
 #define SECONDS_PER_UPDATE 0.1
 

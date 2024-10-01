@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 
 #include "../util/util.h"
-#include "../util/window.h"s
+#include "../util/window.h"
 
 #include "../math/mat4.h"
 #include "../math/vec2.h"

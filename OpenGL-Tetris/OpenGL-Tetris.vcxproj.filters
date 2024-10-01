@@ -87,6 +87,9 @@
     <ClCompile Include="..\src\math\vec2.c">
       <Filter>Header Files\math</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\render\type.c">
+      <Filter>Header Files\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="..\src\math\vec2.h">
       <Filter>Header Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\render\type.h">
+      <Filter>Header Files\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
