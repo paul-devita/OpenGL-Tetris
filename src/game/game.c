@@ -36,12 +36,12 @@ static void g_UpdateTitle(float dt) {
 	//Animate press start alpha values
 
 	//Look for enter key press or escape key press
-
+	
 	//Proceed to next game state
 }
 
 void g_render() {
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	tp_drawChar(v2_new(500, 500), v2_new(100, 100), v3_new(1, 1, 1), 10, 'p');
+	
+	tp_drawChar(v2_new(500, 500), v2_new(100, 100), v3_new(1, 1, 1), 10, 'U');
 }

@@ -37,4 +37,15 @@ static void tp_drawX(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
 static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
 
+static void tp_draw0(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw1(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw2(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw3(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw4(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw5(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw6(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw7(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw8(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+static void tp_draw9(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
+
 #endif
