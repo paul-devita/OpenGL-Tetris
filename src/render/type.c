@@ -772,19 +772,181 @@ static void tp_drawV(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 }
 
 static void tp_drawW(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+	vec2 p1, p2, p3, p4, p5;
+	vec2 s1, s2, s3, s4, s5;
 
+	//Horizontal
+	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
+	p1.y = position.y - thickness / 2.0;
+	s1.x = thickness; 
+	s1.y = scale.y - thickness;
+
+	p2.x = position.x + scale.x / 2.0 - thickness / 2.0;
+	p2.y = position.y - thickness / 2.0;
+	s2.x = thickness;
+	s2.y = scale.y - thickness;
+
+	p3.x = position.x;
+	p3.y = position.y + scale.y / 4.0 - thickness / 2.0;
+	s3.x = thickness;
+	s3.y = scale.y / 2.0 - thickness;
+
+	//Vertical
+	p4.x = position.x - scale.x / 4.0 + thickness / 4.0;
+	p4.y = position.y + scale.y / 2.0 - thickness / 2.0;
+	s4.x = scale.x / 2.0 - 3 * thickness / 2.0;
+	s4.y = thickness;
+
+	p5.x = position.x + scale.x / 4.0 - thickness / 4.0;
+	p5.y = position.y + scale.y / 2.0 - thickness / 2.0;
+	s5.x = scale.x / 2.0 - 3 * thickness / 2.0;
+	s5.y = thickness;
+
+	qd_drawSolidRect(p1, s1, 0, color);
+	qd_drawSolidRect(p2, s2, 0, color);
+	qd_drawSolidRect(p3, s3, 0, color);
+	qd_drawSolidRect(p4, s4, 0, color);
+	qd_drawSolidRect(p5, s5, 0, color);
 }
 
 static void tp_drawX(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
+	float rx = scale.x / 2.0 - numLines * thickness;
 
+	float sy = (scale.y / 2.0 - thickness / 2.0) / (float)numLines;
+
+	vec2 p1, s1;
+
+	p1.x = position.x;
+	p1.y = position.y;
+	s1.x = thickness + rx;
+	s1.y = thickness;
+	qd_drawSolidRect(p1, s1, 0, color);
+
+	float dx = thickness + rx / 2.0;
+	float dy = thickness / 2.0 + sy / 2.0;
+
+	for (unsigned int i = 0; i < numLines; i++) {
+		vec2 p, s;
+
+		s.x = thickness;
+		s.y = sy;
+
+		p.x = position.x + dx;
+		p.y = position.y - dy;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		p.x = position.x - dx;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		p.y = position.y + dy;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		p.x = position.x + dx;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		dx += thickness;
+		dy += sy;
+	}
 }
 
 static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+	vec2 p1, s1;
 
+	p1.x = position.x;
+	p1.y = position.y + scale.y / 4.0;
+	s1.x = thickness;
+	s1.y = scale.y / 2.0;
+	qd_drawSolidRect(p1, s1, 0, color);
+
+	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
+
+	float sy = (scale.y / 2.0) / (float)thickness;
+
+	float dx = thickness;
+	float dy = sy / 2.0;
+
+	for (unsigned int i = 0; i < numLines; i++) {
+		vec2 p, s;
+
+		s.x = thickness;
+		s.y = sy;
+
+		p.x = position.x + dx;
+		p.y = position.y - dy;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		p.x = position.x - dx;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		dx += thickness;
+		dy += sy;
+	}
 }
 
 static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+	vec2 p1, p2;
+	vec2 s1, s2;
 
+	p1.x = position.x;
+	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
+	s1.x = scale.x;
+	s1.y = thickness;
+
+	p2.x = position.x;
+	p2.y = position.y + scale.y / 2.0 - thickness / 2.0;
+	s2.x = scale.x;
+	s2.y = thickness;
+
+	qd_drawSolidRect(p1, s1, 0, color);
+	qd_drawSolidRect(p2, s2, 0, color);
+
+	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
+
+	float sy = (scale.y - 2 * thickness) / (float)(2 * numLines);
+
+	vec2 p, s;
+
+	float dx, dy;
+
+	s.x = thickness;
+	s.y = sy;
+
+	if (numLines % 2 != 0) {
+		p.x = position.x;
+		p.y = position.y;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		dx = thickness;
+		dy = sy;
+	}
+	else {
+		dx = thickness / 2.0;
+		dy = sy / 2.0;
+	}
+
+	for (unsigned int i = 0; i < numLines; i++) {
+
+		p.x = position.x + dx;
+		p.y = position.y - dy;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		p.x = position.x - dx;
+		p.y = position.y + dy;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		dx += thickness;
+		dy += sy;
+	}
 }
 
 static void tp_draw0(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
