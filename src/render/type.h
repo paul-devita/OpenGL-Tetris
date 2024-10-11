@@ -8,7 +8,7 @@
 
 void tp_drawString(vec2 position, vec2 scale, vec3 color, unsigned int thickness, const char* string);
 
-void tp_drawChar(vec2 position, vec2 scale, vec3 color, unsigned int thickness, const char character);
+void tp_drawChar(vec2 position, vec2 scale, vec3 color, unsigned int thickness, char character);
 
 static void tp_drawA(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
 static void tp_drawB(vec2 position, vec2 scale, unsigned int thickness, vec3 color);
