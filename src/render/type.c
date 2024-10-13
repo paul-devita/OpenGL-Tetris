@@ -118,675 +118,774 @@ void tp_drawChar(vec2 position, vec2 scale, vec3 color, unsigned int thickness, 
 }
 
 static void tp_drawA(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4;
-	vec2 s1, s2, s3, s4;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y - thickness / 2.0;
-	s1.x = scale.x - 2.0 * thickness;
-	s1.y = thickness;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x;
-	p2.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s2.x = scale.x - 2.0 * thickness;
-	s2.y = thickness;
+	unsigned int tm2 = 2 * thickness;
 
-	p3.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p3.y = position.y;
-	s3.x = thickness;
-	s3.y = scale.y;
+	float dx = scale.x / 2.0 - td2;
 
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y;
-	s4.x = thickness;
-	s4.y = scale.y;
+	p.x = position.x;
+	p.y = position.y - td2;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
+	p.x = position.x;
+	p.y = position.y - scale.y / 2.0 + td2;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawB(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5, p6;
-	vec2 s1, s2, s3, s4, s5, s6;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	unsigned int tm2 = thickness * 2;
+
+	float sxd2 = scale.x / 2.0;
+	float syd2 = scale.y / 2.0;
+	float syd4 = scale.y / 4.0;
+
+	float dy = syd2 - td2;
 
 	//Horizontal Lines
-	p1.x = position.x;
-	p1.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s1.x = scale.x - 2.0 * thickness;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 	
-	p2.x = position.x;
-	p2.y = position.y;
-	s2.x = scale.x - 2.0 * thickness;
-	s2.y = thickness;
+	p.x = position.x;
+	p.y = position.y;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s3.x = scale.x - 2.0 * thickness;
-	s3.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical Lines
-	p4.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p4.y = position.y;
-	s4.x = thickness;
-	s4.y = scale.y;
+	p.x = position.x - sxd2 + td2;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p5.x = position.x + scale.x / 2.0 - 3.0 * thickness / 2.0;
-	p5.y = position.y - scale.y / 4.0;
-	s5.x = thickness;
-	s5.y = scale.y / 2.0 - thickness;
+	p.x = position.x + sxd2 - 3.0 * td2;
+	p.y = position.y - syd4;
+	s.x = thickness;
+	s.y = syd2 - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p6.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p6.y = position.y + scale.y / 4.0 - thickness / 4.0;
-	s6.x = thickness;
-	s6.y = scale.y / 2.0 + thickness / 2;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
-	qd_drawSolidRect(p6, s6, 0, color);
+	p.x = position.x + sxd2 - td2;
+	p.y = position.y + syd4 - thickness / 4.0;
+	s.x = thickness;
+	s.y = syd2 + td2;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawC(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
 
-	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x + thickness / 2.0;
-	p2.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s2.x = scale.x - thickness;
-	s2.y = thickness;
+	float dy = scale.y / 2.0 - thickness / 2.0;
 
-	p3.x = position.x + thickness / 2.0;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x - thickness;
-	s3.y = thickness;
+	p.x = position.x - scale.x / 2.0 + td2;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x + td2;
+	p.y = position.y - dy;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + td2;
+	p.y = position.y + dy;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawD(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4;
-	vec2 s1, s2, s3, s4;
+	vec2 p, s;
 
-	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p2.y = position.y;
-	s2.x = thickness;
-	s2.y = scale.y - 2.0 * thickness;
+	unsigned int tm2 = thickness * 2;
 
-	p3.x = position.x;
-	p3.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s3.x = scale.x - 2.0 * thickness;
-	s3.y = thickness;
+	float dx = scale.x / 2.0 - td2;
+	float dy = scale.y / 2.0 - td2;
 
-	p4.x = position.x;
-	p4.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s4.x = scale.x - 2.0 * thickness;
-	s4.y = thickness;
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - tm2;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 void tp_drawE(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4;
-	vec2 s1, s2, s3, s4;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x - scale.x / 4.0 + thickness / 2.0;
-	p2.y = position.y;
-	s2.x = scale.x / 2.0 + thickness;
-	s2.y = thickness;
+	float sxd2 = scale.x / 2.0;
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x;
-	s3.y = thickness;
+	float dy = scale.y / 2.0 - td2;
 
-	p4.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p4.y = position.y;
-	s4.x = thickness;
-	s4.y = scale.y - 2.0 * thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
+	p.x = position.x - scale.x / 4.0 + td2;
+	p.y = position.y;
+	s.x = sxd2 + thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x - sxd2 + td2;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - 2.0 * thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawF(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
 
-	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x + thickness / 2.0;
-	p2.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s2.x = scale.x - thickness;
-	s2.y = thickness;
+	float sxd2 = scale.x / 2.0;
 
-	p3.x = position.x - scale.x / 4.0 + thickness / 2.0;
-	p3.y = position.y - scale.y / 16.0;
-	s3.x = scale.x / 2.0 + thickness;
-	s3.y = thickness;
+	p.x = position.x - sxd2 + td2;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x + td2;
+	p.y = position.y - scale.y / 2.0 + td2;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x - scale.x / 4.0 + td2;
+	p.y = position.y - scale.y / 16.0;
+	s.x = sxd2 + thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawG(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float sxd2 = scale.x / 2.0;
+	float syd2 = scale.y / 2.0;
+
+	float dx = sxd2 - td2;
+	float dy = syd2 - td2;
 
 	//Horizontal
-	p1.x = position.x + thickness / 2.0;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x - thickness;
-	s1.y = thickness;
+	p.x = position.x + td2;
+	p.y = position.y - dy;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x + scale.x / 4.0 - thickness / 2.0;
-	p2.y = position.y;
-	s2.x = scale.x / 2.0 + thickness;
-	s2.y = thickness;
+	p.x = position.x + scale.x / 4.0 - td2;
+	p.y = position.y;
+	s.x = sxd2 + thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x + thickness / 2.0;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x - thickness;
-	s3.y = thickness;
+	p.x = position.x + td2;
+	p.y = position.y + dy;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p4.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p4.y = position.y;
-	s4.x = thickness;
-	s4.y = scale.y;
-
-	p5.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p5.y = position.y + scale.y / 4.0;
-	s5.x = thickness;
-	s5.y = scale.y / 2.0;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
+	
+	p.x = position.x + dx;
+	p.y = position.y + scale.y / 4.0;
+	s.x = thickness;
+	s.y = syd2;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawH(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
 
-	p1.x = position.x - scale.x / 2 + thickness / 2;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	float dx = scale.x / 2.0 - thickness / 2.0;
 
-	p2.x = position.x + scale.x / 2 - thickness / 2;
-	p2.y = position.y;
-	s2.x = thickness;
-	s2.y = scale.y;
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y;
-	s3.x = scale.x - 2 * thickness;
-	s3.y = thickness;
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x;
+	p.y = position.y;
+	s.x = scale.x - 2 * thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawI(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2 + thickness / 2;
-	s1.x = scale.x;
-	s1.y = thickness;
+	float dy = scale.y / 2.0 - thickness / 2.0;
 
-	p2.x = position.x;
-	p2.y = position.y;
-	s2.x = thickness;
-	s2.y = scale.y - 2 * thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2 - thickness / 2;
-	s3.x = scale.x;
-	s3.y = thickness;
+	p.x = position.x;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - 2 * thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawJ(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
 
-	p1.x = position.x - scale.x / 2 + thickness / 2;
-	p1.y = position.y + 3 * scale.y / 8;
-	s1.x = thickness;
-	s1.y = scale.y / 4;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x + scale.x / 2 - thickness / 2;
-	p2.y = position.y;
-	s2.x = thickness;
-	s2.y = scale.y;
+	float dx = scale.x / 2.0 - td2;
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2 - thickness / 2;
-	s3.x = scale.x - 2 * thickness;
-	s3.y = thickness;
+	p.x = position.x - dx;
+	p.y = position.y + 3 * scale.y / 8.0;
+	s.x = thickness;
+	s.y = scale.y / 4.0;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x;
+	p.y = position.y + scale.y / 2.0 - td2;
+	s.x = scale.x - 2 * thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawK(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4;
-	vec2 s1, s2, s3, s4;
+	vec2 p, s;
 
-	p1.x = position.x + thickness / 2;
-	p1.y = position.y;
-	s1.x = scale.x - thickness;
-	s1.y = thickness;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x - scale.x / 2 + thickness / 2;
-	p2.y = position.y;
-	s2.x = thickness;
-	s2.y = scale.y;
+	float sxd2 = scale.x / 2.0;
 
-	p3.x = position.x + scale.x / 2 - 2 * thickness;
-	p3.y = position.y - scale.y / 4 - thickness / 4;
-	s3.x = thickness;
-	s3.y = scale.y / 2 - thickness / 2;
+	float sy = scale.y / 2.0 - td2;
 
-	p4.x = position.x + scale.x / 2 - thickness / 2;
-	p4.y = position.y + scale.y / 4 + thickness / 4;
-	s4.x = thickness;
-	s4.y = scale.y / 2 - thickness / 2;
+	float dx = sxd2 - td2;
+	float dy = scale.y / 2.0 + thickness / 4.0;
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
+	p.x = position.x + td2;
+	p.y = position.y;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + sxd2 - 2 * thickness;
+	p.y = position.y - dy;
+	s.x = thickness;
+	s.y = sy;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + dx;
+	p.y = position.y + dy;
+	s.x = thickness;
+	s.y = sy;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawL(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2;
-	vec2 s1, s2;
+	vec2 p, s;
 
-	p1.x = position.x - scale.x / 2 + thickness / 2;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x + thickness / 2;
-	p2.y = position.y + scale.y / 2 - thickness / 2;
-	s2.x = scale.x - thickness;
-	s2.y = thickness;
+	p.x = position.x - scale.x / 2.0 + td2;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
+	p.x = position.x + td2;
+	p.y = position.y + scale.y / 2.0 - td2;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawM(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float sxd2 = scale.x / 2.0;
+	float syd2 = scale.y / 2.0;
+
+	float dx1 = sxd2 - td2;
+	float dx2 = scale.x / 4.0 - thickness / 4.0;
+	float dy = syd2 - td2;
+
+	float sx = sxd2 - 3 * td2;
 
 	//Vertical
-	p1.x = position.x - scale.x / 2 + thickness / 2;
-	p1.y = position.y + thickness / 2;
-	s1.x = thickness;
-	s1.y = scale.y - thickness / 2;
+	p.x = position.x - dx1;
+	p.y = position.y + td2;
+	s.x = thickness;
+	s.y = scale.y - td2;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x;
-	p2.y = position.y - scale.y / 4 + thickness / 2;
-	s2.x = thickness;
-	s2.y = scale.y / 2 - thickness;
+	p.x = position.x;
+	p.y = position.y - scale.y / 4 + td2;
+	s.x = thickness;
+	s.y = syd2 - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x + scale.x / 2 - thickness / 2;
-	p3.y = position.y + thickness / 2;
-	s3.x = thickness;
-	s3.y = scale.y - thickness;
+	p.x = position.x + dx1;
+	p.y = position.y + td2;
+	s.x = thickness;
+	s.y = scale.y - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Horizontal
-	p4.x = position.x - scale.x / 4 + thickness / 4;
-	p4.y = position.y - scale.y / 2 + thickness / 2;
-	s4.x = scale.x / 2 - 3 * thickness / 2;
-	s4.y = thickness;
+	p.x = position.x - dx2;
+	p.y = position.y - dy;
+	s.x = sx;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p5.x = position.x + scale.x / 4 - thickness / 4;
-	p5.y = position.y - scale.y / 2 + thickness / 2;
-	s5.x = scale.x / 2 - 3 * thickness / 2;
-	s5.y = thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x + dx2;
+	p.y = position.y - dy;
+	s.x = sx;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawN(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2;
-	vec2 s1, s2;
+	vec2 p, s;
 
-	//Vertical
-	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p2.y = position.y;
-	s2.x = thickness;
-	s2.y = scale.y;
+	float dx = scale.x / 2.0 - td2;
 
-	//Horizontal
-	unsigned int numLines = (int)scale.y / thickness;
-	if (numLines % 2 == 0) numLines--;
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	float length = scale.x / (float)numLines - 2 * (float)thickness / (float)numLines;
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	float px = position.x - ((numLines / (int)2) * length);
-	float py = position.y - ((numLines / (int)2) * thickness);
+	unsigned int numLines = (int)(scale.x - 2 * thickness) / thickness;
+	unsigned int nLd2 = numLines / 2;
 
-	for (int i = 0; i < numLines; i++) {
-		vec2 p, s;
+	float sy = scale.y / (float)numLines;
 
-		p.x = px;
-		p.y = py;
+	float dy;
 
-		s.x = length;
-		s.y = thickness;
+	s.x = thickness;
+	s.y = sy;
 
-		px += length;
-		py += thickness;
+	if (numLines % 2 != 0) {
+		p.x = position.x;
+		p.y = position.y;
 
 		qd_drawSolidRect(p, s, 0, color);
+
+		dx = thickness;
+		dy = sy;
+	}
+	else {
+		dx = td2;
+		dy = sy / 2.0;
 	}
 
+	for (int i = 0; i < nLd2; i++) {
+		p.x = position.x - dx;
+		p.y = position.y - dy;
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
+		qd_drawSolidRect(p, s, 0, color);
+
+		p.x = position.x + dx;
+		p.y = position.y + dy;
+
+		qd_drawSolidRect(p, s, 0, color);
+
+		dx += thickness;
+		dy += sy;
+	}
 }
 
 static void tp_drawO(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4;
-	vec2 s1, s2, s3, s4;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x - 2 * thickness;
-	s1.y = thickness;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x;
-	p2.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s2.x = scale.x - 2 * thickness;
-	s2.y = thickness;
+	unsigned int tm2 = thickness * 2;
 
-	p3.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p3.y = position.y;
-	s3.x = thickness;
-	s3.y = scale.y - 2 * thickness;
+	float dx = scale.x / 2.0 - td2;
+	float dy = scale.y / 2.0 - td2;
 
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y;
-	s4.x = thickness;
-	s4.y = scale.y - 2 * thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - tm2;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - tm2;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawP(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4;
-	vec2 s1, s2, s3, s4;
+	vec2 p, s;
 
-	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x + thickness / 2.0;
-	p2.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s2.x = scale.x - thickness;
-	s2.y = thickness;
+	float dx = scale.x / 2.0 - td2;
 
-	p3.x = position.x + thickness / 2.0;
-	p3.y = position.y - scale.y / 8.0;
-	s3.x = scale.x - thickness;
-	s3.y = thickness;
+	float syd8 = scale.y / 8.0;
 
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y - 5.0 * scale.y / 16.0 + thickness / 4.0;
-	s4.x = thickness;
-	s4.y = 3 * scale.y / 8.0 - 3 * thickness / 2.0;
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
+	p.x = position.x + td2;
+	p.y = position.y - scale.y / 2.0 + td2;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + td2;
+	p.y = position.y - syd8;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + dx;
+	p.y = position.y - 5.0 * scale.y / 16.0 + thickness / 4.0;
+	s.x = thickness;
+	s.y = 3 * (syd8 - td2);
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawQ(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	unsigned int tm2 = thickness * 2;
+	unsigned int tm3 = thickness * 3;
+
+	float syd2 = scale.y / 2.0;
+
+	float dx = scale.x / 2.0 - td2;
+	float dy = syd2 - td2;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x - 2 * thickness;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x;
-	p2.y = position.y + scale.y / 2.0 - 3 * thickness / 2.0;
-	s2.x = scale.x - 2 * thickness;
-	s2.y = thickness;
+	p.x = position.x;
+	p.y = position.y + syd2 - 3 * td2;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p3.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p3.y = position.y - thickness / 2.0;
-	s3.x = thickness;
-	s3.y = scale.y - 3 * thickness;
+	p.x = position.x - dx;
+	p.y = position.y - td2;
+	s.x = thickness;
+	s.y = scale.y - tm3;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y - thickness / 2.0;
-	s4.x = thickness;
-	s4.y = scale.y - 3 * thickness;
+	p.x = position.x + dx;
+	p.y = position.y - td2;
+	s.x = thickness;
+	s.y = scale.y - tm3;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Dot
-	p5.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p5.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s5.x = thickness;
-	s5.y = thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x + dx;
+	p.y = position.y + dy;
+	s.x = thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawR(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5, p6;
-	vec2 s1, s2, s3, s4, s5, s6;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+	float td8 = thickness / 8.0;
+
+	float sxd2 = scale.x / 2.0;
+	float syd8 = scale.y / 8.0;
+	float syd32 = scale.y / 32.0;
+
+	float sy = 5 * scale.y / 16.0 - thickness / 4.0;
+
+	float dx = sxd2 - td2;
 
 	//Vertical
-	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p1.y = position.y;
-	s1.x = thickness;
-	s1.y = scale.y;
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p2.y = position.y - 5.0 * scale.y / 16.0 + thickness / 4.0;
-	s2.x = thickness;
-	s2.y = 3 * scale.y / 8.0 - 3 * thickness / 2.0;
+	p.x = position.x + dx;
+	p.y = position.y - sy;
+	s.x = thickness;
+	s.y = 3 * syd8 - 3 * td2;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x + scale.x / 2.0 - 3 * thickness / 2.0;
-	p3.y = position.y + scale.y / 32.0 + 3.0 * thickness / 8.0;
-	s3.x = thickness;
-	s3.y = 5.0 * scale.y / 16.0 - thickness / 4.0;
+	p.x = position.x + sxd2 - 3 * td2;
+	p.y = position.y + syd32 + 3 * td8;
+	s.x = thickness;
+	s.y = sy;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y + 11.0 * scale.y / 32.0 + thickness / 8.0;
-	s4.x = thickness;
-	s4.y = 5.0 * scale.y / 16.0 - thickness / 4.0;
+	p.x = position.x + dx;
+	p.y = position.y + 11.0 * syd32 + td8;
+	s.x = thickness;
+	s.y = sy;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Horizontal
-	p5.x = position.x + thickness / 2.0;
-	p5.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s5.x = scale.x - thickness;
-	s5.y = thickness;
+	p.x = position.x + td2;
+	p.y = position.y - scale.y / 2.0 + td2;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p6.x = position.x + thickness / 2.0;
-	p6.y = position.y - scale.y / 8.0;
-	s6.x = scale.x - thickness;
-	s6.y = thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
-	qd_drawSolidRect(p6, s6, 0, color);
+	p.x = position.x + td2;
+	p.y = position.y - syd8;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawS(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float syd2 = scale.y / 2.0;
+
+	float dx = scale.x / 2.0 - td2;
+	float dy1 = syd2 - td2;
+	float dy2 = scale.y / 4.0 - thickness / 4.0;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy1;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x;
-	p2.y = position.y;
-	s2.x = scale.x;
-	s2.y = thickness;
+	p.x = position.x;
+	p.y = position.y;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x;
-	s3.y = thickness;
+	p.x = position.x;
+	p.y = position.y + dy1;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y + scale.y / 4.0 - thickness / 4.0;
-	s4.x = thickness;
-	s4.y = scale.y / 2.0 + thickness / 2.0;
+	p.x = position.x + dx;
+	p.y = position.y + dy2;
+	s.x = thickness;
+	s.y = syd2 + td2;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p5.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p5.y = position.y  - scale.y / 4.0 + thickness / 4.0;
-	s5.x = thickness;
-	s5.y = scale.y / 2.0 - thickness / 2.0;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x - dx;
+	p.y = position.y - dy2;
+	s.x = thickness;
+	s.y = dy1;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawT(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2;
-	vec2 s1, s2;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y + thickness / 2.0;
-	s1.x = thickness;
-	s1.y = scale.y - thickness;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x;
-	p2.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s2.x = scale.x;
-	s2.y = thickness;
+	p.x = position.x;
+	p.y = position.y + td2;
+	s.x = thickness;
+	s.y = scale.y - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
+	p.x = position.x;
+	p.y = position.y - scale.y / 2.0 + td2;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawU(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s1.x = scale.x - 2 * thickness;
-	s1.y = thickness;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p2.y = position.y;
-	s2.x = thickness;
-	s2.y = scale.y;
+	float dx = scale.x / 2.0 - td2;
 
-	p3.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p3.y = position.y;
-	s3.x = thickness;
-	s3.y = scale.y;
+	p.x = position.x;
+	p.y = position.y + scale.y / 2.0 - td2;
+	s.x = scale.x - 2 * thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
+
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawV(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, s1;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s1.x = thickness;
-	s1.y = thickness;
+	float td2 = thickness / 2.0;
 
-	qd_drawSolidRect(p1, s1, 0, color);
+	float syd2 = scale.y / 2.0;
 
-	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
+	p.x = position.x;
+	p.y = position.y + syd2 - td2;
+	s.x = thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	unsigned int numLines = (int)(scale.x / 2.0 - td2) / thickness;
 
 	float length = (scale.y - thickness) / (float)numLines;
 
 	float px = 0;
 	float py = 0;
 
+	s.x = thickness;
+	s.y = length;
+
 	for (int i = 0; i < numLines; i++) {
-		vec2 p, s;
-
 		p.x = px + position.x + thickness;
-		p.y = py + position.y + scale.y / 2.0 - thickness - length / 2.0;
-
-		s.x = thickness;
-		s.y = length;
+		p.y = py + position.y + syd2 - thickness - length / 2.0;
 
 		px += thickness;
 		py -= length;
@@ -800,66 +899,77 @@ static void tp_drawV(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 }
 
 static void tp_drawW(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float sxd2 = scale.x / 2.0;
+	float syd2 = scale.y / 2.0;
+
+	float sx = sxd2 - td2 * 3;
+
+	float dx1 = sxd2 - td2;
+	float dx2 = scale.x / 4.0 - thickness / 4.0;
+	float dy = syd2 - td2;
 
 	//Horizontal
-	p1.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p1.y = position.y - thickness / 2.0;
-	s1.x = thickness; 
-	s1.y = scale.y - thickness;
+	p.x = position.x - dx1;
+	p.y = position.y - td2;
+	s.x = thickness; 
+	s.y = scale.y - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p2.y = position.y - thickness / 2.0;
-	s2.x = thickness;
-	s2.y = scale.y - thickness;
+	p.x = position.x + dx1;
+	p.y = position.y - td2;
+	s.x = thickness;
+	s.y = scale.y - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 4.0 - thickness / 2.0;
-	s3.x = thickness;
-	s3.y = scale.y / 2.0 - thickness;
+	p.x = position.x;
+	p.y = position.y + scale.y / 4.0 - td2;
+	s.x = thickness;
+	s.y = syd2 - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p4.x = position.x - scale.x / 4.0 + thickness / 4.0;
-	p4.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s4.x = scale.x / 2.0 - 3 * thickness / 2.0;
-	s4.y = thickness;
+	p.x = position.x - dx2;
+	p.y = position.y + dy;
+	s.x = sx;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p5.x = position.x + scale.x / 4.0 - thickness / 4.0;
-	p5.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s5.x = scale.x / 2.0 - 3 * thickness / 2.0;
-	s5.y = thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x + dx2;
+	p.y = position.y + dy;
+	s.x = sx;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_drawX(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
-	float rx = scale.x / 2.0 - numLines * thickness;
+	float td2 = thickness / 2.0;
 
-	float sy = (scale.y / 2.0 - thickness / 2.0) / (float)numLines;
+	float sxd2 = scale.x / 2.0;
 
-	vec2 p1, s1;
+	unsigned int numLines = (int)(sxd2 - td2) / thickness;
+	float rx = sxd2 - numLines * thickness;
 
-	p1.x = position.x;
-	p1.y = position.y;
-	s1.x = thickness + rx;
-	s1.y = thickness;
-	qd_drawSolidRect(p1, s1, 0, color);
+	float sy = (scale.y / 2.0 - td2) / (float)numLines;
+
+	vec2 p, s;
+
+	p.x = position.x;
+	p.y = position.y;
+	s.x = thickness + rx;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	float dx = thickness + rx / 2.0;
-	float dy = thickness / 2.0 + sy / 2.0;
+	float dy = td2 + sy / 2.0;
+
+	s.x = thickness;
+	s.y = sy;
 
 	for (unsigned int i = 0; i < numLines; i++) {
-		vec2 p, s;
-
-		s.x = thickness;
-		s.y = sy;
-
 		p.x = position.x + dx;
 		p.y = position.y - dy;
 
@@ -883,13 +993,13 @@ static void tp_drawX(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 }
 
 static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, s1;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y + scale.y / 4.0;
-	s1.x = thickness;
-	s1.y = scale.y / 2.0;
-	qd_drawSolidRect(p1, s1, 0, color);
+	p.x = position.x;
+	p.y = position.y + scale.y / 4.0;
+	s.x = thickness;
+	s.y = scale.y / 2.0;
+	qd_drawSolidRect(p, s, 0, color);
 
 	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
 
@@ -898,12 +1008,10 @@ static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	float dx = thickness;
 	float dy = sy / 2.0;
 
+	s.x = thickness;
+	s.y = sy;
+
 	for (unsigned int i = 0; i < numLines; i++) {
-		vec2 p, s;
-
-		s.x = thickness;
-		s.y = sy;
-
 		p.x = position.x + dx;
 		p.y = position.y - dy;
 
@@ -919,29 +1027,29 @@ static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 }
 
 static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2;
-	vec2 s1, s2;
+	vec2 p, s;
 
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	float td2 = thickness / 2.0;
 
-	p2.x = position.x;
-	p2.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s2.x = scale.x;
-	s2.y = thickness;
+	float dy = scale.y / 2.0 - td2;
 
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
+
+	unsigned int numLines = (int)(scale.x / 2.0 - td2) / thickness;
 
 	float sy = (scale.y - 2 * thickness) / (float)(2 * numLines);
 
-	vec2 p, s;
-
-	float dx, dy;
+	float dx;
 
 	s.x = thickness;
 	s.y = sy;
@@ -956,7 +1064,7 @@ static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 		dy = sy;
 	}
 	else {
-		dx = thickness / 2.0;
+		dx = td2;
 		dy = sy / 2.0;
 	}
 
@@ -978,246 +1086,263 @@ static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 }
 
 static void tp_draw0(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	unsigned int tm2 = thickness * 2;
+
+	float dx = scale.x / 2.0 - td2;
+	float dy = scale.y / 2.0 - td2;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x - 2 * thickness;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x;
-	p2.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s2.x = scale.x - 2 * thickness;
-	s2.y = thickness;
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x - tm2;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p3.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p3.y = position.y;
-	s3.x = thickness;
-	s3.y = scale.y - 2 * thickness;
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - tm2;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y;
-	s4.x = thickness;
-	s4.y = scale.y - 2 * thickness;
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - tm2;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Dot
-	p5.x = position.x;
-	p5.y = position.y;
-	s5.x = scale.x / 5.0;
-	s5.y = scale.y / 5.0;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x;
+	p.y = position.y;
+	s.x = scale.x / 5.0;
+	s.y = scale.y / 5.0;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_draw1(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float syd2 = scale.y / 2.0;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y + syd2 - td2;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x - thickness / 2.0 - scale.x / 16.0;
-	p2.y = position.y - scale.y / 2.0 + 3 * thickness / 2.0;
-	s2.x = scale.x / 8.0;
-	s2.y = thickness;
+	p.x = position.x - td2 - scale.x / 16.0;
+	p.y = position.y - syd2 + 3 * td2;
+	s.x = scale.x / 8.0;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p3.x = position.x;
-	p3.y = position.y - thickness / 2.0;
-	s3.x = thickness;
-	s3.y = scale.y - thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x;
+	p.y = position.y - td2;
+	s.x = thickness;
+	s.y = scale.y - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_draw2(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float syd2 = scale.y / 2.0;
+
+	float dx = scale.x / 2.0 - td2;
+	float dy1 = syd2 - td2;
+	float dy2 = scale.y / 4.0 - thickness / 4.0;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy1;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x;
-	p2.y = position.y;
-	s2.x = scale.x;
-	s2.y = thickness;
+	p.x = position.x;
+	p.y = position.y;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x;
-	s3.y = thickness;
+	p.x = position.x;
+	p.y = position.y + dy1;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p4.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p4.y = position.y + scale.y / 4.0 - thickness / 4.0;
-	s4.x = thickness;
-	s4.y = scale.y / 2.0 + thickness / 2.0;
+	p.x = position.x - dx;
+	p.y = position.y + dy2;
+	s.x = thickness;
+	s.y = syd2 + td2;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p5.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p5.y = position.y - scale.y / 4.0 + thickness / 4.0;
-	s5.x = thickness;
-	s5.y = scale.y / 2.0 - thickness / 2.0;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x + dx;
+	p.y = position.y - dy2;
+	s.x = thickness;
+	s.y = dy1;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_draw3(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4;
-	vec2 s1, s2, s3, s4;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float dy = scale.y / 2.0 - td2;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x - thickness / 2.0;
-	p2.y = position.y;
-	s2.x = scale.x - thickness;
-	s2.y = thickness;
+	p.x = position.x - td2;
+	p.y = position.y;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x;
-	s3.y = thickness;
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p4.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p4.y = position.y;
-	s4.x = thickness;
-	s4.y = scale.y - 2 * thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
+	p.x = position.x + scale.x / 2.0 - td2;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y - 2 * thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_draw4(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3;
-	vec2 s1, s2, s3;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float dx = scale.x / 2.0 - td2;
 
 	//Horizontal
-	p1.x = position.x - thickness / 2.0;
-	p1.y = position.y;
-	s1.x = scale.x - thickness;
-	s1.y = thickness;
+	p.x = position.x - td2;
+	p.y = position.y;
+	s.x = scale.x - thickness;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p2.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p2.y = position.y - scale.y / 4.0 + thickness / 4.0;
-	s2.x = thickness;
-	s2.y = scale.y / 2.0 - thickness / 2.0;
+	p.x = position.x - dx;
+	p.y = position.y - scale.y / 4.0 + thickness / 4.0;
+	s.x = thickness;
+	s.y = scale.y / 2.0 - td2;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p3.y = position.y;
-	s3.x = thickness;
-	s3.y = scale.y;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = thickness;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_draw5(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5;
-	vec2 s1, s2, s3, s4, s5;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float syd4 = scale.y / 4.0;
+	float syd8 = scale.y / 8.0;
+
+	float dy = scale.y / 2.0 - td2;
+	float dx = scale.x / 2.0 - td2;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x;
-	p2.y = position.y - scale.y / 4.0 + thickness / 2.0;
-	s2.x = scale.x;
-	s2.y = thickness;
+	p.x = position.x;
+	p.y = position.y - syd4 + td2;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x;
-	s3.y = thickness;
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p4.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p4.y = position.y - 3 * scale.y / 8.0 + thickness / 2.0;
-	s4.x = thickness;
-	s4.y = scale.y / 4.0 - thickness;
+	p.x = position.x - dx;
+	p.y = position.y - 3 * syd8 + td2;
+	s.x = thickness;
+	s.y = syd4 - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p5.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p5.y = position.y + scale.y / 8.0;
-	s5.x = thickness;
-	s5.y = 3 * scale.y / 4.0 - 2 * thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
+	p.x = position.x + dx;
+	p.y = position.y + syd8;
+	s.x = thickness;
+	s.y = 3 * syd4 - 2 * thickness;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_draw6(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
-	vec2 p1, p2, p3, p4, p5, p6;
-	vec2 s1, s2, s3, s4, s5, s6;
+	vec2 p, s;
+
+	float td2 = thickness / 2.0;
+
+	float syd2 = scale.y / 2.0;
+	float syd4 = scale.y / 4.0;
+
+	float dy = syd2 - td2;
+	float dx = scale.x / 2.0 - td2;
 
 	//Horizontal
-	p1.x = position.x;
-	p1.y = position.y - scale.y / 2.0 + thickness / 2.0;
-	s1.x = scale.x;
-	s1.y = thickness;
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x;
+	s.y = thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p2.x = position.x;
-	p2.y = position.y;
-	s2.x = scale.x;
-	s2.y = thickness;
+	p.y = position.y;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p3.x = position.x;
-	p3.y = position.y + scale.y / 2.0 - thickness / 2.0;
-	s3.x = scale.x;
-	s3.y = thickness;
+	p.y = position.y + dy;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Vertical
-	p4.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p4.y = position.y - scale.y / 4.0;
-	s4.x = thickness;
-	s4.y = scale.y / 2.0 - thickness;
+	p.x = position.x - dx;
+	p.y = position.y - syd4;
+	s.x = thickness;
+	s.y = syd2 - thickness;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p5.x = position.x - scale.x / 2.0 + thickness / 2.0;
-	p5.y = position.y + scale.y / 4.0;
-	s5.x = thickness;
-	s5.y = scale.y / 2.0 - thickness;
+	p.y = position.y + syd4;
+	qd_drawSolidRect(p, s, 0, color);
 
-	p6.x = position.x + scale.x / 2.0 - thickness / 2.0;
-	p6.y = position.y + scale.y / 4.0;
-	s6.x = thickness;
-	s6.y = scale.y / 2.0 - thickness;
-
-	qd_drawSolidRect(p1, s1, 0, color);
-	qd_drawSolidRect(p2, s2, 0, color);
-	qd_drawSolidRect(p3, s3, 0, color);
-	qd_drawSolidRect(p4, s4, 0, color);
-	qd_drawSolidRect(p5, s5, 0, color);
-	qd_drawSolidRect(p6, s6, 0, color);
+	p.x = position.x + dx;
+	qd_drawSolidRect(p, s, 0, color);
 }
 
 static void tp_draw7(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
