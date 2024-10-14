@@ -6,7 +6,15 @@
 
 #include "quad.h"
 
-void tp_drawString(vec2 position, vec2 scale, vec3 color, unsigned int thickness, const char* string);
+#define TP_NULL '\0'
+#define TP_NEWLINE '\n'
+#define TP_SPACE ' '
+
+#define TP_ALIGNMENT_LEFT 0
+#define TP_ALIGNMENT_CENTER 1
+#define TP_ALIGNMENT_RIGHT 2
+
+void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thickness, unsigned int char_spacing, unsigned int line_spacing, unsigned char alignment, const char* string);
 
 void tp_drawChar(vec2 position, vec2 scale, vec3 color, unsigned int thickness, char character);
 

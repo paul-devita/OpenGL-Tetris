@@ -1,5 +1,49 @@
 #include "type.h"
 
+void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thickness, unsigned int char_spacing, unsigned int line_spacing, unsigned char alignment, const char* string) {
+	vec2 p;
+	
+	unsigned int strLength = 0;
+
+	for (char* c = string; *c != TP_NULL; c++)
+		strLength++;
+
+	switch (alignment) {
+		case TP_ALIGNMENT_LEFT: {
+			float default_x = position.x + char_scale.x / 2.0;
+
+			p.y = position.y;
+			p.x = default_x;
+
+			for (char* c = string; *c != TP_NULL; c++) {
+				switch (*c) {
+				case TP_SPACE:
+					//Do Nothing
+					p.x += char_scale.x + char_spacing;
+					break;
+				case TP_NEWLINE:
+					p.y += char_scale.y + line_spacing;
+					p.x = default_x;
+					break;
+				default:
+					tp_drawChar(p, char_scale, color, thickness, *c);
+
+					p.x += char_scale.x + char_spacing;
+					break;
+				}
+			}
+
+			break;
+		}
+		case TP_ALIGNMENT_CENTER:
+
+			break;
+		case TP_ALIGNMENT_RIGHT:
+
+			break;
+	}
+}
+
 void tp_drawChar(vec2 position, vec2 scale, vec3 color, unsigned int thickness, char character) {
 
 	if (character >= 'A' && character <= 'Z')
@@ -380,13 +424,9 @@ static void tp_drawH(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 
 	p.x = position.x + dx;
-	p.y = position.y;
-	s.x = thickness;
-	s.y = scale.y;
 	qd_drawSolidRect(p, s, 0, color);
 
 	p.x = position.x;
-	p.y = position.y;
 	s.x = scale.x - 2 * thickness;
 	s.y = thickness;
 	qd_drawSolidRect(p, s, 0, color);
