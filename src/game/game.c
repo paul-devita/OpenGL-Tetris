@@ -43,5 +43,5 @@ static void g_UpdateTitle(float dt) {
 void g_render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	tp_drawString(v2_new(100, 500), v2_new(100, 100), v3_new(1.0f, 1.0f, 1.0f), 5, 20, 20, TP_ALIGNMENT_LEFT, "Hello\nWorld");
+	tp_drawString(v2_new(500, 500), v2_new(50, 50), v3_new(1.0f, 1.0f, 1.0f), 5, 5, 20, TP_ALIGNMENT_RIGHT, "Name\nHi My Name Is\nP");
 }

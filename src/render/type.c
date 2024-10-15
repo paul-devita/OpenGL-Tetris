@@ -1,46 +1,226 @@
 #include "type.h"
 
-void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thickness, unsigned int char_spacing, unsigned int line_spacing, unsigned char alignment, const char* string) {
+void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thickness, unsigned int char_spacing, unsigned int line_spacing, TPAlignment alignment, const char* string) {
+	if (*string == TP_NULL) return;
+
 	vec2 p;
-	
-	unsigned int strLength = 0;
+
+	unsigned int numLines = 1;
+
+	float dx = char_scale.x + char_spacing;
+	float dy = char_scale.y + line_spacing;
+
+	char* cur = string;
 
 	for (char* c = string; *c != TP_NULL; c++)
-		strLength++;
+		if (*c == TP_NEWLINE)
+			numLines++;
 
 	switch (alignment) {
 		case TP_ALIGNMENT_LEFT: {
 			float default_x = position.x + char_scale.x / 2.0;
+			
+			if (numLines > 1) {
+				if (numLines % 2 != 0) {
+					unsigned int nLd2 = numLines / 2;
 
-			p.y = position.y;
-			p.x = default_x;
+					p.y = position.y - nLd2 * dy;
+				}
+				else {
+					unsigned int nLd2m1 = (numLines / 2) - 1;
 
-			for (char* c = string; *c != TP_NULL; c++) {
-				switch (*c) {
-				case TP_SPACE:
-					//Do Nothing
-					p.x += char_scale.x + char_spacing;
-					break;
-				case TP_NEWLINE:
-					p.y += char_scale.y + line_spacing;
+					p.y = position.y - ((char_scale.y - line_spacing) / 2.0) - nLd2m1 * dy;
+				}
+
+				for (unsigned int i = 0; i < numLines; i++) {
+					for (; *cur != TP_NEWLINE && *cur != TP_NULL; cur++) {
+						switch (*cur) {
+							case TP_SPACE:
+								//Do Nothing
+								break;
+							default:
+								tp_drawChar(p, char_scale, color, thickness, *cur);
+								break;
+						}
+
+						p.x += dx;
+					}
+
 					p.x = default_x;
-					break;
-				default:
-					tp_drawChar(p, char_scale, color, thickness, *c);
+					p.y += dy;
 
-					p.x += char_scale.x + char_spacing;
-					break;
+					cur++;
+				}
+			}
+			else {
+				p.y = position.y;
+				p.x = default_x;
+
+				for (; *cur != TP_NULL; cur++) {
+					switch (*cur) {
+						case TP_SPACE:
+							//Do Nothing
+							break;
+						default:
+							tp_drawChar(p, char_scale, color, thickness, *cur);
+							break;
+					}
+
+					p.x += dx;
+				}
+			}
+			break;
+		}
+		case TP_ALIGNMENT_CENTER: {
+			if (numLines > 1) {
+				if (numLines % 2 != 0) {
+					unsigned int nLd2 = numLines / 2;
+
+					p.y = position.y - nLd2 * dy;
+				}
+				else {
+					unsigned int nLd2m1 = (numLines / 2) - 1;
+
+					p.y = position.y - ((char_scale.y - line_spacing) / 2.0) - nLd2m1 * dy;
+				}
+
+				for (unsigned int i = 0; i < numLines; i++) {
+					unsigned int strLen = 0;
+
+					for (char* c = cur; *c != TP_NULL && *c != TP_NEWLINE; c++)
+						strLen++;
+
+					if (strLen % 2 != 0) {
+						unsigned int sLd2 = strLen / 2;
+
+						p.x = position.x - sLd2 * (char_scale.x + char_spacing);
+					}
+					else
+					{
+						unsigned int sLd2m1 = (strLen / 2) - 1;
+
+						p.x = position.x - char_scale.x / 2.0 - line_spacing / 2.0 - sLd2m1 * (char_scale.x + char_spacing);
+					}
+
+					for (; *cur != TP_NEWLINE && *cur != TP_NULL; cur++) {
+						switch (*cur) {
+							case TP_SPACE:
+								//Do Nothing
+								break;
+							default:
+								tp_drawChar(p, char_scale, color, thickness, *cur);
+								break;
+						}
+
+						p.x += dx;
+					}
+
+					p.y += dy;
+					cur++;
+				}
+			}
+			else {
+				unsigned int strLen = 0;
+
+				for (char* c = string; *c != TP_NULL; c++)
+					strLen++;
+
+				if (strLen % 2 != 0) {
+					unsigned int sLd2 = strLen / 2;
+
+					p.x = position.x - sLd2 * (char_scale.x + char_spacing);
+					p.y = position.y;
+				}
+				else
+				{
+					unsigned int sLd2m1 = (strLen / 2) - 1;
+
+					p.x = position.x - char_scale.x / 2.0 - line_spacing / 2.0 - sLd2m1 * (char_scale.x + char_spacing);
+					p.y = position.y;
+				}
+				
+				for ( ; *cur != TP_NULL; cur++) {
+					switch (*cur) {
+						case TP_SPACE: 
+							//Do Nothing
+							break;
+						default:
+							tp_drawChar(p, char_scale, color, thickness, *cur);
+							break;
+					}
+
+					p.x += dx;
 				}
 			}
 
 			break;
 		}
-		case TP_ALIGNMENT_CENTER:
+		case TP_ALIGNMENT_RIGHT: {
+			float default_x = position.x - char_scale.x / 2.0;
+
+			if (numLines > 1) {
+				if (numLines % 2 != 0) {
+					unsigned int nLd2 = numLines / 2;
+
+					p.y = position.y - nLd2 * dy;
+				}
+				else {
+					unsigned int nLd2m1 = (numLines / 2) - 1;
+
+					p.y = position.y - ((char_scale.y - line_spacing) / 2.0) - nLd2m1 * dy;
+				}
+
+				for (unsigned int i = 0; i < numLines; i++) {
+					unsigned int strLen = 0;
+
+					for (char* c = cur; *c != TP_NEWLINE && *c != TP_NULL; c++)
+						strLen++;
+
+					p.x = default_x - ((strLen - 1) * dx);
+
+					for (; *cur != TP_NEWLINE && *cur != TP_NULL; cur++) {
+						switch (*cur) {
+							case TP_SPACE:
+								//Do Nothing
+								break;
+							default:
+								tp_drawChar(p, char_scale, color, thickness, *cur);
+								break;
+						}
+
+						p.x += dx;
+					}
+
+					p.y += dy;
+
+					cur++;
+				}
+			}
+			else {
+				unsigned int strLen = 0;
+
+				for (char* c = string; *c != TP_NULL; c++)
+					strLen++;
+
+				p.x = default_x - (strLen - 1) * dx;
+				p.y = position.y;
+
+				for (; *cur != TP_NULL; cur++) {
+					switch (*cur) {
+						case TP_SPACE:
+							//Do Nothing
+							break;
+						default:
+							tp_drawChar(p, char_scale, color, thickness, *cur);
+							break;
+					}
+
+					p.x += dx;
+				}
+			}
 
 			break;
-		case TP_ALIGNMENT_RIGHT:
-
-			break;
+		}
 	}
 }
 
