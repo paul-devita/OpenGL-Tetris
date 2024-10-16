@@ -69,7 +69,7 @@ signed char win_windowInit() {
 
 	glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
 
-	for (unsigned short i = 0; i < KEY_COUNT / (sizeof(unsigned char) * 8); i++)
+	for (unsigned int i = 0; i < KEY_COUNT / (sizeof(unsigned char) * 8); i++)
 		keys[i] = 0x00;
 
 	return 1;

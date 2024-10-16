@@ -13,8 +13,6 @@
 int main(int argc, char* argv[]) {
 	if (win_windowInit() < 0) { return -1; }
 
-	float lastTime = 0;
-
 	qd_init();
 	g_init();
 	tm_initTime();
