@@ -49,7 +49,15 @@ Returns a negative value on failure, and each value has a different meaning:
 */
 char win_windowInit();
 
+/*
+Clears the color buffer bit
+*/
 void win_clear();
+
+/*
+Closes the window and calls win_windowTerminate()
+*/
+void win_close();
 
 /*
 Terminates GLFW and deallocates all window-related functionality

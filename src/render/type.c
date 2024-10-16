@@ -1,6 +1,6 @@
 #include "type.h"
 
-void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thickness, unsigned int char_spacing, unsigned int line_spacing, TPAlignment alignment, const char* string) {
+void tp_drawString(vec2 position, vec2 char_scale, vec3 color, float thickness, float char_spacing, float line_spacing, TPAlignment alignment, const char* string) {
 	if (*string == TP_NULL) return;
 
 	vec2 p;
@@ -19,6 +19,8 @@ void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thic
 	switch (alignment) {
 		case TP_ALIGNMENT_LEFT: {
 			float default_x = position.x + char_scale.x / 2.0;
+
+			p.x = default_x;
 			
 			if (numLines > 1) {
 				if (numLines % 2 != 0) {
@@ -54,7 +56,6 @@ void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thic
 			}
 			else {
 				p.y = position.y;
-				p.x = default_x;
 
 				for (; *cur != TP_NULL; cur++) {
 					switch (*cur) {
@@ -224,7 +225,7 @@ void tp_drawString(vec2 position, vec2 char_scale, vec3 color, unsigned int thic
 	}
 }
 
-void tp_drawChar(vec2 position, vec2 scale, vec3 color, unsigned int thickness, char character) {
+void tp_drawChar(vec2 position, vec2 scale, vec3 color, float thickness, char character) {
 
 	if (character >= 'A' && character <= 'Z')
 		character += 32;
@@ -341,7 +342,7 @@ void tp_drawChar(vec2 position, vec2 scale, vec3 color, unsigned int thickness, 
 	}
 }
 
-static void tp_drawA(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawA(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -375,12 +376,12 @@ static void tp_drawA(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawB(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawB(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
 
-	unsigned int tm2 = thickness * 2;
+	float tm2 = thickness * 2;
 
 	float sxd2 = scale.x / 2.0;
 	float syd2 = scale.y / 2.0;
@@ -427,7 +428,7 @@ static void tp_drawB(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawC(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawC(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -453,12 +454,12 @@ static void tp_drawC(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawD(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawD(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
 
-	unsigned int tm2 = thickness * 2;
+	float tm2 = thickness * 2;
 
 	float dx = scale.x / 2.0 - td2;
 	float dy = scale.y / 2.0 - td2;
@@ -488,7 +489,7 @@ static void tp_drawD(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-void tp_drawE(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+void tp_drawE(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -522,7 +523,7 @@ void tp_drawE(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawF(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawF(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -548,7 +549,7 @@ static void tp_drawF(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawG(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawG(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -592,7 +593,7 @@ static void tp_drawG(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawH(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawH(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float dx = scale.x / 2.0 - thickness / 2.0;
@@ -612,7 +613,7 @@ static void tp_drawH(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawI(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawI(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float dy = scale.y / 2.0 - thickness / 2.0;
@@ -636,7 +637,7 @@ static void tp_drawI(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawJ(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawJ(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -662,7 +663,7 @@ static void tp_drawJ(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawK(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawK(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -699,7 +700,7 @@ static void tp_drawK(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawL(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawL(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -717,7 +718,7 @@ static void tp_drawL(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawM(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawM(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -764,7 +765,7 @@ static void tp_drawM(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawN(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawN(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -783,7 +784,7 @@ static void tp_drawN(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	s.y = scale.y;
 	qd_drawSolidRect(p, s, 0, color);
 
-	unsigned int numLines = (int)(scale.x - 2 * thickness) / thickness;
+	unsigned int numLines = (unsigned int)((scale.x - 2 * thickness) / thickness);
 	unsigned int nLd2 = numLines / 2;
 
 	float sy = scale.y / (float)numLines;
@@ -823,12 +824,12 @@ static void tp_drawN(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	}
 }
 
-static void tp_drawO(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawO(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
 
-	unsigned int tm2 = thickness * 2;
+	float tm2 = thickness * 2;
 
 	float dx = scale.x / 2.0 - td2;
 	float dy = scale.y / 2.0 - td2;
@@ -858,7 +859,7 @@ static void tp_drawO(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawP(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawP(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -892,13 +893,13 @@ static void tp_drawP(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawQ(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawQ(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
 
-	unsigned int tm2 = thickness * 2;
-	unsigned int tm3 = thickness * 3;
+	float tm2 = thickness * 2;
+	float tm3 = thickness * 3;
 
 	float syd2 = scale.y / 2.0;
 
@@ -939,7 +940,7 @@ static void tp_drawQ(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawR(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawR(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -992,7 +993,7 @@ static void tp_drawR(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawS(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawS(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1036,7 +1037,7 @@ static void tp_drawS(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawT(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawT(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1054,7 +1055,7 @@ static void tp_drawT(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawU(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawU(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1080,7 +1081,7 @@ static void tp_drawU(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawV(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawV(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1093,7 +1094,7 @@ static void tp_drawV(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	s.y = thickness;
 	qd_drawSolidRect(p, s, 0, color);
 
-	unsigned int numLines = (int)(scale.x / 2.0 - td2) / thickness;
+	unsigned int numLines = (unsigned int)((scale.x / 2.0 - td2) / thickness);
 
 	float length = (scale.y - thickness) / (float)numLines;
 
@@ -1118,7 +1119,7 @@ static void tp_drawV(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	}
 }
 
-static void tp_drawW(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawW(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1165,12 +1166,12 @@ static void tp_drawW(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_drawX(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawX(vec2 position, vec2 scale, float thickness, vec3 color) {
 	float td2 = thickness / 2.0;
 
 	float sxd2 = scale.x / 2.0;
 
-	unsigned int numLines = (int)(sxd2 - td2) / thickness;
+	unsigned int numLines = (unsigned int)((sxd2 - td2) / thickness);
 	float rx = sxd2 - numLines * thickness;
 
 	float sy = (scale.y / 2.0 - td2) / (float)numLines;
@@ -1212,7 +1213,7 @@ static void tp_drawX(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	}
 }
 
-static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawY(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	p.x = position.x;
@@ -1221,7 +1222,7 @@ static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	s.y = scale.y / 2.0;
 	qd_drawSolidRect(p, s, 0, color);
 
-	unsigned int numLines = (int)(scale.x / 2.0 - thickness / 2.0) / thickness;
+	unsigned int numLines = (unsigned int)((scale.x / 2.0 - thickness / 2.0) / thickness);
 
 	float sy = (scale.y / 2.0) / (float)thickness;
 
@@ -1246,7 +1247,7 @@ static void tp_drawY(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	}
 }
 
-static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_drawZ(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1265,7 +1266,7 @@ static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	s.y = thickness;
 	qd_drawSolidRect(p, s, 0, color);
 
-	unsigned int numLines = (int)(scale.x / 2.0 - td2) / thickness;
+	unsigned int numLines = (unsigned int)((scale.x / 2.0 - td2) / thickness);
 
 	float sy = (scale.y - 2 * thickness) / (float)(2 * numLines);
 
@@ -1305,12 +1306,12 @@ static void tp_drawZ(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	}
 }
 
-static void tp_draw0(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw0(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
 
-	unsigned int tm2 = thickness * 2;
+	float tm2 = thickness * 2;
 
 	float dx = scale.x / 2.0 - td2;
 	float dy = scale.y / 2.0 - td2;
@@ -1349,7 +1350,7 @@ static void tp_draw0(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw1(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw1(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1377,7 +1378,7 @@ static void tp_draw1(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw2(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw2(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1421,7 +1422,7 @@ static void tp_draw2(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw3(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw3(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1455,7 +1456,7 @@ static void tp_draw3(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw4(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw4(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1483,7 +1484,7 @@ static void tp_draw4(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw5(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw5(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1527,7 +1528,7 @@ static void tp_draw5(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw6(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw6(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1565,7 +1566,7 @@ static void tp_draw6(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw7(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw7(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1590,7 +1591,7 @@ static void tp_draw7(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw8(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw8(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;
@@ -1634,7 +1635,7 @@ static void tp_draw8(vec2 position, vec2 scale, unsigned int thickness, vec3 col
 	qd_drawSolidRect(p, s, 0, color);
 }
 
-static void tp_draw9(vec2 position, vec2 scale, unsigned int thickness, vec3 color) {
+static void tp_draw9(vec2 position, vec2 scale, float thickness, vec3 color) {
 	vec2 p, s;
 
 	float td2 = thickness / 2.0;

@@ -9,9 +9,6 @@ void win_framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void win_keyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
-	}
 	if (key >= 0 && key <= KEY_COUNT) {
 		int index = (key / (sizeof(unsigned char) * 8)) - 1;
 		int bit = key % (sizeof(unsigned char) * 8);
@@ -80,6 +77,10 @@ signed char win_windowInit() {
 
 void win_clear() {
 	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void win_close() {
+	glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
 
 void win_windowTerminate() {

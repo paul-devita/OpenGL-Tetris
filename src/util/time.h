@@ -3,8 +3,8 @@
 
 #include <GLFW/glfw3.h>
 
-static float prevTime;
-static float dTime;
+static double prevTime;
+static double dTime;
 
 /*
 Initializes the timing functionality for the game.
@@ -20,6 +20,6 @@ void tm_updateDeltaTime();
 /*
 Returns the time difference between the last frame and the current frame.
 */
-float tm_deltaTime();
+double tm_deltaTime();
 
 #endif

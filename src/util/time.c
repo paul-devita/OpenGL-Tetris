@@ -1,21 +1,21 @@
 #include "time.h"
 
-static float prevTime = 0;
-static float dTime = 0;
+static double prevTime = 0;
+static double dTime = 0;
 
 void tm_initTime() {
-	float currentTime = (float) glfwGetTime();
+	double currentTime = glfwGetTime();
 
 	prevTime = currentTime;
 }
 
 void tm_updateDeltaTime() {
-	float currentTime = (float) glfwGetTime();
+	double currentTime = glfwGetTime();
 
 	dTime = currentTime - prevTime;
 	prevTime = currentTime;
 }
 
-float tm_deltaTime() {
+double tm_deltaTime() {
 	return dTime;
 }

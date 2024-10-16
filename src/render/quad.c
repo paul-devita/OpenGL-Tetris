@@ -108,34 +108,39 @@ void qd_drawSolidRect(vec2 position, vec2 scale, float rotation_deg, vec3 color)
 }
 
 void qd_drawOutlineRect(vec2 position, vec2 scale, unsigned int strokeWidth, vec3 color) {
-	vec2 pr1, pr2, pr3, pr4;
-	vec2 sr1, sr2, sr3, sr4;
+	vec2 p, s;
+	
+	float swm2 = strokeWidth * 2;
+	float swd2 = strokeWidth / 2.0;
+
+	float dx = scale.x / 2.0 - swd2;
+	float dy = scale.y / 2.0 - swd2;
 
 	//Top
-	pr1.x = position.x;
-	pr1.y = position.y - scale.y / 2 + strokeWidth / 2;
-	sr1.x = scale.x - 2 * strokeWidth;
-	sr1.y = strokeWidth;
-	qd_drawSolidRect(pr1, sr1, 0, color);
+	p.x = position.x;
+	p.y = position.y - dy;
+	s.x = scale.x - swd2;
+	s.y = strokeWidth;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Bottom
-	pr2.x = position.x;
-	pr2.y = position.y + scale.y / 2 - strokeWidth / 2;
-	sr2.x = scale.x - 2 * strokeWidth;
-	sr2.y = strokeWidth;
-	qd_drawSolidRect(pr2, sr2, 0, color);
+	p.x = position.x;
+	p.y = position.y + dy;
+	s.x = scale.x - swd2;
+	s.y = strokeWidth;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Left
-	pr3.x = position.x - scale.x / 2 + strokeWidth / 2;
-	pr3.y = position.y;
-	sr3.x = strokeWidth;
-	sr3.y = scale.y;
-	qd_drawSolidRect(pr3, sr3, 0, color);
+	p.x = position.x - dx;
+	p.y = position.y;
+	s.x = strokeWidth;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 
 	//Right
-	pr4.x = position.x + scale.x / 2 - strokeWidth / 2;
-	pr4.y = position.y;
-	sr4.x = strokeWidth;
-	sr4.y = scale.y;
-	qd_drawSolidRect(pr4, sr4, 0, color);
+	p.x = position.x + dx;
+	p.y = position.y;
+	s.x = strokeWidth;
+	s.y = scale.y;
+	qd_drawSolidRect(p, s, 0, color);
 }
