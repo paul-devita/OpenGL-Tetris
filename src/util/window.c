@@ -15,8 +15,6 @@ void win_keyCallback(GLFWwindow* window, int key, int scancode, int action, int 
 
 		unsigned char setBit = 0x1 << bit;
 
-		printf("Found index '%d' and bit '%d' for key '%d'\n", index, bit, key);
-
 		if (action == GLFW_PRESS) {
 			keys[index] = (unsigned char)keys[index] | setBit;
 		}
@@ -33,8 +31,6 @@ unsigned char win_checkKey(int key) {
 
 	unsigned char mask = 0x1 << bit;
 	unsigned char result = (unsigned char)keys[index] & mask;
-
-	printf("checked key '%d' found '%d'\n", key, result);
 
 	return result;
 }
