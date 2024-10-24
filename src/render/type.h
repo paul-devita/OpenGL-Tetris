@@ -14,6 +14,8 @@
 #define TP_ALIGNMENT_CENTER 1
 #define TP_ALIGNMENT_RIGHT 2
 
+#define TP_NO_SPACING 0
+
 typedef unsigned char TPAlignment;
 
 void tp_drawString(vec2 position, vec2 char_scale, vec3 color, float thickness, float char_spacing, float line_spacing, TPAlignment alignment, const char* string);

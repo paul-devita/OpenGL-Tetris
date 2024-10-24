@@ -10,22 +10,12 @@
 #include "../render/quad.h"
 #include "../render/type.h"
 
-#define SECONDS_PER_UPDATE 0.1
-
-#define GAME_STATE_TITLE 0
-#define GAME_STATE_PLAY 1
-
-#define GAME_FALSE 0
-#define GAME_TRUE 1
-
 //Start State Functionality----------------------------------------------------------------------------------------
 	
 	//Title Text----------------------------------------------------------------
-	static const char* G_START_TITLE_TEXT = "Tetris";
+	static const char* G_START_TITLE_TEXT = "tetris";
 
 	static const float G_START_TITLE_THICKNESS = SCR_WIDTH / 50.0;
-
-	static unsigned short G_START_TITLE_TEXT_LENGTH = 0;
 	
 	static float G_START_TITLE_WIDTH = 0;
 	static float G_START_TITLE_HEIGHT = 0;
@@ -42,8 +32,6 @@
 	static const char* G_START_PRESS_TEXT = "Press Enter To Play";
 
 	static const float G_START_PRESS_THICKNESS = SCR_WIDTH / 500.0;
-
-	static unsigned short G_START_PRESS_TEXT_LENGTH = 0;
 
 	static float G_START_PRESS_WIDTH = 0;
 	static float G_START_PRESS_HEIGHT = 0;
@@ -62,18 +50,19 @@
 	static const float G_GAME_BOX_THICKNESS = SCR_WIDTH / 150.0;
 	static const float G_GAME_GAME_BOX_THICKNESS = SCR_WIDTH / 50.0;
 
+	static const float G_GAME_TEXT_HEIGHT = SCR_HEIGHT / 40.0;
+
+	static const float G_GAME_TEXT_THICKNESS_STANDARD = SCR_WIDTH / 350.0;
+	static const float G_GAME_TEXT_THICKNESS_BOLD = SCR_WIDTH / 250.0;
+
+	static const float G_GAME_TEXT_CHAR_SPACING = SCR_WIDTH / 200.0;
+
 		//Score Box-----------------------------------------------------------------
 			#define G_GAME_SCORE_TEXT_LENGTH 7
 			
 			static const char* G_GAME_SCORE_TITLE_TEXT = "score";
-			static char* G_GAME_SCORE_TEXT = "0000000";
-			
-			static const float G_GAME_SCORE_TITLE_TEXT_THICKNESS = SCR_WIDTH / 250.0;
 
-			static const float G_GAME_SCORE_TEXT_THICKNESS = SCR_WIDTH / 350.0;
-			static const float G_GAME_SCORE_TEXT_CHAR_SPACING = SCR_WIDTH / 150.0;
-
-			static unsigned int G_GAME_SCORE_TITLE_TEXT_LENGTH = 0;
+			static char G_GAME_SCORE_TEXT[G_GAME_SCORE_TEXT_LENGTH + 1];
 		
 			static vec2 G_GAME_SCORE_BOX_POSITION;
 			static vec2 G_GAME_SCORE_BOX_SCALE;
@@ -85,24 +74,114 @@
 			static vec2 G_GAME_SCORE_TEXT_SCALE;
 
 		//Next Box------------------------------------------------------------------
+			static const char* G_GAME_NEXT_TITLE_TEXT = "next";
+
 			static vec2 G_GAME_NEXT_BOX_POSITION;
 			static vec2 G_GAME_NEXT_BOX_SCALE;
 
+			static vec2 G_GAME_NEXT_TITLE_TEXT_POSITION;
+			static vec2 G_GAME_NEXT_TITLE_TEXT_SCALE;
+
+			static vec2 G_GAME_NEXT_BLOCK_POSITION;
+			static vec2 G_GAME_NEXT_BLOCK_SCALE;
+
 		//Hold Box------------------------------------------------------------------
+			static const char* G_GAME_HOLD_TITLE_TEXT = "hold";
+
 			static vec2 G_GAME_HOLD_BOX_POSITION;
 			static vec2 G_GAME_HOLD_BOX_SCALE;
 
+			static vec2 G_GAME_HOLD_TITLE_TEXT_POSITION;
+			static vec2 G_GAME_HOLD_TITLE_TEXT_SCALE;
+
+			static vec2 G_GAME_HOLD_BLOCK_POSITION;
+			static vec2 G_GAME_HOLD_BLOCK_SCALE;
+
 		//Stats Box-----------------------------------------------------------------
+			#define G_GAME_STATS_NUM_LENGTH 4
+
+			#define G_GAME_STATS_MAXIMUM_COUNT 9999
+
+			static const char* G_GAME_STATS_TITLE_TEXT = "stats";
+
+			static const float G_GAME_STATS_ELEMENT_SPACING = SCR_HEIGHT / 64.0;
+
+			static const vec2 G_GAME_STATS_ELEMENT_SCALE = { (3 * SCR_WIDTH) / 20.0, (9 * (SCR_HEIGHT / 2.0)) / 112.0 - (6 * SCR_HEIGHT / 64.0) / 7.0 };
+			
+			static char G_GAME_STATS_I_BLOCK_TEXT[G_GAME_STATS_NUM_LENGTH + 1];
+			static char G_GAME_STATS_J_BLOCK_TEXT[G_GAME_STATS_NUM_LENGTH + 1];
+			static char G_GAME_STATS_L_BLOCK_TEXT[G_GAME_STATS_NUM_LENGTH + 1];
+			static char G_GAME_STATS_O_BLOCK_TEXT[G_GAME_STATS_NUM_LENGTH + 1];
+			static char G_GAME_STATS_S_BLOCK_TEXT[G_GAME_STATS_NUM_LENGTH + 1];
+			static char G_GAME_STATS_T_BLOCK_TEXT[G_GAME_STATS_NUM_LENGTH + 1];
+			static char G_GAME_STATS_Z_BLOCK_TEXT[G_GAME_STATS_NUM_LENGTH + 1];
+
+			static unsigned short G_GAME_STATS_I_BLOCK_COUNT = 0;
+			static unsigned short G_GAME_STATS_J_BLOCK_COUNT = 0;
+			static unsigned short G_GAME_STATS_L_BLOCK_COUNT = 0;
+			static unsigned short G_GAME_STATS_O_BLOCK_COUNT = 0;
+			static unsigned short G_GAME_STATS_S_BLOCK_COUNT = 0;
+			static unsigned short G_GAME_STATS_T_BLOCK_COUNT = 0;
+			static unsigned short G_GAME_STATS_Z_BLOCK_COUNT = 0;
+
 			static vec2 G_GAME_STATS_BOX_POSITION;
 			static vec2 G_GAME_STATS_BOX_SCALE;
+
+			static vec2 G_GAME_STATS_TITLE_TEXT_POSITION;
+			static vec2 G_GAME_STATS_TITLE_TEXT_SCALE;
+
+			static vec2 G_GAME_STATS_ELEMENT_TEXT_CHAR_SCALE;
+
+			static vec2 G_GAME_STATS_I_ELEMENT_TEXT_POSITION;
+			static vec2 G_GAME_STATS_J_ELEMENT_TEXT_POSITION;
+			static vec2 G_GAME_STATS_L_ELEMENT_TEXT_POSITION;
+			static vec2 G_GAME_STATS_O_ELEMENT_TEXT_POSITION;
+			static vec2 G_GAME_STATS_S_ELEMENT_TEXT_POSITION;
+			static vec2 G_GAME_STATS_T_ELEMENT_TEXT_POSITION;
+			static vec2 G_GAME_STATS_Z_ELEMENT_TEXT_POSITION;
+
+			static vec2 G_GAME_STATS_I_ELEMENT_BLOCK_POSITION;
+			static vec2 G_GAME_STATS_J_ELEMENT_BLOCK_POSITION;
+			static vec2 G_GAME_STATS_L_ELEMENT_BLOCK_POSITION;
+			static vec2 G_GAME_STATS_O_ELEMENT_BLOCK_POSITION;
+			static vec2 G_GAME_STATS_S_ELEMENT_BLOCK_POSITION;
+			static vec2 G_GAME_STATS_T_ELEMENT_BLOCK_POSITION;
+			static vec2 G_GAME_STATS_Z_ELEMENT_BLOCK_POSITION;
 
 		//Game Box------------------------------------------------------------------
 			static vec2 G_GAME_GAME_BOX_POSITION;
 			static vec2 G_GAME_GAME_BOX_SCALE;
 
-static const vec3 G_COLOR_WHITE = { 1.0f, 1.0f, 1.0f };
+	//GAME---------------------------------------------------------------------------------------------------------
 
-static unsigned char g_state = GAME_STATE_TITLE;
+	#define G_GAME_MAXIMUM_SCORE 9999999
+
+	#define G_I_BLOCK 0
+	#define G_J_BLOCK 1
+	#define G_L_BLOCK 2
+	#define G_O_BLOCK 3
+	#define G_S_BLOCK 4
+	#define G_T_BLOCK 5
+	#define G_Z_BLOCK 6
+
+	static unsigned int G_GAME_SCORE = 0;
+
+//General----------------------------------------------------------------------------------------------------------
+
+	#define SECONDS_PER_UPDATE 0.1
+
+	#define GAME_STATE_TITLE 0
+	#define GAME_STATE_PLAY 1
+
+	#define GAME_FALSE 0
+	#define GAME_TRUE 1
+
+	static unsigned char g_state = GAME_STATE_TITLE;
+
+	static const vec3 G_COLOR_WHITE = { 1.0f, 1.0f, 1.0f };
+	static const vec3 G_COLOR_BLUE = { 0.0f, 0.827f, 1.0f };
+
+//-----------------------------------------------------------------------------------------------------------------
 
 void g_init();
 
@@ -114,5 +193,9 @@ static void g_updatePlay(float udt);
 void g_render();
 
 void g_changeState(unsigned char destinationState);
+
+void g_increaseScore(unsigned int additionalScore);
+
+void g_incrementStat(unsigned char block);
 
 #endif
