@@ -10,6 +10,8 @@
 #include "../render/quad.h"
 #include "../render/type.h"
 
+#include "block.h"
+
 //Start State Functionality----------------------------------------------------------------------------------------
 	
 	//Title Text----------------------------------------------------------------
@@ -155,14 +157,6 @@
 	//GAME---------------------------------------------------------------------------------------------------------
 
 	#define G_GAME_MAXIMUM_SCORE 9999999
-
-	#define G_I_BLOCK 0
-	#define G_J_BLOCK 1
-	#define G_L_BLOCK 2
-	#define G_O_BLOCK 3
-	#define G_S_BLOCK 4
-	#define G_T_BLOCK 5
-	#define G_Z_BLOCK 6
 
 	static unsigned int G_GAME_SCORE = 0;
 

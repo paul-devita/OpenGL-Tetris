@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 
 #include "game/game.h"
+#include "game/block.h"
 
 #include "util/window.h"
 #include "util/time.h"
@@ -14,6 +15,7 @@ int main(int argc, char* argv[]) {
 	if (win_windowInit() < 0) { return -1; }
 
 	qd_init();
+	b_init();
 	g_init();
 	tm_initTime();
 

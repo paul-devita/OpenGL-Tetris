@@ -33,6 +33,8 @@ void g_init() {
 		G_START_PRESS_CHAR_SCALE.y = G_START_PRESS_HEIGHT;
 
 	//Game State
+		//General
+
 		//UI
 			//Score Box
 				//Box
@@ -294,6 +296,9 @@ void g_render() {
 
 				//Game
 					qd_drawOutlineRect(G_GAME_GAME_BOX_POSITION, G_GAME_GAME_BOX_SCALE, G_GAME_GAME_BOX_THICKNESS, G_COLOR_WHITE);
+
+			//Render Game
+					b_drawSingle(v2_new(SCR_WIDTH / 2.0, SCR_HEIGHT / 2.0), v2_new(100, 100), G_COLOR_BLUE);
 				
 			break;
 	}
@@ -349,7 +354,7 @@ void g_incrementStat(unsigned char block) {
 	unsigned short temp;
 
 	switch (block) {
-		case G_I_BLOCK:
+		case B_I_BLOCK:
 			if (G_GAME_STATS_I_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_I_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -360,7 +365,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_I_BLOCK_TEXT;
 
 			break;
-		case G_J_BLOCK:
+		case B_J_BLOCK:
 			if (G_GAME_STATS_J_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_J_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -371,7 +376,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_J_BLOCK_TEXT;
 
 			break;
-		case G_L_BLOCK:
+		case B_L_BLOCK:
 			if (G_GAME_STATS_L_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_L_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -382,7 +387,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_L_BLOCK_TEXT;
 
 			break;
-		case G_O_BLOCK:
+		case B_O_BLOCK:
 			if (G_GAME_STATS_O_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_O_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -393,7 +398,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_O_BLOCK_TEXT;
 
 			break;
-		case G_S_BLOCK:
+		case B_S_BLOCK:
 			if (G_GAME_STATS_S_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_S_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -404,7 +409,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_S_BLOCK_TEXT;
 
 			break;
-		case G_T_BLOCK:
+		case B_T_BLOCK:
 			if (G_GAME_STATS_T_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_T_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -415,7 +420,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_T_BLOCK_TEXT;
 
 			break;
-		case G_Z_BLOCK:
+		case B_Z_BLOCK:
 			if (G_GAME_STATS_Z_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_Z_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
