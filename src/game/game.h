@@ -158,6 +158,16 @@
 
 	#define G_GAME_MAXIMUM_SCORE 9999999
 
+	static Block grid[9][18];
+	static Block falling[4];
+
+	static float G_GRID_CELL_SIZE;
+
+	static vec2 G_GRID_TOP_LEFT;
+	static vec2 G_GRID_TOP_RIGHT;
+	static vec2 G_GRID_BOTTOM_LEFT;
+	static vec2 G_GRID_BOTTOM_RIGHT;
+
 	static unsigned int G_GAME_SCORE = 0;
 
 //General----------------------------------------------------------------------------------------------------------
@@ -191,5 +201,9 @@ void g_changeState(unsigned char destinationState);
 void g_increaseScore(unsigned int additionalScore);
 
 void g_incrementStat(unsigned char block);
+
+vec2i g_screenToGrid(vec2 screenCords);
+
+vec2 g_gridToScreen(unsigned int gridX, unsigned int gridY);
 
 #endif
