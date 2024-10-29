@@ -44,6 +44,6 @@ void qd_drawSolidRect(vec2 position, vec2 scale, float rotation, vec3 color);
 Draws the outline of a rect with a given stroke thickness
 Equivalent to 4 qd_drawSolidRect calls
 */
-void qd_drawOutlineRect(vec2 position, vec2 scale, unsigned int strokeWidth, vec3 color);
+void qd_drawOutlineRect(vec2 position, vec2 scale, float strokeWidth, vec3 color);
 
 #endif

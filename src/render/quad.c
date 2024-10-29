@@ -73,10 +73,10 @@ void qd_drawTexturedRect(unsigned int textureID, vec2 position, vec2 scale, floa
 
 	mat4 model = IDENTITY_M4;
 
-	model = m4_translate(&model, v3_new(position.x, position.y, 1.0f));
+	model = m4_translate(&model, v3_new(position.x, position.y, (float) 1));
 	model = m4_rotate(&model, rotation_deg, AXIS_Z_V3);
-	model = m4_translate(&model, v3_new(-scale.x / 2, -scale.y / 2, 0.0f));
-	model = m4_scale(&model, v3_new(scale.x, scale.y, 1.0f));
+	model = m4_translate(&model, v3_new(-scale.x / (double) 2, -scale.y / (double) 2, (float) 0));
+	model = m4_scale(&model, v3_new(scale.x, scale.y, (float) 1));
 
 	sh_modifyShaderUniformMatrix4x4(texShaderID, "model", &model);
 	sh_modifyShaderUniformf(texShaderID, "spriteColor", v3_asArray(&color), SIZE_V3);
@@ -94,10 +94,10 @@ void qd_drawSolidRect(vec2 position, vec2 scale, float rotation_deg, vec3 color)
 
 	mat4 model = IDENTITY_M4;
 
-	model = m4_translate(&model, v3_new(position.x, position.y, 1.0f));
+	model = m4_translate(&model, v3_new(position.x, position.y, (float) 1));
 	model = m4_rotate(&model, rotation_deg, AXIS_Z_V3);
-	model = m4_translate(&model, v3_new(-scale.x / 2, -scale.y / 2, 0.0f));
-	model = m4_scale(&model, v3_new(scale.x, scale.y, 1.0f));
+	model = m4_translate(&model, v3_new(-scale.x / (double) 2, -scale.y / (double) 2, (float) 0));
+	model = m4_scale(&model, v3_new(scale.x, scale.y, (float) 1));
 
 	sh_modifyShaderUniformMatrix4x4(solidShaderID, "model", &model);
 	sh_modifyShaderUniformf(solidShaderID, "solidColor", v3_asArray(&color), SIZE_V3);
@@ -107,31 +107,49 @@ void qd_drawSolidRect(vec2 position, vec2 scale, float rotation_deg, vec3 color)
 	glBindVertexArray(0);
 }
 
-void qd_drawOutlineRect(vec2 position, vec2 scale, unsigned int strokeWidth, vec3 color) {
+void qd_drawOutlineRect(vec2 position, vec2 scale, float strokeWidth, vec3 color) {
 	vec2 p, s;
 	
 	float swm2 = strokeWidth * 2;
-	float swd2 = strokeWidth / 2.0;
+	float swd2 = strokeWidth / (float)2;
 
-	float dx = scale.x / 2.0 - swd2;
-	float dy = scale.y / 2.0 - swd2;
+	float dx = (scale.x / (float)2) - swd2;
+	float dy = (scale.y / (float)2) - swd2;
 
 	//Top
 	p.x = position.x;
 	p.y = position.y - dy;
-	s.x = scale.x - swd2;
+
+	if (p.y < position.y - (scale.y / (float)2)) {
+		qd_drawSolidRect(position, scale, 0, color);
+		return;
+	}
+
+	s.x = scale.x - swm2;
 	s.y = strokeWidth;
 	qd_drawSolidRect(p, s, 0, color);
 
 	//Bottom
 	p.x = position.x;
 	p.y = position.y + dy;
-	s.x = scale.x - swd2;
+
+	if (p.y > position.y + (scale.y / (float)2)) {
+		qd_drawSolidRect(position, scale, 0, color);
+		return;
+	}
+
+	s.x = scale.x - swm2;
 	s.y = strokeWidth;
 	qd_drawSolidRect(p, s, 0, color);
 
 	//Left
 	p.x = position.x - dx;
+
+	if (p.x < position.x - (scale.x / (float)2)) {
+		qd_drawSolidRect(position, scale, 0, color);
+		return;
+	}
+
 	p.y = position.y;
 	s.x = strokeWidth;
 	s.y = scale.y;
@@ -139,6 +157,12 @@ void qd_drawOutlineRect(vec2 position, vec2 scale, unsigned int strokeWidth, vec
 
 	//Right
 	p.x = position.x + dx;
+
+	if (p.x > position.x + (scale.x / (float)2)) {
+		qd_drawSolidRect(position, scale, 0, color);
+		return;
+	}
+
 	p.y = position.y;
 	s.x = strokeWidth;
 	s.y = scale.y;

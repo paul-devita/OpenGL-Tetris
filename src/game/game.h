@@ -50,7 +50,6 @@
 	//UI-----------------------------------------------------------------------------------------------------------
 	
 	static const float G_GAME_BOX_THICKNESS = SCR_WIDTH / 150.0;
-	static const float G_GAME_GAME_BOX_THICKNESS = SCR_WIDTH / 50.0;
 
 	static const float G_GAME_TEXT_HEIGHT = SCR_HEIGHT / 40.0;
 
@@ -150,25 +149,25 @@
 			static vec2 G_GAME_STATS_T_ELEMENT_BLOCK_POSITION;
 			static vec2 G_GAME_STATS_Z_ELEMENT_BLOCK_POSITION;
 
-		//Game Box------------------------------------------------------------------
-			static vec2 G_GAME_GAME_BOX_POSITION;
-			static vec2 G_GAME_GAME_BOX_SCALE;
-
 	//GAME---------------------------------------------------------------------------------------------------------
+		#define G_GAME_MAXIMUM_SCORE 9999999
 
-	#define G_GAME_MAXIMUM_SCORE 9999999
+		static unsigned int G_GAME_SCORE = 0;
 
-	static Block grid[9][18];
-	static Block falling[4];
+		//Grid
+			#define G_GRID_CELL_COUNT 3
 
-	static float G_GRID_CELL_SIZE;
+			static const float G_GRID_OUTLINE_THICKNESS = SCR_WIDTH / (float)150;
+			
+			static Block grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
+			static Block falling[4];
 
-	static vec2 G_GRID_TOP_LEFT;
-	static vec2 G_GRID_TOP_RIGHT;
-	static vec2 G_GRID_BOTTOM_LEFT;
-	static vec2 G_GRID_BOTTOM_RIGHT;
+			static float G_GRID_CELL_SIZE;
 
-	static unsigned int G_GAME_SCORE = 0;
+			static vec2 G_GRID_POSITION;
+			static vec2 G_GRID_SCALE;
+
+			static vec2 G_GRID_OUTLINE_SCALE;
 
 //General----------------------------------------------------------------------------------------------------------
 
@@ -184,6 +183,7 @@
 
 	static const vec3 G_COLOR_WHITE = { 1.0f, 1.0f, 1.0f };
 	static const vec3 G_COLOR_BLUE = { 0.0f, 0.827f, 1.0f };
+	static const vec3 G_COLOR_GRAY = { 0.472f, 0.472f, 0.472f };
 
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -195,6 +195,8 @@ static void g_updateTitle(float udt);
 static void g_updatePlay(float udt);
 
 void g_render();
+
+static void g_drawGridLines();
 
 void g_changeState(unsigned char destinationState);
 
