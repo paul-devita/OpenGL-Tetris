@@ -183,6 +183,8 @@ void g_init() {
 			G_GRID_SCALE.x = (9 * SCR_WIDTH) / (double)20;
 			G_GRID_SCALE.y = 2 * G_GRID_SCALE.x;
 
+			G_GRID_CELL_SIZE = G_GRID_SCALE.x / (float)G_GRID_CELL_COUNT;
+
 			G_GRID_OUTLINE_SCALE.x = G_GRID_SCALE.x + 2 * G_GRID_OUTLINE_THICKNESS;
 			G_GRID_OUTLINE_SCALE.y = G_GRID_SCALE.y + 2 * G_GRID_OUTLINE_THICKNESS;
 
@@ -313,6 +315,57 @@ void g_render() {
 void g_drawGridLines() {
 	const float width = SCR_WIDTH / 400.0;
 
+	vec2 p, s;
+
+	float dx;
+	float dy;
+
+	if (G_GRID_CELL_COUNT % 2 == 0) {
+		dx = 0;
+		dy = 0;
+	}
+	else {
+		dx = G_GRID_CELL_SIZE / (float)2;
+		dy = G_GRID_CELL_SIZE / (float)2;
+	}
+
+	s.x = width;
+	s.y = G_GRID_SCALE.y;
+
+	p.y = G_GRID_POSITION.y;
+
+	for (int i = 0; i < G_GRID_CELL_COUNT / 2; i++) {
+		p.x = G_GRID_POSITION.x + dx;
+
+		qd_drawSolidRect(p, s, 0, G_COLOR_GRAY);
+
+		if (dx != 0) {
+			p.x = G_GRID_POSITION.x - dx;
+
+			qd_drawSolidRect(p, s, 0, G_COLOR_GRAY);
+		}
+			
+		dx += G_GRID_CELL_SIZE;
+	}
+
+	s.x = G_GRID_SCALE.x;
+	s.y = width;
+
+	p.x = G_GRID_POSITION.x;
+
+	for (int i = 0; i < G_GRID_CELL_COUNT; i++) {
+		p.y = G_GRID_POSITION.y + dy;
+
+		qd_drawSolidRect(p, s, 0, G_COLOR_GRAY);
+
+		if (dy != 0) {
+			p.y = G_GRID_POSITION.y - dy;
+
+			qd_drawSolidRect(p, s, 0, G_COLOR_GRAY);
+		}
+
+		dy += G_GRID_CELL_SIZE;
+	}
 }
 
 void g_changeState(unsigned char destinationState) {

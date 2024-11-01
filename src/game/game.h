@@ -155,7 +155,7 @@
 		static unsigned int G_GAME_SCORE = 0;
 
 		//Grid
-			#define G_GRID_CELL_COUNT 3
+			#define G_GRID_CELL_COUNT 6
 
 			static const float G_GRID_OUTLINE_THICKNESS = SCR_WIDTH / (float)150;
 			
