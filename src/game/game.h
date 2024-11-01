@@ -159,12 +159,14 @@
 
 			static const float G_GRID_OUTLINE_THICKNESS = SCR_WIDTH / (float)150;
 			
-			static Block grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
-			static Block falling[4];
+			static BlockData grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
+			
+			static Piece falling;
 
 			static float G_GRID_CELL_SIZE;
 
 			static vec2 G_GRID_POSITION;
+			static vec2 G_GRID_LOWER_LEFT;
 			static vec2 G_GRID_SCALE;
 
 			static vec2 G_GRID_OUTLINE_SCALE;
