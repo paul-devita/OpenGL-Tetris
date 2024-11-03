@@ -68,15 +68,15 @@ void qd_init() {
 	sh_modifyShaderUniformMatrix4x4(solidShaderID, "ortho", &ortho);
 }
 
-void qd_drawTexturedRect(unsigned int textureID, vec2 position, vec2 scale, float rotation_deg, vec3 color) {
+void qd_drawTexturedRect(unsigned int textureID, vec2* position, vec2* scale, float rotation_deg, vec3* color) {
 	sh_useShaderProgram(texShaderID);
 
 	mat4 model = IDENTITY_M4;
 
-	model = m4_translate(&model, v3_new(position.x, position.y, (float) 1));
+	model = m4_translate(&model, v3_new(position->x, position->y, (float) 1));
 	model = m4_rotate(&model, rotation_deg, AXIS_Z_V3);
-	model = m4_translate(&model, v3_new(-scale.x / (double) 2, -scale.y / (double) 2, (float) 0));
-	model = m4_scale(&model, v3_new(scale.x, scale.y, (float) 1));
+	model = m4_translate(&model, v3_new(-scale->x / (double) 2, -scale->y / (double) 2, (float) 0));
+	model = m4_scale(&model, v3_new(scale->x, scale->y, (float) 1));
 
 	sh_modifyShaderUniformMatrix4x4(texShaderID, "model", &model);
 	sh_modifyShaderUniformf(texShaderID, "spriteColor", v3_asArray(&color), SIZE_V3);

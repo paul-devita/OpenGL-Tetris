@@ -10,8 +10,6 @@
 #include "../render/quad.h"
 #include "../render/type.h"
 
-#include "block.h"
-
 //Start State Functionality----------------------------------------------------------------------------------------
 	
 	//Title Text----------------------------------------------------------------
@@ -154,14 +152,33 @@
 
 		static unsigned int G_GAME_SCORE = 0;
 
-		//Grid
+		//Grid - MOVE ALL GRID FUNCTIONALITY TO SEPERATE FILE
 			#define G_GRID_CELL_COUNT 6
+		
+			typedef unsigned char BlockData;
+
+			/*
+				Data Format:	    [Bit 8]---   000				00				000   ---[Bit 0]
+												 |-|				||				|-|
+											  color bits       rotation bits	 type bits
+			*/
+
+			typedef struct {
+				vec2 position;
+				BlockData data;
+			} Piece;
+
 
 			static const float G_GRID_OUTLINE_THICKNESS = SCR_WIDTH / (float)150;
 			
-			static BlockData grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
+			/*
+			Column-major grid that represents blocks placed onto the grid
+
+			g_grid[GRID X POSITION][GRID Y POSITION] = (HORIZONTAL COORDINATE, VERTICAL COORDINATE) of block
+			*/
+			static BlockData g_grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
 			
-			static Piece falling;
+			static Piece g_falling;
 
 			static float G_GRID_CELL_SIZE;
 
@@ -181,10 +198,30 @@
 	#define GAME_FALSE 0
 	#define GAME_TRUE 1
 
+	#define G_COLOR_COUNT 8
+
+	#define G_I_BLOCK 1	
+	#define G_J_BLOCK 2 
+	#define G_L_BLOCK 3 
+	#define G_O_BLOCK 4 
+	#define G_S_BLOCK 5 
+	#define G_T_BLOCK 6 
+	#define G_Z_BLOCK 7 
+
 	static unsigned char g_state = GAME_STATE_TITLE;
 
+	static vec3* g_colors[G_COLOR_COUNT];
+
+	static const vec3 G_COLOR_BLUE = { 0.000f, 0.827f, 1.000f };
+	static const vec3 G_COLOR_YELLOW = { 1.000f, 0.984f, 0.000f };
+	static const vec3 G_COLOR_RED = { 1.000f, 0.388f, 0.388f };
+	static const vec3 G_COLOR_GREEN = { 0.388f, 1.000f, 0.510f };
+	static const vec3 G_COLOR_ORANGE = { 0.988f, 0.647f, 0.000f };
+	static const vec3 G_COLOR_PINK = { 1.000f, 0.682f, 0.957f };
+	static const vec3 G_COLOR_PURPLE = { 0.659f, 0.157f, 1.000f };
+	static const vec3 G_COLOR_TEAL = { 0.000f, 1.000f, 0.761f };
+
 	static const vec3 G_COLOR_WHITE = { 1.0f, 1.0f, 1.0f };
-	static const vec3 G_COLOR_BLUE = { 0.0f, 0.827f, 1.0f };
 	static const vec3 G_COLOR_GRAY = { 0.472f, 0.472f, 0.472f };
 
 //-----------------------------------------------------------------------------------------------------------------
@@ -197,6 +234,8 @@ static void g_updateTitle(float udt);
 static void g_updatePlay(float udt);
 
 void g_render();
+
+static void g_drawGrid();
 
 static void g_drawGridLines();
 

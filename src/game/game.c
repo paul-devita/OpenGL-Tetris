@@ -34,7 +34,20 @@ void g_init() {
 
 	//Game State
 		//General
+			//Colors
+			g_colors[0] = &G_COLOR_BLUE;
+			g_colors[1] = &G_COLOR_YELLOW;
+			g_colors[2] = &G_COLOR_RED;
+			g_colors[3] = &G_COLOR_GREEN;
+			g_colors[4] = &G_COLOR_ORANGE;
+			g_colors[5] = &G_COLOR_PINK;
+			g_colors[6] = &G_COLOR_PURPLE;
+			g_colors[7] = &G_COLOR_TEAL;
 
+			for (unsigned int x = 0; x < G_GRID_CELL_COUNT; x++)
+				for (unsigned int y = 0; y < 2 * G_GRID_CELL_COUNT; y++)
+					g_grid[x][y] = 0xA1;
+			
 		//UI
 			//Score Box
 				//Box
@@ -304,18 +317,24 @@ void g_render() {
 					tp_drawString(G_GAME_STATS_Z_ELEMENT_TEXT_POSITION, G_GAME_STATS_ELEMENT_TEXT_CHAR_SCALE, G_COLOR_WHITE, G_GAME_TEXT_THICKNESS_STANDARD, G_GAME_TEXT_CHAR_SPACING, TP_NO_SPACING, TP_ALIGNMENT_CENTER, G_GAME_STATS_Z_BLOCK_TEXT);
 
 			//Render Game
-					b_drawSingle(v2_new(SCR_WIDTH / 2.0, SCR_HEIGHT / 2.0), v2_new(500, 300), G_COLOR_BLUE);
+					
 
 					//Grid
 					qd_drawOutlineRect(G_GRID_POSITION, G_GRID_OUTLINE_SCALE, G_GRID_OUTLINE_THICKNESS, G_COLOR_WHITE);
 
-					g_drawGridLines();
+					g_drawGrid();
 				
 			break;
 	}
 }
 
-void g_drawGridLines() {
+static void g_drawGrid() {
+	for (int x = 0; x < G_GRID_CELL_COUNT; x++)
+		for (int y = 0; y < 2 * G_GRID_CELL_COUNT; y++)
+			b_drawBlock(x, y, g_grid[x][y]);
+}
+
+static void g_drawGridLines() {
 	const float width = SCR_WIDTH / 400.0;
 
 	vec2 p, s;
@@ -421,7 +440,7 @@ void g_incrementStat(unsigned char block) {
 	unsigned short temp;
 
 	switch (block) {
-		case B_I_BLOCK:
+		case G_I_BLOCK:
 			if (G_GAME_STATS_I_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_I_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -432,7 +451,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_I_BLOCK_TEXT;
 
 			break;
-		case B_J_BLOCK:
+		case G_J_BLOCK:
 			if (G_GAME_STATS_J_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_J_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -443,7 +462,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_J_BLOCK_TEXT;
 
 			break;
-		case B_L_BLOCK:
+		case G_L_BLOCK:
 			if (G_GAME_STATS_L_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_L_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -454,7 +473,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_L_BLOCK_TEXT;
 
 			break;
-		case B_O_BLOCK:
+		case G_O_BLOCK:
 			if (G_GAME_STATS_O_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_O_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -465,7 +484,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_O_BLOCK_TEXT;
 
 			break;
-		case B_S_BLOCK:
+		case G_S_BLOCK:
 			if (G_GAME_STATS_S_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_S_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -476,7 +495,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_S_BLOCK_TEXT;
 
 			break;
-		case B_T_BLOCK:
+		case G_T_BLOCK:
 			if (G_GAME_STATS_T_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_T_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else
@@ -487,7 +506,7 @@ void g_incrementStat(unsigned char block) {
 			text = G_GAME_STATS_T_BLOCK_TEXT;
 
 			break;
-		case B_Z_BLOCK:
+		case G_Z_BLOCK:
 			if (G_GAME_STATS_Z_BLOCK_COUNT + 1 > G_GAME_STATS_MAXIMUM_COUNT)
 				G_GAME_STATS_Z_BLOCK_COUNT = G_GAME_STATS_MAXIMUM_COUNT;
 			else

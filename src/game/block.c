@@ -32,7 +32,24 @@ unsigned char b_getBlockColor(BlockData data) {
 	return result;
 }
 
-void b_drawSingle(vec2 position, vec2 scale, vec3 color) {
-	qd_drawTexturedRect(B_BLOCK_TEXTURE, position, scale, 0, color);
+void b_drawBlock(unsigned int gridPosX, unsigned int gridPosY, BlockData data) {
+	ubyte type = b_getBlockType(data);
+
+	if (type == B_NULL_BLOCK) return;
+
+	vec2 p, s;
+
+	ubyte color = b_getBlockColor(data);
+
+	s.x = G_GRID_CELL_SIZE;
+	s.y = G_GRID_CELL_SIZE;
+
+	p.x = G_GRID_LOWER_LEFT.x + (gridPosX * G_GRID_CELL_SIZE) - (G_GRID_CELL_SIZE / (float)2);
+	p.y = G_GRID_LOWER_LEFT.y - (gridPosY * G_GRID_CELL_SIZE) + (G_GRID_CELL_SIZE / (float)2);
+
+	qd_drawTexturedRect(B_BLOCK_TEXTURE, &p, &s, 0, g_colors[color]);
 }
 
+void b_drawSingle(vec2* position, vec2* scale, vec3* color) {
+	qd_drawTexturedRect(B_BLOCK_TEXTURE, position, scale, 0, color);
+}

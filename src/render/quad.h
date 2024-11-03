@@ -33,7 +33,7 @@ void qd_init();
 /*
 Draws a rect and applies the given texture
 */
-void qd_drawTexturedRect(unsigned int textureID, vec2 position, vec2 scale, float rotation, vec3 color);
+void qd_drawTexturedRect(unsigned int textureID, vec2* position, vec2* scale, float rotation, vec3* color);
 
 /*
 Draws a rect of a solid color

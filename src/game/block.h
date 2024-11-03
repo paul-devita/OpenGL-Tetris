@@ -7,9 +7,11 @@
 #include "../math/vec2.h"
 #include "../math/vec3.h"
 
+#include "game.h"
+
 #define B_BLOCK_TEXTURE_PATH "../resources/textures/block.png"
 
-#define B_NUL_BLOCK 0 //             - 000
+#define B_NULL_BLOCK 0 //             - 000
 
 #define B_I_BLOCK 1	//				 - 001
 #define B_J_BLOCK 2 //				 - 010
@@ -33,19 +35,6 @@
 #define B_COLOR_INDEX_6 6 //         - 110
 #define B_COLOR_INDEX_7 7 //         - 111
 
-typedef unsigned char BlockData;
-
-/*
-	Data Format:	    [Bit 8]---   000				00				000   ---[Bit 0]
-					                 |-|				||				|-|
-					              color bits       rotation bits	 type bits
-*/
-
-typedef struct {
-	vec2 position;
-	BlockData data;
-} Piece;
-
 static unsigned int B_BLOCK_TEXTURE;
 
 void b_init();
@@ -60,11 +49,11 @@ void b_translate(Piece* piece, int dx, int dy);
 
 void b_rotate(unsigned char newRotation);
 
-void b_drawSingle(vec2 position, vec2 scale, vec3 color);
+void b_drawSingle(vec2* position, vec2* scale, vec3* color);
 
 void b_drawBlock(unsigned char type, vec2 position, vec2 scale, vec3 color);
 
-void b_drawPiece(unsigned int gridPosX, unsigned int gridPosY, BlockData data);
+void b_drawBlock(unsigned int gridPosX, unsigned int gridPosY, BlockData data);
 
 void b_drawPiece(vec2 position, BlockData data);
 
