@@ -93,6 +93,18 @@
     <ClCompile Include="..\src\game\block.c">
       <Filter>Header Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\grid.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\piece.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\ui.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\render\color.c">
+      <Filter>Header Files\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -148,6 +160,18 @@
     </ClInclude>
     <ClInclude Include="..\src\game\block.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\grid.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\piece.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\ui.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\render\color.h">
+      <Filter>Header Files\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
