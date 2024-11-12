@@ -73,13 +73,18 @@ void qd_drawTexturedRect(unsigned int textureID, vec2* position, vec2* scale, fl
 
 	mat4 model = IDENTITY_M4;
 
-	model = m4_translate(&model, v3_new(position->x, position->y, (float) 1));
+	vec3 p_t2 = { position->x, position->y, (float)1 };
+
+	vec3 s_s1 = { scale->x, scale->y, (float)1 };
+	vec3 s_t1 = { -scale->x / (double)2, -scale->y / (double)2, (float)0 };
+
+	model = m4_translate(&model, p_t2); //t2
 	model = m4_rotate(&model, rotation_deg, AXIS_Z_V3);
-	model = m4_translate(&model, v3_new(-scale->x / (double) 2, -scale->y / (double) 2, (float) 0));
-	model = m4_scale(&model, v3_new(scale->x, scale->y, (float) 1));
+	model = m4_translate(&model, s_t1); //t1
+	model = m4_scale(&model, s_s1);
 
 	sh_modifyShaderUniformMatrix4x4(texShaderID, "model", &model);
-	sh_modifyShaderUniformf(texShaderID, "spriteColor", v3_asArray(&color), SIZE_V3);
+	sh_modifyShaderUniformf(texShaderID, "spriteColor", v3_asArray(color), SIZE_V3);
 
 	tx_activeTexture(0);
 	tx_bindTexture(textureID);

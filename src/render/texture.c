@@ -1,6 +1,6 @@
 #include "texture.h"
 
-unsigned int tx_genTexture(const char* path, const unsigned char alpha) {
+unsigned int tx_genTexture(const char* path, unsigned char alpha) {
     Image image = rm_readImageFile(path, alpha);
 
 	unsigned int result;

@@ -3,9 +3,14 @@
 
 #include "../math/vec2.h"
 
+#include "../util/window.h"
+
+#include "../render/color.h"
+
 #include "block.h"
 
-#define G_GRID_CELL_COUNT 6
+#define G_GRID_CELL_COUNT 12
+#define GR_NULL_ELEMENT 0xFF
 
 /*
 Column-major grid that represents blocks placed onto the grid
@@ -14,7 +19,7 @@ g_grid[GRID X POSITION][GRID Y POSITION] = (HORIZONTAL COORDINATE, VERTICAL COOR
 */
 static unsigned char grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
 
-static float GRID_CELL_SIZE;
+extern const float GRID_CELL_SIZE;
 
 static vec2 GRID_POSITION;
 static vec2 GRID_LOWER_LEFT;
@@ -29,6 +34,8 @@ void gr_init();
 void gr_drawGridUI();
 
 void gr_drawGridContents();
+
+vec2 gr_gridToScreen(unsigned int grX, unsigned int grY);
 
 void gr_updateGrid(unsigned int grX, unsigned int grY, unsigned char data);
 

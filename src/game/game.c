@@ -34,29 +34,13 @@ void g_init() {
 
 	//UI
 		ui_init();
+	//Grid
+		gr_init();
+	//Block
+		b_init();
 
 	//Game State
 		//General
-
-			for (unsigned int x = 0; x < G_GRID_CELL_COUNT; x++)
-				for (unsigned int y = 0; y < 2 * G_GRID_CELL_COUNT; y++)
-					grid[x][y] = 0xA1;
-			
-		
-		//Grid
-			GRID_POSITION.x = SCR_WIDTH / (float)2;
-			GRID_POSITION.y = SCR_HEIGHT / (float)2;
-
-			GRID_SCALE.x = (9 * SCR_WIDTH) / (float)20;
-			GRID_SCALE.y = 2 * GRID_SCALE.x;
-
-			GRID_LOWER_LEFT.x = GRID_POSITION.x - (GRID_SCALE.x / (float)2);
-			GRID_LOWER_LEFT.y = GRID_POSITION.y + (GRID_SCALE.y / (float)2);
-
-			GRID_CELL_SIZE = GRID_SCALE.x / (float)G_GRID_CELL_COUNT;
-
-			GRID_OUTLINE_SCALE.x = GRID_SCALE.x + 2 * GRID_OUTLINE_THICKNESS;
-			GRID_OUTLINE_SCALE.y = GRID_SCALE.y + 2 * GRID_OUTLINE_THICKNESS;
 
 
 }
@@ -129,20 +113,15 @@ void g_render() {
 		case GAME_STATE_PLAY:
 			//Render UI
 				ui_render();
-			//Render Game
-					//Grid
-					qd_drawOutlineRect(GRID_POSITION, GRID_OUTLINE_SCALE, GRID_OUTLINE_THICKNESS, COLOR_WHITE);
+			
+			//Render Grid
+				gr_drawGridUI();
+				gr_drawGridContents();
 
-					g_drawGrid();
-				
+			//Render Game
+
 			break;
 	}
-}
-
-static void g_drawGrid() {
-	for (int x = 0; x < G_GRID_CELL_COUNT; x++)
-		for (int y = 0; y < 2 * G_GRID_CELL_COUNT; y++)
-			b_drawBlock(x, y, grid[x][y]);
 }
 
 static void g_drawGridLines() {

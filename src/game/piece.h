@@ -3,6 +3,8 @@
 
 #include "block.h"
 
+#define P_BLOCK_COUNT 4
+
 #define P_I_PIECE 0	
 #define P_J_PIECE 1 
 #define P_L_PIECE 2 
@@ -34,7 +36,7 @@ typedef unsigned char PieceData;
 */
 
 typedef struct {
-	vec2 blocks[4];
+	vec2 blocks[P_BLOCK_COUNT];
 	PieceData data;
 } Piece;
 
@@ -46,5 +48,6 @@ unsigned char p_getBlockColor(PieceData data);
 
 void p_translate(Piece* piece, float dx, float dy);
 
+void p_draw(Piece* piece);
 
 #endif
