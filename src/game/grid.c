@@ -5,7 +5,7 @@ const float GRID_CELL_SIZE = ((9 * SCR_WIDTH) / (float)20) / (float)G_GRID_CELL_
 void gr_init() {
 	for (int x = 0; x < G_GRID_CELL_COUNT; x++)
 		for (int y = 0; y < 2 * G_GRID_CELL_COUNT; y++)
-			grid[x][y] = 0x00; // 00000000
+			grid[x][y] = GR_NULL_ELEMENT; // 11111111
 	
 	GRID_POSITION.x = SCR_WIDTH / (float)2;
 	GRID_POSITION.y = SCR_HEIGHT / (float)2;
@@ -25,22 +25,80 @@ void gr_drawGridUI() {
 }
 
 void gr_drawGridContents() {
-	for (unsigned int x = 0; x < G_GRID_CELL_COUNT; x++) 
-		for(unsigned int y = 0; y < 2 * G_GRID_CELL_COUNT; y++)
-			if (grid[x][y] != GR_NULL_ELEMENT) {
-				vec2 p = gr_gridToScreen(x, y);
+	vec2s gridPos = { 0, 0 };
 
-				b_drawBlock(&p, grid[x][y]);
+	for (; gridPos.x < G_GRID_CELL_COUNT; gridPos.x++) 
+		for(; gridPos.y < 2 * G_GRID_CELL_COUNT; gridPos.y++)
+			if (grid[gridPos.x][gridPos.y] != GR_NULL_ELEMENT) {
+				vec2 p = gr_gridToScreen(&gridPos);
+
+				b_drawBlock(&p, grid[gridPos.x][gridPos.y]);
 			}
 }
 
-vec2 gr_gridToScreen(unsigned int grX, unsigned int grY) {
+void gr_drawGridLines() {
+	const float width = SCR_WIDTH / 400.0;
+
+	vec2 p, s;
+
+	float dx;
+	float dy;
+
+	if (G_GRID_CELL_COUNT % 2 == 0) {
+		dx = 0;
+		dy = 0;
+	}
+	else {
+		dx = GRID_CELL_SIZE / (float)2;
+		dy = GRID_CELL_SIZE / (float)2;
+	}
+
+	s.x = width;
+	s.y = GRID_SCALE.y;
+
+	p.y = GRID_POSITION.y;
+
+	for (int i = 0; i < G_GRID_CELL_COUNT / 2; i++) {
+		p.x = GRID_POSITION.x + dx;
+
+		qd_drawSolidRect(p, s, 0, COLOR_GRAY);
+
+		if (dx != 0) {
+			p.x = GRID_POSITION.x - dx;
+
+			qd_drawSolidRect(p, s, 0, COLOR_GRAY);
+		}
+
+		dx += GRID_CELL_SIZE;
+	}
+
+	s.x = GRID_SCALE.x;
+	s.y = width;
+
+	p.x = GRID_POSITION.x;
+
+	for (int i = 0; i < G_GRID_CELL_COUNT; i++) {
+		p.y = GRID_POSITION.y + dy;
+
+		qd_drawSolidRect(p, s, 0, COLOR_GRAY);
+
+		if (dy != 0) {
+			p.y = GRID_POSITION.y - dy;
+
+			qd_drawSolidRect(p, s, 0, COLOR_GRAY);
+		}
+
+		dy += GRID_CELL_SIZE;
+	}
+}
+
+vec2 gr_gridToScreen(vec2s* pos) {
 	vec2 result;
 
 	float sized2 = GRID_CELL_SIZE / (float)2;
 
-	result.x = GRID_LOWER_LEFT.x + sized2 + grX * GRID_CELL_SIZE;
-	result.y = GRID_LOWER_LEFT.y - sized2 - grY * GRID_CELL_SIZE;
+	result.x = GRID_LOWER_LEFT.x + sized2 + pos->x * GRID_CELL_SIZE;
+	result.y = GRID_LOWER_LEFT.y - sized2 - pos->y * GRID_CELL_SIZE;
 
 	return result;
 }

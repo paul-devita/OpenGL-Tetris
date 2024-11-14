@@ -38,9 +38,15 @@ void g_init() {
 		gr_init();
 	//Block
 		b_init();
+	//Piece
+		p_init();
 
 	//Game State
 		//General
+
+		vec2s p = { 5, 5 };
+
+		p_createPiece(&g_falling, &p, P_I_PIECE, G_FALSE);
 
 
 }
@@ -76,11 +82,11 @@ static void g_updateTitle(float udt) {
 	if (pressStartTimer <= 0) {
 		if (g_start_pressStartToggle) {
 			pressStartTimer = G_START_ANIMATION_INTERVAL_DOWN;
-			g_start_pressStartToggle = GAME_FALSE;
+			g_start_pressStartToggle = G_FALSE;
 		}
 		else {
 			pressStartTimer = G_START_ANIMATION_INTERVAL_UP;
-			g_start_pressStartToggle = GAME_TRUE;
+			g_start_pressStartToggle = G_TRUE;
 		}
 	}
 
@@ -94,7 +100,9 @@ static void g_updateTitle(float udt) {
 }
 
 static void g_updatePlay(float udt) {
-
+	if (win_checkKey(GLFW_KEY_R)) {
+		p_rotate(&g_falling);
+	}
 }
 
 void g_render() {
@@ -119,64 +127,9 @@ void g_render() {
 				gr_drawGridContents();
 
 			//Render Game
+				p_draw(&g_falling);
 
 			break;
-	}
-}
-
-static void g_drawGridLines() {
-	const float width = SCR_WIDTH / 400.0;
-
-	vec2 p, s;
-
-	float dx;
-	float dy;
-
-	if (G_GRID_CELL_COUNT % 2 == 0) {
-		dx = 0;
-		dy = 0;
-	}
-	else {
-		dx = GRID_CELL_SIZE / (float)2;
-		dy = GRID_CELL_SIZE / (float)2;
-	}
-
-	s.x = width;
-	s.y = GRID_SCALE.y;
-
-	p.y = GRID_POSITION.y;
-
-	for (int i = 0; i < G_GRID_CELL_COUNT / 2; i++) {
-		p.x = GRID_POSITION.x + dx;
-
-		qd_drawSolidRect(p, s, 0, COLOR_GRAY);
-
-		if (dx != 0) {
-			p.x = GRID_POSITION.x - dx;
-
-			qd_drawSolidRect(p, s, 0, COLOR_GRAY);
-		}
-			
-		dx += GRID_CELL_SIZE;
-	}
-
-	s.x = GRID_SCALE.x;
-	s.y = width;
-
-	p.x = GRID_POSITION.x;
-
-	for (int i = 0; i < G_GRID_CELL_COUNT; i++) {
-		p.y = GRID_POSITION.y + dy;
-
-		qd_drawSolidRect(p, s, 0, COLOR_GRAY);
-
-		if (dy != 0) {
-			p.y = GRID_POSITION.y - dy;
-
-			qd_drawSolidRect(p, s, 0, COLOR_GRAY);
-		}
-
-		dy += GRID_CELL_SIZE;
 	}
 }
 

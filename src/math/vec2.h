@@ -11,6 +11,11 @@ typedef struct {
 	int y;
 } vec2i;
 
+typedef struct {
+	short x;
+	short y;
+} vec2s;
+
 vec2 v2_new(float x, float y);
 
 #endif

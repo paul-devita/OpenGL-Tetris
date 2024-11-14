@@ -35,7 +35,9 @@ void gr_drawGridUI();
 
 void gr_drawGridContents();
 
-vec2 gr_gridToScreen(unsigned int grX, unsigned int grY);
+void gr_drawGridLines();
+
+vec2 gr_gridToScreen(vec2s* pos);
 
 void gr_updateGrid(unsigned int grX, unsigned int grY, unsigned char data);
 

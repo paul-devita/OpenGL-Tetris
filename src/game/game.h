@@ -61,8 +61,8 @@ static vec2 G_START_PRESS_CHAR_SCALE;
 	#define GAME_STATE_TITLE 0
 	#define GAME_STATE_PLAY 1
 
-	#define GAME_FALSE 0
-	#define GAME_TRUE 1
+	#define G_FALSE 0
+	#define G_TRUE 1
 
 	#define G_COLOR_COUNT 8
 
@@ -78,8 +78,6 @@ static void g_updateTitle(float udt);
 static void g_updatePlay(float udt);
 
 void g_render();
-
-static void g_drawGrid();
 
 static void g_drawGridLines();
 
