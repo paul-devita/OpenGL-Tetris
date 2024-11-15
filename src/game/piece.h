@@ -32,7 +32,8 @@ typedef unsigned char PieceData;
 */
 
 typedef struct {
-	vec2s blocks[P_BLOCK_COUNT];
+	vec2s position;
+	unsigned short blocks;
 	PieceData data;
 } Piece;
 
@@ -40,18 +41,22 @@ void p_init();
 
 void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, unsigned char randomColor);
 
+void p_setBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos);
+void p_setBlockAtFromShort(unsigned short* blocks, unsigned char xBlockPos, unsigned char yBlockPos, unsigned char height);
+
+void p_unsetBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos);
+unsigned char p_getBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos);
+
 unsigned char p_getPieceColor(PieceData data);
 void p_setPieceColor(Piece* piece, unsigned char colorIndex);
 
-unsigned char p_getPieceHeightFromData(PieceData data);
-unsigned char p_getPieceHeight(Piece* piece);
+unsigned char p_getPieceHeight(PieceData data);
 void p_setPieceHeight(Piece* piece, unsigned char height);
 
-unsigned char p_getPieceWidthFromData(PieceData data);
-unsigned char p_getPieceWidth(Piece* piece);
+unsigned char p_getPieceWidth(PieceData data);
 void p_setPieceWidth(Piece* piece, unsigned char width);
 
-unsigned char p_
+vec2s p_getCenterPoint(Piece* piece);
 
 void p_translate(Piece* piece, short dx, short dy);
 

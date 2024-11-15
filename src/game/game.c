@@ -103,6 +103,20 @@ static void g_updatePlay(float udt) {
 	if (win_checkKey(GLFW_KEY_R)) {
 		p_rotate(&g_falling);
 	}
+
+
+	if(win_checkKey(GLFW_KEY_W)) {
+		p_translate(&g_falling, 0, 1);
+	}
+	else if (win_checkKey(GLFW_KEY_S)) {
+		p_translate(&g_falling, 0, -1);
+	}
+	else if (win_checkKey(GLFW_KEY_D)) {
+		p_translate(&g_falling, 1, 0);
+	}
+	else if (win_checkKey(GLFW_KEY_A)) {
+		p_translate(&g_falling, -1, 0);
+	}
 }
 
 void g_render() {

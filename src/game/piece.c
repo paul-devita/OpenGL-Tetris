@@ -18,6 +18,10 @@ void p_init() {
 }
 
 void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, unsigned char randomColor) {
+	unsigned char width, height;
+
+	piece->blocks = 0x00; // 00000000
+
 	switch (pieceType) {
 		case P_I_PIECE:
 			if (randomColor) {
@@ -27,17 +31,16 @@ void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, u
 				p_setPieceColor(piece, COLOR_INDEX_BLUE);
 			}
 
-			short grY = gridPosition->y;
-			short grX = gridPosition->x;
+			piece->position = *gridPosition;
 
-			for (int i = 0; i < P_BLOCK_COUNT; i++) {
-				piece->blocks[i].x = grX;
-				piece->blocks[i].y = grY;
+			width = 1;
+			height = 4;
 
-				grX++;
+			p_setPieceWidth(piece, width);
+			p_setPieceHeight(piece, height);
 
-				printf("%d, %d\n", piece->blocks[i].x, piece->blocks[i].y);
-			}
+			for (int i = 0; i < height; i++)
+				p_setBlockAt(piece, width - 1, i);
 
 			break;
 		case P_J_PIECE:
@@ -64,6 +67,48 @@ void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, u
 	}
 }
 
+void p_setBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos) {
+	unsigned short mask = 0x0001; // 00000000 00000001
+
+	unsigned char height = p_getPieceHeight(piece->data);
+
+	mask <<= (yBlockPos * height) + xBlockPos;
+
+	piece->blocks |= mask;
+}
+
+void p_setBlockAtFromShort(unsigned short* blocks, unsigned char xBlockPos, unsigned char yBlockPos, unsigned char height) {
+	unsigned short mask = 0x0001; // 00000000 00000001
+
+	mask <<= (yBlockPos * height) + xBlockPos;
+
+	*blocks |= mask;
+}
+
+void p_unsetBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos) {
+	unsigned short mask = 0x0001; // 00000000 00000001
+
+	unsigned char height = p_getPieceHeight(piece->data);
+
+	mask <<= (yBlockPos * height) + xBlockPos;
+
+	piece->blocks &= ~mask;
+}
+
+unsigned char p_getBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos) {
+	short mask = 0x0001; // 00000000 00000001
+
+	unsigned char height = p_getPieceHeight(piece->data);
+
+	mask <<= (yBlockPos * height) + xBlockPos;
+
+	short result = mask & piece->blocks;
+
+	result >>= (yBlockPos * height) + xBlockPos;
+
+	return (unsigned char)result;
+}
+
 unsigned char p_getPieceColor(PieceData data) {
 	unsigned char mask = 0x0F; // 00001111
 
@@ -77,82 +122,110 @@ void p_setPieceColor(Piece* piece, unsigned char colorIndex) {
 
 	piece->data &= mask;
 
-	mask |= colorIndex;
+	colorIndex &= ~(mask);
 
-	piece->data |= mask;
+	piece->data |= colorIndex;
 }
 
-unsigned char p_getPieceHeightFromData(PieceData data) {
+unsigned char p_getPieceHeight(PieceData data) {
 	unsigned char mask = 0xC0; // 11000000
 
 	unsigned char result = (data & mask) >> 6;
 
-	return result;
-}
-
-unsigned char p_getPieceHeight(Piece* piece) {
-
+	return result + 1;
 }
 
 void p_setPieceHeight(Piece* piece, unsigned char height) {
+	height--;
+
 	unsigned char mask = 0x3F; // 00111111
 
 	piece->data &= mask;
 
 	height <<= 6;
 
-	mask |= height;
-
-	piece->data |= mask;
+	piece->data |= height;
 }
 
-unsigned char p_getPieceWidthFromData(PieceData data) {
+unsigned char p_getPieceWidth(PieceData data) {
+	unsigned char mask = 0x30; // 00110000
 
-}
+	unsigned char result = (data & mask) >> 4;
 
-unsigned char p_getPieceWidth(Piece* piece) {
-
+	return result + 1;
 }
 
 void p_setPieceWidth(Piece* piece, unsigned char width) {
+	width--;
 
+	unsigned char mask = 0xCF; // 11001111
+
+	piece->data &= mask;
+
+	width <<= 4;
+
+	width &= ~(mask);
+
+	piece->data |= width;
 }
 
 void p_translate(Piece* piece, short dx, short dy) {
-
+	piece->position.x += dx;
+	piece->position.y += dy;
 }
 
 void p_rotate(Piece* piece) {
-	for (int i = 0; i < P_BLOCK_COUNT; i++) {
-		vec2s* oldPos = &piece->blocks[i];
+	unsigned short newBlocks = 0x0000; // 00000000 00000000
 
-		short newY = oldPos->x;
-		short newX = oldPos->y - 2;
+	unsigned char oldWidth = p_getPieceWidth(piece->data);
+	unsigned char oldHeight = p_getPieceHeight(piece->data);
 
-		if (newX < 0) newX *= -1;
+	unsigned char newWidth = oldHeight;
+	unsigned char newHeight = oldWidth;
 
-		oldPos->x = newX;
-		oldPos->y = newY;
+	for (int y = 0; y < oldHeight; y++) {
+		for (int x = 0; x < oldWidth; x++) {
+			if (p_getBlockAt(piece, x, y)) {
+				unsigned char newX = y;
+				unsigned char newY = (oldWidth - 1) - x;
+
+				p_setBlockAtFromShort(&newBlocks, newX, newY, newHeight);
+			}
+		}
 	}
+
+	p_setPieceHeight(piece, newHeight);
+	p_setPieceWidth(piece, newWidth);
+
+	piece->blocks = newBlocks;
+
+	short newXPos = piece->position.x + (oldWidth / 2) - (newWidth / 2);
+	short newYPos = piece->position.y - (oldHeight / 2) + (newHeight / 2);
+
+	piece->position.x = newXPos;
+	piece->position.y = newYPos;
 }
 
 void p_draw(Piece* piece) {
-	static unsigned char x = 1;
+	unsigned char width = p_getPieceWidth(piece->data);
+	unsigned char height = p_getPieceHeight(piece->data);
 
 	unsigned char colorIndex = p_getPieceColor(piece->data);
 
-	for (int i = 0; i < P_BLOCK_COUNT; i++) {
-		vec2 screenPos = gr_gridToScreen(&piece->blocks[i]);
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			unsigned char block = p_getBlockAt(piece, x, y);
 
-		if (x) {
-			printf("%f, %f\n", screenPos.x, screenPos.y);
+			if (block) {
+				vec2s gridPos = piece->position;
 
-			if (x == 4)
-				x = 0;
-			else
-				x++;
+				gridPos.x += x;
+				gridPos.y -= y;
+
+				vec2 screenPos = gr_gridToScreen(&gridPos);
+
+				b_drawBlock(&screenPos, colorIndex);
+			}
 		}
-
-		b_drawBlock(&screenPos, colorIndex);
 	}
 }
