@@ -102,3 +102,12 @@ vec2 gr_gridToScreen(vec2s* pos) {
 
 	return result;
 }
+
+unsigned char gr_checkGridPos(vec2s* pos) {
+	short x = pos->x;
+	short y = pos->y;
+
+	unsigned char val = grid[x][y];
+
+	return val;
+}

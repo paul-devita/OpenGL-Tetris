@@ -53,8 +53,6 @@ static vec2 G_START_PRESS_CHAR_SCALE;
 	#define G_MAXIMUM_SCORE 9999999
 
 	#define G_MAXIMUM_STATS 9999
-			
-	static Piece g_falling;
 
 	#define SECONDS_PER_UPDATE 0.1
 
@@ -64,9 +62,14 @@ static vec2 G_START_PRESS_CHAR_SCALE;
 	#define G_FALSE 0
 	#define G_TRUE 1
 
+	#define G_LEFT 0
+	#define G_RIGHT 1
+
 	#define G_COLOR_COUNT 8
 
 	static unsigned char g_state = GAME_STATE_TITLE;
+
+	static Piece g_falling;
 
 //-----------------------------------------------------------------------------------------------------------------
 
@@ -76,6 +79,11 @@ void g_update(float deltaTime);
 
 static void g_updateTitle(float udt);
 static void g_updatePlay(float udt);
+
+static void g_processGameInput();
+
+static void g_rotateFallingPiece();
+static void g_horizontalFallingPieceMovement(unsigned char direction);
 
 void g_render();
 

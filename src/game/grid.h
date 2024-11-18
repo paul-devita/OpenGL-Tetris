@@ -39,6 +39,8 @@ void gr_drawGridLines();
 
 vec2 gr_gridToScreen(vec2s* pos);
 
+unsigned char gr_checkGridPos(vec2s* pos);
+
 void gr_updateGrid(unsigned int grX, unsigned int grY, unsigned char data);
 
 #endif
