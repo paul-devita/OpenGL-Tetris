@@ -2,188 +2,156 @@
 
 void p_init() {
 	//I
+		P_I_PIECE.blocks = 0x00; // 0000 0000
+
+		p_setPieceColor(&P_I_PIECE, COLOR_INDEX_BLUE);
+
+		const unsigned char I_WIDTH = 4;
+		const unsigned char I_HEIGHT = 1;
+
+		p_setPieceWidth(&P_I_PIECE, I_WIDTH);
+		p_setPieceHeight(&P_I_PIECE, I_HEIGHT);
+
+		for (int i = 0; i < I_WIDTH; i++)
+			p_setBlockAt(&P_I_PIECE, i, I_HEIGHT - 1);
 
 	//J
+		P_J_PIECE.blocks = 0x00; // 0000 0000
+
+		p_setPieceColor(&P_J_PIECE, COLOR_INDEX_TEAL);
+
+		const unsigned char J_WIDTH = 3;
+		const unsigned char J_HEIGHT = 2;
+
+		p_setPieceWidth(&P_J_PIECE, J_WIDTH);
+		p_setPieceHeight(&P_J_PIECE, J_HEIGHT);
+
+		p_setBlockAt(&P_J_PIECE, 1, 0);
+		p_setBlockAt(&P_J_PIECE, 1, 1);
+		p_setBlockAt(&P_J_PIECE, 1, 2);
+		p_setBlockAt(&P_J_PIECE, 0, 2);
 
 	//L
+		P_L_PIECE.blocks = 0x00; // 0000 0000
+
+		p_setPieceColor(&P_L_PIECE, COLOR_INDEX_ORANGE);
+
+		const unsigned char L_WIDTH = 3;
+		const unsigned char L_HEIGHT = 2;
+
+		p_setPieceWidth(&P_L_PIECE, L_WIDTH);
+		p_setPieceHeight(&P_L_PIECE, L_HEIGHT);
+
+		p_setBlockAt(&P_L_PIECE, 0, 0);
+		p_setBlockAt(&P_L_PIECE, 0, 1);
+		p_setBlockAt(&P_L_PIECE, 0, 2);
+		p_setBlockAt(&P_L_PIECE, 1, 2);
 
 	//O
+		P_O_PIECE.blocks = 0x00; // 0000 0000
+
+		p_setPieceColor(&P_O_PIECE, COLOR_INDEX_YELLOW);
+
+		const unsigned char O_SIZE = 2;
+
+		p_setPieceWidth(&P_O_PIECE, O_SIZE);
+		p_setPieceHeight(&P_O_PIECE, O_SIZE);
+
+		p_setBlockAt(&P_O_PIECE, 0, 0);
+		p_setBlockAt(&P_O_PIECE, 0, 1);
+		p_setBlockAt(&P_O_PIECE, 1, 0);
+		p_setBlockAt(&P_O_PIECE, 1, 1);
 
 	//S
+		P_S_PIECE.blocks = 0x00; // 0000 0000
+
+		p_setPieceColor(&P_S_PIECE, COLOR_INDEX_RED);
+
+		unsigned char S_WIDTH = 3;
+		unsigned char S_HEIGHT = 2;
+
+		p_setPieceWidth(&P_L_PIECE, S_WIDTH);
+		p_setPieceHeight(&P_L_PIECE, S_HEIGHT);
+
+		p_setBlockAt(&P_S_PIECE, 1, 0);
+		p_setBlockAt(&P_S_PIECE, 2, 0);
+		p_setBlockAt(&P_S_PIECE, 0, 1);
+		p_setBlockAt(&P_S_PIECE, 1, 1);
 
 	//T
+		P_T_PIECE.blocks = 0x00; // 0000 0000
+
+		p_setPieceColor(&P_T_PIECE, COLOR_INDEX_PURPLE);
+
+		unsigned char T_WIDTH = 3;
+		unsigned char T_HEIGHT = 2;
+
+		p_setPieceWidth(&P_T_PIECE, T_WIDTH);
+		p_setPieceHeight(&P_T_PIECE, T_HEIGHT);
+
+		p_setBlockAt(&P_T_PIECE, 0, 0);
+		p_setBlockAt(&P_T_PIECE, 1, 0);
+		p_setBlockAt(&P_T_PIECE, 2, 0);
+		p_setBlockAt(&P_T_PIECE, 1, 1);
 
 	//Z
+		P_Z_PIECE.blocks = 0x00; // 0000 0000
 
+		p_setPieceColor(&P_Z_PIECE, COLOR_INDEX_GREEN);
+
+		unsigned char Z_WIDTH = 3;
+		unsigned char Z_HEIGHT = 2;
+
+		p_setPieceWidth(&P_Z_PIECE, Z_WIDTH);
+		p_setPieceHeight(&P_Z_PIECE, Z_HEIGHT);
+
+		p_setBlockAt(&P_Z_PIECE, 0, 0);
+		p_setBlockAt(&P_Z_PIECE, 1, 0);
+		p_setBlockAt(&P_Z_PIECE, 1, 1);
+		p_setBlockAt(&P_Z_PIECE, 2, 1);
 }
 
 void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, unsigned char randomColor) {
-	piece->blocks = 0x00; // 00000000
-
-	piece->position = *gridPosition;
-
 	switch (pieceType) {
-		case P_I_PIECE: {
-			if (randomColor) {
-				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
-
-				p_setPieceColor(piece, randomColor);
-			}
-			else {
-				p_setPieceColor(piece, COLOR_INDEX_BLUE);
-			}
-
-			unsigned char width = 4;
-			unsigned char height = 1;
-
-			p_setPieceWidth(piece, width);
-			p_setPieceHeight(piece, height);
-
-			for (int i = 0; i < width; i++)
-				p_setBlockAt(piece, i, height - 1);
+		case P_I_PIECE_INDEX: 
+			*piece = P_I_PIECE;
 
 			break;
-		}
-		case P_J_PIECE: {
-			if (randomColor) {
-				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
-
-				p_setPieceColor(piece, randomColor);
-			}
-			else {
-				p_setPieceColor(piece, COLOR_INDEX_TEAL);
-			}
-
-			unsigned char width = 2;
-			unsigned char height = 3;
-
-			p_setPieceWidth(piece, width);
-			p_setPieceHeight(piece, height);
-
-			p_setBlockAt(piece, 1, 0);
-			p_setBlockAt(piece, 1, 1);
-			p_setBlockAt(piece, 1, 2);
-			p_setBlockAt(piece, 0, 2);
+		case P_J_PIECE_INDEX:
+			*piece = P_J_PIECE;
 
 			break;
-		}
-		case P_L_PIECE: {
-			if (randomColor) {
-				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
-
-				p_setPieceColor(piece, randomColor);
-			}
-			else {
-				p_setPieceColor(piece, COLOR_INDEX_ORANGE);
-			}
-
-			unsigned char width = 2;
-			unsigned char height = 3;
-
-			p_setPieceWidth(piece, width);
-			p_setPieceHeight(piece, height);
-
-			p_setBlockAt(piece, 0, 0);
-			p_setBlockAt(piece, 0, 1);
-			p_setBlockAt(piece, 0, 2);
-			p_setBlockAt(piece, 1, 2);
+		case P_L_PIECE_INDEX: 
+			*piece = P_L_PIECE;
 
 			break;
-		}
-		case P_O_PIECE: {
-			if (randomColor) {
-				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
-
-				p_setPieceColor(piece, randomColor);
-			}
-			else {
-				p_setPieceColor(piece, COLOR_INDEX_YELLOW);
-			}
-
-			unsigned char size = 2;
-
-			p_setPieceWidth(piece, size);
-			p_setPieceHeight(piece, size);
-
-			p_setBlockAt(piece, 0, 0);
-			p_setBlockAt(piece, 0, 1);
-			p_setBlockAt(piece, 1, 0);
-			p_setBlockAt(piece, 1, 1);
+		case P_O_PIECE_INDEX: 
+			*piece = P_O_PIECE;
 
 			break;
-		}
-		case P_S_PIECE: {
-			if (randomColor) {
-				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
-
-				p_setPieceColor(piece, randomColor);
-			}
-			else {
-				p_setPieceColor(piece, COLOR_INDEX_RED);
-			}
-
-			unsigned char width = 3;
-			unsigned char height = 2;
-
-			p_setPieceWidth(piece, width);
-			p_setPieceHeight(piece, height);
-
-			p_setBlockAt(piece, 1, 0);
-			p_setBlockAt(piece, 2, 0);
-			p_setBlockAt(piece, 0, 1);
-			p_setBlockAt(piece, 1, 1);
+		case P_S_PIECE_INDEX: 
+			*piece = P_S_PIECE;
 
 			break;
-		}
-		case P_T_PIECE: {
-			if (randomColor) {
-				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
-
-				p_setPieceColor(piece, randomColor);
-			}
-			else {
-				p_setPieceColor(piece, COLOR_INDEX_PURPLE);
-			}
-
-			unsigned char width = 3;
-			unsigned char height = 2;
-
-			p_setPieceWidth(piece, width);
-			p_setPieceHeight(piece, height);
-
-			p_setBlockAt(piece, 0, 0);
-			p_setBlockAt(piece, 1, 0);
-			p_setBlockAt(piece, 2, 0);
-			p_setBlockAt(piece, 1, 1);
+		case P_T_PIECE_INDEX: 
+			*piece = P_T_PIECE;
 
 			break;
-		}
-		case P_Z_PIECE: {
-			if (randomColor) {
-				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
-
-				p_setPieceColor(piece, randomColor);
-			}
-			else {
-				p_setPieceColor(piece, COLOR_INDEX_GREEN);
-			}
-
-			unsigned char width = 3;
-			unsigned char height = 2;
-
-			p_setPieceWidth(piece, width);
-			p_setPieceHeight(piece, height);
-
-			p_setBlockAt(piece, 0, 0);
-			p_setBlockAt(piece, 1, 0);
-			p_setBlockAt(piece, 1, 1);
-			p_setBlockAt(piece, 2, 1);
+		case P_Z_PIECE_INDEX: 
+			*piece = P_Z_PIECE;
 
 			break;
-		}
 		default:
 			printf("WARNING: invalid piece type passed to p_createPiece\n");
 			return;
+	}
+
+	piece->position = *gridPosition;
+
+	if (randomColor) {
+		unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+		p_setPieceColor(piece, randomColor);
 	}
 }
 
@@ -380,7 +348,7 @@ void p_draw(Piece* piece) {
 
 void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsigned char colorIndex) {
 	switch (pieceType) {
-		case P_I_PIECE: {
+		case P_I_PIECE_INDEX: {
 			const unsigned char WIDTH = 4;
 
 			unsigned char iterations = WIDTH / 2;
@@ -405,7 +373,7 @@ void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsig
 
 			break;
 		}
-		case P_J_PIECE: {
+		case P_J_PIECE_INDEX: {
 			vec2 p;
 
 			//0, 0
@@ -431,7 +399,7 @@ void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsig
 
 			break;
 		}
-		case P_L_PIECE: {
+		case P_L_PIECE_INDEX: {
 			vec2 p;
 
 			//0, 1
@@ -457,7 +425,7 @@ void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsig
 
 			break;
 		}
-		case P_O_PIECE: {
+		case P_O_PIECE_INDEX: {
 			vec2 p;
 
 			//0, 0
@@ -483,7 +451,7 @@ void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsig
 
 			break;
 		}
-		case P_S_PIECE: {
+		case P_S_PIECE_INDEX: {
 			vec2 p;
 
 			//0, 1
@@ -509,7 +477,7 @@ void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsig
 
 			break;
 		}
-		case P_T_PIECE: {
+		case P_T_PIECE_INDEX: {
 			vec2 p;
 
 			//0, 0
@@ -536,7 +504,7 @@ void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsig
 
 			break;
 		}
-		case P_Z_PIECE: {
+		case P_Z_PIECE_INDEX: {
 			vec2 p;
 
 			//0, 0

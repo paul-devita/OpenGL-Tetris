@@ -46,7 +46,7 @@ void g_init() {
 
 		vec2s p = { 5, 5 };
 
-		p_createPiece(&g_falling, &p, P_Z_PIECE, G_FALSE);
+		p_createPiece(&g_falling, &p, P_Z_PIECE_INDEX, G_FALSE);
 
 }
 

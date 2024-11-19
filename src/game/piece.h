@@ -8,22 +8,13 @@
 
 #define P_BLOCK_COUNT 4
 
-#define P_I_PIECE 0	 //         - 000
-#define P_J_PIECE 1  //         - 001
-#define P_L_PIECE 2  //         - 010
-#define P_O_PIECE 3  //         - 011
-#define P_S_PIECE 4  //         - 100
-#define P_T_PIECE 5  //         - 101
-#define P_Z_PIECE 6  //         - 110
-
-#define P_COLOR_INDEX_0 0 //         - 00000
-#define P_COLOR_INDEX_1 1 //         - 00001
-#define P_COLOR_INDEX_2 2 //         - 00010
-#define P_COLOR_INDEX_3 3 //         - 00011
-#define P_COLOR_INDEX_4 4 //         - 00100
-#define P_COLOR_INDEX_5 5 //         - 00101
-#define P_COLOR_INDEX_6 6 //         - 00110
-#define P_COLOR_INDEX_7 7 //         - 00111
+#define P_I_PIECE_INDEX 0  //         - 000
+#define P_J_PIECE_INDEX 1  //         - 001
+#define P_L_PIECE_INDEX 2  //         - 010
+#define P_O_PIECE_INDEX 3  //         - 011
+#define P_S_PIECE_INDEX 4  //         - 100
+#define P_T_PIECE_INDEX 5  //         - 101
+#define P_Z_PIECE_INDEX 6  //         - 110
 
 typedef unsigned char PieceData;
 
@@ -38,6 +29,14 @@ typedef struct {
 	unsigned char blocks;
 	PieceData data;
 } Piece;
+
+static Piece P_I_PIECE;
+static Piece P_J_PIECE;
+static Piece P_L_PIECE;
+static Piece P_O_PIECE;
+static Piece P_S_PIECE;
+static Piece P_T_PIECE;
+static Piece P_Z_PIECE;
 
 void p_init();
 
