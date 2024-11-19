@@ -27,7 +27,7 @@ void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, u
 	switch (pieceType) {
 		case P_I_PIECE:
 			if (randomColor) {
-				//Set random color
+				
 			}
 			else {
 				p_setPieceColor(piece, COLOR_INDEX_BLUE);

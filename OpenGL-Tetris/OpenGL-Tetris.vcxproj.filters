@@ -105,6 +105,9 @@
     <ClCompile Include="..\src\render\color.c">
       <Filter>Header Files\render</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\util\random.c">
+      <Filter>Header Files\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="..\src\render\color.h">
       <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\util\random.h">
+      <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
