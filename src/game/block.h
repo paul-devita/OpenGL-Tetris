@@ -22,6 +22,6 @@ void b_init();
 
 void b_drawBlock(vec2* position, unsigned char colorIndex);
 
-void b_drawDummyBlock(vec2* position, vec2* scale, unsigned char colorIndex);
+void b_drawDummyBlock(vec2* position, float blockSize, unsigned char colorIndex);
 
 #endif

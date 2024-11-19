@@ -18,23 +18,23 @@ void p_init() {
 }
 
 void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, unsigned char randomColor) {
-	unsigned char width, height;
-
 	piece->blocks = 0x00; // 00000000
 
 	piece->position = *gridPosition;
 
 	switch (pieceType) {
-		case P_I_PIECE:
+		case P_I_PIECE: {
 			if (randomColor) {
-				
+				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+				p_setPieceColor(piece, randomColor);
 			}
 			else {
 				p_setPieceColor(piece, COLOR_INDEX_BLUE);
 			}
 
-			width = 4;
-			height = 1;
+			unsigned char width = 4;
+			unsigned char height = 1;
 
 			p_setPieceWidth(piece, width);
 			p_setPieceHeight(piece, height);
@@ -42,83 +42,145 @@ void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, u
 			for (int i = 0; i < width; i++)
 				p_setBlockAt(piece, i, height - 1);
 
-			//h >= w
-			//w = 1, h = 4
-			//i = x * h + y
-
-			//Bit 0 - (0, 0) - 0 * h + 0
-			//Bit 1 - (0, 1) - 0 * h + 1
-			//Bit 2 - (0, 2) - 0 * h + 2
-			//Bit 3 - (0, 3) - 0 * h + 3
-
-			//else
-			//w = 4, h = 1
-			//i = y * h + x
-			
-			//Bit 0 - (0, 0) - 0 + 0 * 1
-			//Bit 1 - (1, 0) - 1 + 0 * 1
-			//Bit 2 - (2, 0) - 2 + 0 * 1
-			//Bit 3 - (3, 0) - 3 + 0 * 1
-		
-
 			break;
-		case P_J_PIECE:
+		}
+		case P_J_PIECE: {
 			if (randomColor) {
-				//Set random color
+				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+				p_setPieceColor(piece, randomColor);
 			}
 			else {
 				p_setPieceColor(piece, COLOR_INDEX_TEAL);
 			}
 
-			width = 2;
-			height = 3;
+			unsigned char width = 2;
+			unsigned char height = 3;
 
 			p_setPieceWidth(piece, width);
 			p_setPieceHeight(piece, height);
 
-			p_setBlockAt(piece, 1, 0); 
-			p_setBlockAt(piece, 1, 1); 
-			p_setBlockAt(piece, 1, 2); 
-			p_setBlockAt(piece, 0, 2); 
-
-			//h >= w
-			//h = 3, w = 2
-			//i = x * h + y
-
-			//Bit 0 - (0, 0) - 0 * 3 + 0
-			//Bit 1 - (0, 1) - 0 * 3 + 1
-			//Bit 2 - (0, 2) - 0 * 3 + 2
-			//Bit 3 - (1, 0) - 1 * 3 + 0
-			//Bit 4 - (1, 1) - 1 * 3 + 1
-			//Bit 5 - (1, 2) - 1 * 3 + 2
-
-			//else
-			//h = 2, w = 3
-			//i = y * w + x
-
-			//Bit 0 - (0, 0) - 0 * 3 + 0
-			//Bit 1 - (1, 0) - 0 * 3 + 1
-			//Bit 2 - (2, 0) - 0 * 3 + 2
-			//Bit 3 - (0, 1) - 1 * 3 + 0
-			//Bit 4 - (1, 1) - 1 * 3 + 1
-			//Bit 5 - (1, 2) - 1 * 3 + 2
+			p_setBlockAt(piece, 1, 0);
+			p_setBlockAt(piece, 1, 1);
+			p_setBlockAt(piece, 1, 2);
+			p_setBlockAt(piece, 0, 2);
 
 			break;
-		case P_L_PIECE:
+		}
+		case P_L_PIECE: {
+			if (randomColor) {
+				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+				p_setPieceColor(piece, randomColor);
+			}
+			else {
+				p_setPieceColor(piece, COLOR_INDEX_ORANGE);
+			}
+
+			unsigned char width = 2;
+			unsigned char height = 3;
+
+			p_setPieceWidth(piece, width);
+			p_setPieceHeight(piece, height);
+
+			p_setBlockAt(piece, 0, 0);
+			p_setBlockAt(piece, 0, 1);
+			p_setBlockAt(piece, 0, 2);
+			p_setBlockAt(piece, 1, 2);
 
 			break;
-		case P_O_PIECE:
+		}
+		case P_O_PIECE: {
+			if (randomColor) {
+				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+				p_setPieceColor(piece, randomColor);
+			}
+			else {
+				p_setPieceColor(piece, COLOR_INDEX_YELLOW);
+			}
+
+			unsigned char size = 2;
+
+			p_setPieceWidth(piece, size);
+			p_setPieceHeight(piece, size);
+
+			p_setBlockAt(piece, 0, 0);
+			p_setBlockAt(piece, 0, 1);
+			p_setBlockAt(piece, 1, 0);
+			p_setBlockAt(piece, 1, 1);
 
 			break;
-		case P_S_PIECE:
+		}
+		case P_S_PIECE: {
+			if (randomColor) {
+				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+				p_setPieceColor(piece, randomColor);
+			}
+			else {
+				p_setPieceColor(piece, COLOR_INDEX_RED);
+			}
+
+			unsigned char width = 3;
+			unsigned char height = 2;
+
+			p_setPieceWidth(piece, width);
+			p_setPieceHeight(piece, height);
+
+			p_setBlockAt(piece, 1, 0);
+			p_setBlockAt(piece, 2, 0);
+			p_setBlockAt(piece, 0, 1);
+			p_setBlockAt(piece, 1, 1);
 
 			break;
-		case P_T_PIECE:
+		}
+		case P_T_PIECE: {
+			if (randomColor) {
+				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+				p_setPieceColor(piece, randomColor);
+			}
+			else {
+				p_setPieceColor(piece, COLOR_INDEX_PURPLE);
+			}
+
+			unsigned char width = 3;
+			unsigned char height = 2;
+
+			p_setPieceWidth(piece, width);
+			p_setPieceHeight(piece, height);
+
+			p_setBlockAt(piece, 0, 0);
+			p_setBlockAt(piece, 1, 0);
+			p_setBlockAt(piece, 2, 0);
+			p_setBlockAt(piece, 1, 1);
 
 			break;
-		case P_Z_PIECE:
+		}
+		case P_Z_PIECE: {
+			if (randomColor) {
+				unsigned char randomColor = (unsigned char)r_randomIntInRange(0, 8);
+
+				p_setPieceColor(piece, randomColor);
+			}
+			else {
+				p_setPieceColor(piece, COLOR_INDEX_GREEN);
+			}
+
+			unsigned char width = 3;
+			unsigned char height = 2;
+
+			p_setPieceWidth(piece, width);
+			p_setPieceHeight(piece, height);
+
+			p_setBlockAt(piece, 0, 0);
+			p_setBlockAt(piece, 1, 0);
+			p_setBlockAt(piece, 1, 1);
+			p_setBlockAt(piece, 2, 1);
 
 			break;
+		}
 		default:
 			printf("WARNING: invalid piece type passed to p_createPiece\n");
 			return;
@@ -136,15 +198,6 @@ void p_setBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos
 	}
 	else {
 		mask <<= (yBlockPos * width) + xBlockPos;
-
-		//h = 2, w = 3
-
-		//Bit 0 - (0, 0) - 0 * 3 + 0
-		//Bit 1 - (1, 0) - 1 * 3 + 0
-		//Bit 2 - (2, 0) - 2 * 3 + 0
-		//Bit 3 - (0, 1) - 1 + 1 * 2
-		//Bit 4 - (1, 1) - 0 + 2 * 2
-		//Bit 5 - (2, 1) - 1 + 2 * 2
 	}
 
 	piece->blocks |= mask;
@@ -322,5 +375,195 @@ void p_draw(Piece* piece) {
 				b_drawBlock(&screenPos, colorIndex);
 			}
 		}
+	}
+}
+
+void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsigned char colorIndex) {
+	switch (pieceType) {
+		case P_I_PIECE: {
+			const unsigned char WIDTH = 4;
+
+			unsigned char iterations = WIDTH / 2;
+
+			vec2 p;
+
+			p.y = position->y;
+
+			float dx = blockSize / (float)2;
+
+			for (int i = 0; i < iterations; i++) {
+				p.x = position->x + dx;
+
+				b_drawDummyBlock(&p, blockSize, colorIndex);
+
+				p.x = position->x - dx;
+
+				b_drawDummyBlock(&p, blockSize, colorIndex);
+
+				dx += blockSize;
+			}
+
+			break;
+		}
+		case P_J_PIECE: {
+			vec2 p;
+
+			//0, 0
+			p.x = position->x - blockSize;
+			p.y = position->y - (blockSize / (float)2);
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//0, 1
+			p.y += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 1
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//2, 1
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			break;
+		}
+		case P_L_PIECE: {
+			vec2 p;
+
+			//0, 1
+			p.x = position->x - blockSize;
+			p.y = position->y + (blockSize / (float)2);
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 1
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//2, 1
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//2, 0
+			p.y -= blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			break;
+		}
+		case P_O_PIECE: {
+			vec2 p;
+
+			//0, 0
+			p.x = position->x - (blockSize / (float)2);
+			p.y = position->y - (blockSize / (float)2);
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 0
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 1
+			p.y += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//0, 1
+			p.x -= blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			break;
+		}
+		case P_S_PIECE: {
+			vec2 p;
+
+			//0, 1
+			p.x = position->x - blockSize;
+			p.y = position->y + (blockSize / (float)2);
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 1
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 0
+			p.y -= blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//2, 0
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			break;
+		}
+		case P_T_PIECE: {
+			vec2 p;
+
+			//0, 0
+			p.x = position->x - blockSize;
+			p.y = position->y - (blockSize / (float)2);
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+			
+			//1, 0
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//2, 0
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 1
+			p.x -= blockSize;
+			p.y += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			break;
+		}
+		case P_Z_PIECE: {
+			vec2 p;
+
+			//0, 0
+			p.x = position->x - blockSize;
+			p.y = position->y - (blockSize / (float)2);
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 0
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//1, 1
+			p.y += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			//2, 1
+			p.x += blockSize;
+
+			b_drawDummyBlock(&p, blockSize, colorIndex);
+
+			break;
+		}
+		default:
+			printf("WARNING: invalid piece type passed to p_drawDummy\n");
+			return;
 	}
 }

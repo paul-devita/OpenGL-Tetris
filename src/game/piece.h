@@ -1,6 +1,8 @@
 #ifndef _PIECE_H_
 #define _PIECE_H_
 
+#include "../util/random.h"
+
 #include "block.h"
 #include "grid.h"
 
@@ -45,6 +47,7 @@ void p_setBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos
 void p_setBlockAtFromByte(unsigned char* blocks, unsigned char xBlockPos, unsigned char yBlockPos, unsigned char width, unsigned char height);
 
 void p_unsetBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos);
+
 unsigned char p_getBlockAt(Piece* piece, unsigned char xBlockPos, unsigned char yBlockPos);
 
 unsigned char p_getPieceColor(PieceData data);
@@ -56,14 +59,12 @@ void p_setPieceHeight(Piece* piece, unsigned char height);
 unsigned char p_getPieceWidth(PieceData data);
 void p_setPieceWidth(Piece* piece, unsigned char width);
 
-vec2s p_getCenterPoint(Piece* piece);
-
 void p_translate(Piece* piece, short dx, short dy);
 
 void p_rotate(Piece* piece);
 
 void p_draw(Piece* piece);
 
-void p_drawDummy(unsigned char pieceType, unsigned char rotation, vec2* position, vec2* scale);
+void p_drawDummy(unsigned char pieceType, vec2* position, float blockSize, unsigned char colorIndex);
 
 #endif
