@@ -108,6 +108,15 @@
     <ClCompile Include="..\src\util\random.c">
       <Filter>Header Files\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\starting.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\stateManager.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\title.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -178,6 +187,15 @@
     </ClInclude>
     <ClInclude Include="..\src\util\random.h">
       <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\starting.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\stateManager.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\title.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

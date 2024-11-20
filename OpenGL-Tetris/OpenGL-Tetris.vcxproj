@@ -138,6 +138,9 @@
     <ClCompile Include="..\src\game\game.c" />
     <ClCompile Include="..\src\game\grid.c" />
     <ClCompile Include="..\src\game\piece.c" />
+    <ClCompile Include="..\src\game\starting.c" />
+    <ClCompile Include="..\src\game\stateManager.c" />
+    <ClCompile Include="..\src\game\title.c" />
     <ClCompile Include="..\src\game\ui.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\math\mat4.c" />
@@ -164,6 +167,9 @@
     <ClInclude Include="..\src\game\game.h" />
     <ClInclude Include="..\src\game\grid.h" />
     <ClInclude Include="..\src\game\piece.h" />
+    <ClInclude Include="..\src\game\starting.h" />
+    <ClInclude Include="..\src\game\stateManager.h" />
+    <ClInclude Include="..\src\game\title.h" />
     <ClInclude Include="..\src\game\ui.h" />
     <ClInclude Include="..\src\math\mat4.h" />
     <ClInclude Include="..\src\math\vec2.h" />
