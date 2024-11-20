@@ -2,6 +2,7 @@
 #define _GAME_H_
 
 #include "../util/window.h"
+#include "../util/random.h"
 
 #include "../math/mat4.h"
 
@@ -34,8 +35,13 @@ static unsigned int g_score = 0;
 
 static unsigned short g_stats[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-static Piece g_falling;
+static const vec2s g_pieceStartPos = { G_GRID_CELL_COUNT / (float)2, (2 * G_GRID_CELL_COUNT) - 2 };
 
+static unsigned char g_currentPieceType;
+static Piece g_currentPiece;
+
+static unsigned char g_nextPiece;
+static unsigned char g_heldPiece = P_NULL;
 
 void g_init();
 
@@ -46,13 +52,19 @@ void g_fixedUpdate(float updateDt);
 
 void g_render();
 
-static void g_processGameInput();
+unsigned char g_getRandomPiece();
 
-static void g_rotateFallingPiece();
-static void g_horizontalFallingPieceMovement(unsigned char direction);
+void g_cycleNextPiece();
+
+void g_holdPiece();
+
+void g_rotateFallingPiece();
+void g_horizontalFallingPieceMovement(unsigned char direction);
 
 void g_increaseScore(unsigned int additionalScore);
 
 void g_incrementStat(unsigned char block);
+
+void g_processGameInput();
 
 #endif

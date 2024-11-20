@@ -47,7 +47,10 @@ static vec2 UI_NEXT_TITLE_TEXT_POSITION;
 static vec2 UI_NEXT_TITLE_TEXT_SCALE;
 
 static vec2 UI_NEXT_BLOCK_POSITION;
-static vec2 UI_NEXT_BLOCK_SCALE;
+
+static float UI_NEXT_PIECE_SIZE;
+
+static unsigned char ui_nextPiece = P_NULL;
 
 //Hold Box------------------------------------------------------------------
 static const char* UI_HOLD_TITLE_TEXT = "hold";
@@ -59,7 +62,10 @@ static vec2 UI_HOLD_TITLE_TEXT_POSITION;
 static vec2 UI_HOLD_TITLE_TEXT_SCALE;
 
 static vec2 UI_HOLD_BLOCK_POSITION;
-static vec2 UI_HOLD_BLOCK_SCALE;
+
+static float UI_HOLD_PIECE_SIZE;
+
+static unsigned char ui_heldPiece = P_NULL;
 
 //Stats Box-----------------------------------------------------------------
 #define UI_STATS_NUM_LENGTH 4
@@ -115,6 +121,9 @@ static vec2 UI_STATS_Z_ELEMENT_BLOCK_POSITION;
 void ui_init();
 
 void ui_render();
+
+void ui_setNextPiece(unsigned char newNext);
+void ui_setHeldPiece(unsigned char newHeld);
 
 void ui_updateScoreText(unsigned int score);
 

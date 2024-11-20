@@ -8,6 +8,8 @@
 
 #define P_BLOCK_COUNT 4
 
+#define P_NULL 0xFF
+
 #define P_I_PIECE_INDEX 0  //         - 000
 #define P_J_PIECE_INDEX 1  //         - 001
 #define P_L_PIECE_INDEX 2  //         - 010
@@ -15,6 +17,8 @@
 #define P_S_PIECE_INDEX 4  //         - 100
 #define P_T_PIECE_INDEX 5  //         - 101
 #define P_Z_PIECE_INDEX 6  //         - 110
+
+#define P_PIECE_COUNT 7
 
 typedef unsigned char PieceData;
 
@@ -57,6 +61,8 @@ void p_setPieceHeight(Piece* piece, unsigned char height);
 
 unsigned char p_getPieceWidth(PieceData data);
 void p_setPieceWidth(Piece* piece, unsigned char width);
+
+unsigned char p_getDefaultPieceColor(unsigned char pieceType);
 
 void p_translate(Piece* piece, short dx, short dy);
 

@@ -51,6 +51,11 @@ void ui_init() {
 		UI_NEXT_TITLE_TEXT_SCALE.y = UI_TEXT_HEIGHT;
 
 		//Piece
+		UI_NEXT_BLOCK_POSITION.x = UI_NEXT_BOX_POSITION.x;
+		UI_NEXT_BLOCK_POSITION.y = UI_NEXT_BOX_POSITION.y + UI_NEXT_BOX_SCALE.y / 8.0;
+
+		UI_NEXT_PIECE_SIZE = (5 * UI_NEXT_BOX_SCALE.x) / ((float)8 * (float)P_BLOCK_COUNT);
+
 
 	//Hold Box
 		//Box
@@ -72,6 +77,8 @@ void ui_init() {
 		UI_HOLD_TITLE_TEXT_SCALE.y = UI_TEXT_HEIGHT;
 
 		//Piece
+		UI_HOLD_BLOCK_POSITION.x = UI_HOLD_BOX_POSITION.x;
+		UI_HOLD_BLOCK_POSITION.y = UI_HOLD_BOX_POSITION.y + UI_HOLD_BOX_SCALE.y / (float)8;
 
 	//Stats Box
 		//Box
@@ -80,6 +87,8 @@ void ui_init() {
 
 		UI_STATS_BOX_SCALE.x = SCR_WIDTH / 5.0;
 		UI_STATS_BOX_SCALE.y = SCR_HEIGHT / 2.0;
+
+		UI_HOLD_PIECE_SIZE = (5 * UI_HOLD_BOX_SCALE.x) / ((float)8 * (float)P_BLOCK_COUNT);
 
 		//Title
 		unsigned int G_GAME_STATS_TITLE_TEXT_LENGTH = 0;
@@ -177,10 +186,22 @@ void ui_render() {
 
 	tp_drawString(UI_NEXT_TITLE_TEXT_POSITION, UI_NEXT_TITLE_TEXT_SCALE, COLOR_WHITE, UI_TEXT_THICKNESS_BOLD, UI_TEXT_CHAR_SPACING, TP_NO_SPACING, TP_ALIGNMENT_CENTER, UI_NEXT_TITLE_TEXT);
 
+	if (ui_nextPiece != P_NULL) {
+		unsigned char color = p_getDefaultPieceColor(ui_nextPiece);
+
+		p_drawDummy(ui_nextPiece, &UI_NEXT_BLOCK_POSITION, UI_NEXT_PIECE_SIZE, color);
+	}
+
 	//Hold
 	qd_drawOutlineRect(UI_HOLD_BOX_POSITION, UI_HOLD_BOX_SCALE, UI_BOX_THICKNESS, COLOR_WHITE);
 
 	tp_drawString(UI_HOLD_TITLE_TEXT_POSITION, UI_HOLD_TITLE_TEXT_SCALE, COLOR_WHITE, UI_TEXT_THICKNESS_BOLD, UI_TEXT_CHAR_SPACING, TP_NO_SPACING, TP_ALIGNMENT_CENTER, UI_HOLD_TITLE_TEXT);
+
+	if (ui_heldPiece != P_NULL) {
+		unsigned char color = p_getDefaultPieceColor(ui_heldPiece);
+
+		p_drawDummy(ui_heldPiece, &UI_HOLD_BLOCK_POSITION, UI_HOLD_PIECE_SIZE, color);
+	}
 
 	//Stats
 	qd_drawOutlineRect(UI_STATS_BOX_POSITION, UI_STATS_BOX_SCALE, UI_BOX_THICKNESS, COLOR_WHITE);
@@ -214,6 +235,14 @@ void ui_render() {
 	//Z
 	tp_drawString(UI_STATS_Z_ELEMENT_TEXT_POSITION, UI_STATS_ELEMENT_TEXT_CHAR_SCALE, COLOR_WHITE, UI_TEXT_THICKNESS_STANDARD, UI_TEXT_CHAR_SPACING, TP_NO_SPACING, TP_ALIGNMENT_CENTER, UI_STATS_Z_BLOCK_TEXT);
 	p_drawDummy(P_Z_PIECE_INDEX, &UI_STATS_Z_ELEMENT_BLOCK_POSITION, UI_STATS_ELEMENT_BLOCK_SIZE, COLOR_INDEX_GREEN);
+}
+
+void ui_setNextPiece(unsigned char newNext) {
+	ui_nextPiece = newNext;
+}
+
+void ui_setHeldPiece(unsigned char newHeld) {
+	ui_heldPiece = newHeld;
 }
 
 void ui_updateScoreText(unsigned int score) {

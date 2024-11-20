@@ -20,8 +20,8 @@ void p_init() {
 
 		p_setPieceColor(&P_J_PIECE, COLOR_INDEX_TEAL);
 
-		const unsigned char J_WIDTH = 3;
-		const unsigned char J_HEIGHT = 2;
+		const unsigned char J_WIDTH = 2;
+		const unsigned char J_HEIGHT = 3;
 
 		p_setPieceWidth(&P_J_PIECE, J_WIDTH);
 		p_setPieceHeight(&P_J_PIECE, J_HEIGHT);
@@ -36,8 +36,8 @@ void p_init() {
 
 		p_setPieceColor(&P_L_PIECE, COLOR_INDEX_ORANGE);
 
-		const unsigned char L_WIDTH = 3;
-		const unsigned char L_HEIGHT = 2;
+		const unsigned char L_WIDTH = 2;
+		const unsigned char L_HEIGHT = 3;
 
 		p_setPieceWidth(&P_L_PIECE, L_WIDTH);
 		p_setPieceHeight(&P_L_PIECE, L_HEIGHT);
@@ -70,8 +70,8 @@ void p_init() {
 		unsigned char S_WIDTH = 3;
 		unsigned char S_HEIGHT = 2;
 
-		p_setPieceWidth(&P_L_PIECE, S_WIDTH);
-		p_setPieceHeight(&P_L_PIECE, S_HEIGHT);
+		p_setPieceWidth(&P_S_PIECE, S_WIDTH);
+		p_setPieceHeight(&P_S_PIECE, S_HEIGHT);
 
 		p_setBlockAt(&P_S_PIECE, 1, 0);
 		p_setBlockAt(&P_S_PIECE, 2, 0);
@@ -283,6 +283,28 @@ void p_setPieceWidth(Piece* piece, unsigned char width) {
 	width &= ~(mask);
 
 	piece->data |= width;
+}
+
+unsigned char p_getDefaultPieceColor(unsigned char pieceType) {
+	switch (pieceType) {
+	case P_I_PIECE_INDEX:
+		return COLOR_INDEX_BLUE;
+	case P_J_PIECE_INDEX:
+		return COLOR_INDEX_TEAL;
+	case P_L_PIECE_INDEX:
+		return COLOR_INDEX_ORANGE;
+	case P_O_PIECE_INDEX:
+		return COLOR_INDEX_YELLOW;
+	case P_S_PIECE_INDEX:
+		return COLOR_INDEX_RED;
+	case P_T_PIECE_INDEX:
+		return COLOR_INDEX_PURPLE;
+	case P_Z_PIECE_INDEX:
+		return COLOR_INDEX_GREEN;
+	default:
+		printf("WARNING: invalid piece type passed to p_getDefaultPieceColor\n");
+		return;
+	}
 }
 
 void p_translate(Piece* piece, short dx, short dy) {
