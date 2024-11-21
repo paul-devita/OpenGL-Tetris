@@ -29,22 +29,31 @@ void sm_update(float deltaTime) {
 }
 
 void sm_fixedUpdate(float deltaTime) {
-	switch (SM_STATE) {
-		case SM_TITLE_STATE:
+	static const float fixedRate = 1 / (float)SM_TPS;
+	static float fixedUpdateTime = 0;
 
-			return;
-		case SM_STARTING_STATE:
-	
-			return;
-		case SM_GAME_STATE:
-			g_fixedUpdate(deltaTime);
-			return;
-		case SM_PAUSE_STATE:
+	fixedUpdateTime += deltaTime;
 
-			return;
-		default:
+	if (fixedUpdateTime >= fixedRate) {
+		fixedUpdateTime = 0;
 
-			return;
+		switch (SM_STATE) {
+			case SM_TITLE_STATE:
+
+				return;
+			case SM_STARTING_STATE:
+
+				return;
+			case SM_GAME_STATE:
+				g_fixedUpdate(fixedUpdateTime);
+				return;
+			case SM_PAUSE_STATE:
+
+				return;
+			default:
+
+				return;
+		}
 	}
 }
 

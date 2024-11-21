@@ -5,6 +5,8 @@
 #include "starting.h"
 #include "game.h"
 
+#define SM_TPS 15
+
 #define SM_TITLE_STATE 0
 #define SM_STARTING_STATE 1
 #define SM_GAME_STATE 2

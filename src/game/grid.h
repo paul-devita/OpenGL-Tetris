@@ -17,7 +17,7 @@ Column-major grid that represents blocks placed onto the grid
 
 g_grid[GRID X POSITION][GRID Y POSITION] = (HORIZONTAL COORDINATE, VERTICAL COORDINATE) of block
 */
-static unsigned char grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
+static unsigned char gr_grid[G_GRID_CELL_COUNT][2 * G_GRID_CELL_COUNT];
 
 extern const float GRID_CELL_SIZE;
 
@@ -41,6 +41,6 @@ vec2 gr_gridToScreen(vec2s* pos);
 
 unsigned char gr_checkGridPos(vec2s* pos);
 
-void gr_updateGrid(unsigned int grX, unsigned int grY, unsigned char data);
+void gr_updateGrid(vec2s* gridPos, unsigned char data);
 
 #endif

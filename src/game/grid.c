@@ -5,8 +5,8 @@ const float GRID_CELL_SIZE = ((9 * SCR_WIDTH) / (float)20) / (float)G_GRID_CELL_
 void gr_init() {
 	for (int x = 0; x < G_GRID_CELL_COUNT; x++)
 		for (int y = 0; y < 2 * G_GRID_CELL_COUNT; y++)
-			grid[x][y] = GR_NULL_ELEMENT; // 11111111
-	
+			gr_grid[x][y] = GR_NULL_ELEMENT; // 11111111
+
 	GRID_POSITION.x = SCR_WIDTH / (float)2;
 	GRID_POSITION.y = SCR_HEIGHT / (float)2;
 
@@ -18,6 +18,8 @@ void gr_init() {
 
 	GRID_OUTLINE_SCALE.x = GRID_SCALE.x + 2 * GRID_OUTLINE_THICKNESS;
 	GRID_OUTLINE_SCALE.y = GRID_SCALE.y + 2 * GRID_OUTLINE_THICKNESS;
+
+	gr_grid[1][1] = 4;
 }
 
 void gr_drawGridUI() {
@@ -25,15 +27,24 @@ void gr_drawGridUI() {
 }
 
 void gr_drawGridContents() {
-	vec2s gridPos = { 0, 0 };
+	vec2s gridPos;
 
-	for (; gridPos.x < G_GRID_CELL_COUNT; gridPos.x++) 
-		for(; gridPos.y < 2 * G_GRID_CELL_COUNT; gridPos.y++)
-			if (grid[gridPos.x][gridPos.y] != GR_NULL_ELEMENT) {
+	int yMax = 2 * G_GRID_CELL_COUNT;
+
+	for (int x = 0; x < G_GRID_CELL_COUNT; x++) {
+		for (int y = 0; y < yMax; y++) {
+			unsigned char gridElement = gr_grid[x][y];
+
+			if (gridElement != GR_NULL_ELEMENT) {
+				gridPos.x = x;
+				gridPos.y = y;
+
 				vec2 p = gr_gridToScreen(&gridPos);
 
-				b_drawBlock(&p, grid[gridPos.x][gridPos.y]);
+				b_drawBlock(&p, gridElement);
 			}
+		}
+	}
 }
 
 void gr_drawGridLines() {
@@ -107,7 +118,14 @@ unsigned char gr_checkGridPos(vec2s* pos) {
 	short x = pos->x;
 	short y = pos->y;
 
-	unsigned char val = grid[x][y];
+	unsigned char val = gr_grid[x][y];
 
 	return val;
+}
+
+void gr_updateGrid(vec2s* gridPos, unsigned char data) {
+	short x = gridPos->x;
+	short y = gridPos->y;
+
+	gr_grid[x][y] = data;
 }
