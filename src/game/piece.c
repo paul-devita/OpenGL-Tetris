@@ -360,6 +360,9 @@ void p_draw(Piece* piece) {
 				gridPos.x += x;
 				gridPos.y -= y;
 
+				if (gridPos.y >= 2 * G_GRID_CELL_COUNT)
+					continue;
+
 				vec2 screenPos = gr_gridToScreen(&gridPos);
 
 				b_drawBlock(&screenPos, colorIndex);

@@ -409,13 +409,55 @@ void g_cycleNextPiece() {
 }
 
 void g_holdPiece() {
+	if (!g_checkBelowCurrentPiece())
+		return;
+
+	Piece newPiece;
+
+	if (g_heldPiece == P_NULL) {
+		p_createPiece(&newPiece, &g_currentPiece.position, g_nextPiece, G_FALSE);
+	}
+	else {
+		p_createPiece(&newPiece, &g_currentPiece.position, g_heldPiece, G_FALSE);
+	}
+
+	unsigned char newWidth = p_getPieceWidth(newPiece.data);
+	unsigned char newHeight = p_getPieceHeight(newPiece.data);
+
+	if (newPiece.position.x < 0) {
+		newPiece.position.x = 0;
+	}
+	if (newPiece.position.x + newWidth >= G_GRID_CELL_COUNT) {
+		newPiece.position.x = G_GRID_CELL_COUNT - newWidth;
+	}
+
+	for (int x = 0; x < newWidth; x++) {
+		for (int y = 0; y < newHeight; y++) {
+			unsigned char block = p_getBlockAt(&newPiece, x, y);
+
+			if (block) {
+				vec2s gridPos;
+
+				gridPos.x = newPiece.position.x + x;
+				gridPos.y = newPiece.position.y - y;
+
+				unsigned char gridVal = gr_checkGridPos(&gridPos);
+
+				if (gridVal != GR_NULL_ELEMENT)
+					return;
+			}
+		}
+	}
+
 	if (g_heldPiece == P_NULL) {
 		g_heldPiece = g_currentPieceType;
 		ui_setHeldPiece(g_heldPiece);
 
-		g_cycleNextPiece();
+		g_currentPieceType = g_nextPiece;
+		g_incrementStat(g_currentPieceType);
 
-		return;
+		g_nextPiece = g_getRandomPiece();
+		ui_setNextPiece(g_nextPiece);
 	}
 	else {
 		unsigned char temp = g_heldPiece;
@@ -423,9 +465,10 @@ void g_holdPiece() {
 		g_heldPiece = g_currentPieceType;
 		g_currentPieceType = temp;
 
-		p_createPiece(&g_currentPiece, &g_pieceStartPos, g_currentPieceType, G_FALSE);
 		ui_setHeldPiece(g_heldPiece);
 	}
+
+	g_currentPiece = newPiece;
 }
 
 void g_rotateFallingPiece() {
@@ -447,9 +490,6 @@ void g_rotateFallingPiece() {
 	//y-value checks
 	if (!g_checkBelowCurrentPiece() && (newPiece.position.y - height >= 0 || newPiece.position.y - height < 0)) {
 		newPiece.position.y = height - 1;
-	}
-	if (newPiece.position.y >= 2 * G_GRID_CELL_COUNT) {
-		newPiece.position.y = (2 * G_GRID_CELL_COUNT) - 1;
 	}
 
 	for (int y = 0; y < height; y++) {
