@@ -18,8 +18,6 @@ void gr_init() {
 
 	GRID_OUTLINE_SCALE.x = GRID_SCALE.x + 2 * GRID_OUTLINE_THICKNESS;
 	GRID_OUTLINE_SCALE.y = GRID_SCALE.y + 2 * GRID_OUTLINE_THICKNESS;
-
-	gr_grid[1][1] = 4;
 }
 
 void gr_drawGridUI() {
@@ -128,4 +126,18 @@ void gr_updateGrid(vec2s* gridPos, unsigned char data) {
 	short y = gridPos->y;
 
 	gr_grid[x][y] = data;
+}
+
+void gr_deleteRowAndShift(short row) {
+	short gridHeight = 2 * G_GRID_CELL_COUNT;
+
+	for (int r = row + 1; r < gridHeight; r++) {
+		for (int x = 0; x < G_GRID_CELL_COUNT; x++) {
+			gr_grid[x][r - 1] = gr_grid[x][r];
+		}
+	}
+
+	for (int x = 0; x < G_GRID_CELL_COUNT; x++) {
+		gr_grid[x][gridHeight - 1] = GR_NULL_ELEMENT;
+	}
 }

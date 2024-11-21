@@ -9,7 +9,7 @@
 
 #include "block.h"
 
-#define G_GRID_CELL_COUNT 12
+#define G_GRID_CELL_COUNT 10
 #define GR_NULL_ELEMENT 0xFF
 
 /*
@@ -42,5 +42,7 @@ vec2 gr_gridToScreen(vec2s* pos);
 unsigned char gr_checkGridPos(vec2s* pos);
 
 void gr_updateGrid(vec2s* gridPos, unsigned char data);
+
+void gr_deleteRowAndShift(short row);
 
 #endif

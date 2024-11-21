@@ -10,10 +10,6 @@ void g_init() {
 	//Piece
 	p_init();
 
-	vec2s p = { 5, 0 };
-
-	gr_updateGrid(&p, 4);
-
 	//General
 	g_currentPieceType = g_getRandomPiece();
 	p_createPiece(&g_currentPiece, &g_pieceStartPos, g_currentPieceType, G_FALSE);
@@ -28,24 +24,194 @@ void g_init() {
 }
 
 void g_reset() {
+	//Reset Score
 
+	//Reset Levels
+
+	//Reset Lines Cleared Indices
+
+	//Reset Grid
+
+	//Reset UI
+
+	//Run General Init Functionality To Init Game State for next Run
 }
 
 void g_update(float deltaTime) {
 	if (g_gameHalted) {
-		static float haltTimer = 0;
-
-		haltTimer += deltaTime;
-
 		switch (g_haltReason) {
 			case G_HALT_CLEARED_LINE: {
-				
+				const float PHASE_DURATION = 0.5f;
+				const unsigned char MAX_NUM_PHASES = 4;
 
+				static unsigned char numOfPhases = 0;
+
+				static unsigned char phaseToggle = G_FALSE;
+				static unsigned char whitePhaseTriggered = G_FALSE;
+				static unsigned char colorPhaseTriggered = G_FALSE;
+
+				static float phaseTimer = 0;
+
+				phaseTimer += deltaTime;
+
+				if (numOfPhases >= MAX_NUM_PHASES) {
+					unsigned char numRowsCompleted = 0;
+
+					//Sort indices so they are in descending order
+					for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
+						int maxIndex = i;
+
+						for (int j = i + 1; j < G_MAXIMUM_LINES_CLEARABLE; j++) {
+							if (g_completeLinesIndices[j] > g_completeLinesIndices[maxIndex]) {
+								maxIndex = j;
+							}
+						}
+
+						short temp = g_completeLinesIndices[i];
+
+						g_completeLinesIndices[i] = g_completeLinesIndices[maxIndex];
+						g_completeLinesIndices[maxIndex] = temp;
+					}
+
+					//Get num of rows completed
+					for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
+						if (g_completeLinesIndices[i] != G_NULL_INDEX) {
+							//Add 1 to number of rows
+							numRowsCompleted++;
+
+							//Delete the row and shift the grid
+							short row = g_completeLinesIndices[i];
+
+							gr_deleteRowAndShift(row);
+
+							g_completeLinesIndices[i] = G_NULL_INDEX;
+						}
+						else {
+							break;
+						}
+					}
+
+					//Update lines cleared
+					g_linesCleared += numRowsCompleted;
+
+					//Update Level and Difficulty
+					unsigned char newLevel = g_linesCleared / 10;
+
+					if (newLevel != g_level) {
+						g_level = newLevel;
+
+						if (g_level >= 1 && g_level <= 10) {
+							g_fallingTimer -= 4;
+						}
+						else if (g_level == 13 || g_level == 16 || g_level == 19 || g_level == 24 || g_level == 29) {
+							g_fallingTimer -= 4;
+						}
+					}
+
+					//Update score
+					unsigned int additionalScore = 0;
+
+					switch (numRowsCompleted) {
+					case 1:
+						additionalScore = 40 * (g_level + 1);
+						break;
+					case 2:
+						additionalScore = 100 * (g_level + 1);
+						break;
+					case 3:
+						additionalScore = 300 * (g_level + 1);
+						break;
+					case 4:
+						additionalScore = 1200 * (g_level + 1);
+						break;
+					default:
+						printf("WARNING: invalid number of lines cleared\n");
+						break;
+					}
+
+					g_increaseScore(additionalScore);
+
+					phaseToggle = G_FALSE;
+					whitePhaseTriggered = G_FALSE;
+					colorPhaseTriggered = G_FALSE;
+
+					phaseTimer = 0;
+					numOfPhases = 0;
+
+					g_gameHalted = G_FALSE;
+
+					g_halt(G_HALT_CHANGING_PIECE);
+
+					return;
+				}
+
+				if (!phaseToggle) {
+					if (!whitePhaseTriggered) {
+						for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
+							if (g_completeLinesIndices[i] != -1) {
+								short yVal = g_completeLinesIndices[i];
+
+								for (int x = 0; x < G_GRID_CELL_COUNT; x++) {
+									vec2s p;
+
+									p.x = x;
+									p.y = yVal;
+
+									gr_updateGrid(&p, COLOR_INDEX_WHITE);
+								}
+							}
+						}
+
+						whitePhaseTriggered = G_TRUE;
+					}
+
+					if (phaseTimer >= PHASE_DURATION) {
+						phaseToggle = G_TRUE;
+						whitePhaseTriggered = G_FALSE;
+
+						numOfPhases++;
+						phaseTimer = 0;
+					}
+				}
+				else {
+					if (!colorPhaseTriggered) {
+						for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
+							if (g_completeLinesIndices[i] != -1) {
+								short yVal = g_completeLinesIndices[i];
+
+								for (int x = 0; x < G_GRID_CELL_COUNT; x++) {
+									unsigned char color = g_completeLinesData[i][x];
+
+									vec2s p;
+
+									p.x = x;
+									p.y = yVal;
+
+									gr_updateGrid(&p, color);
+								}
+							}
+						}
+
+						colorPhaseTriggered = G_TRUE;
+					}
+
+					if (phaseTimer >= PHASE_DURATION) {
+						phaseToggle = G_FALSE;
+						colorPhaseTriggered = G_FALSE;
+
+						numOfPhases++;
+						phaseTimer = 0;
+					}
+				}
 
 				break;
 			}
 			case G_HALT_CHANGING_PIECE: {
 				const float CHANGING_PIECE_DURATION = 0.5f;
+
+				static float haltTimer = 0;
+
+				haltTimer += deltaTime;
 
 				if (haltTimer >= CHANGING_PIECE_DURATION) {
 					g_cycleNextPiece();
@@ -54,14 +220,12 @@ void g_update(float deltaTime) {
 					g_gameHalted = G_FALSE;
 				}
 
-				break;
+				return;
 			}
 			default:
 				printf("WARNING: invalid halt reason, resuming game\n");
-				break;
+				return;
 		}
-
-		return;
 	}
 
 	g_processGameInput();
@@ -74,11 +238,12 @@ void g_fixedUpdate(float deltaTime) {
 	}
 
 	switch (g_checkBelowCurrentPiece()) {
+		//Unobstructed, continue to move piece downward
 		case G_TRUE: {
 			unsigned char fallingDelay = g_fallingDelay;
 
 			if (g_fastFallToggle)
-				fallingDelay = g_fastFallDelay;
+				fallingDelay = 0;
 
 			g_placingTimer = 0;
 			g_fallingTimer++;
@@ -86,20 +251,30 @@ void g_fixedUpdate(float deltaTime) {
 			if (g_fallingTimer >= fallingDelay) {
 				p_translate(&g_currentPiece, 0, -1);
 				g_fallingTimer = 0;
+
+				if (g_fastFallToggle) {
+					unsigned int additionalScore = 1;
+
+					g_increaseScore(additionalScore);
+				}
 			}
 
 			break;
 		}
-		case G_FALSE:
+		//Obstructed, begin piece placement
+		case G_FALSE: {
+			unsigned char placingDelay = g_placingDelay;
+
 			g_fallingTimer = 0;
 			g_placingTimer++;
 
-			if (g_placingTimer >= g_placingDelay) {
+			if (g_placingTimer >= placingDelay) {
 				unsigned char width = p_getPieceWidth(g_currentPiece.data);
 				unsigned char height = p_getPieceHeight(g_currentPiece.data);
 
 				unsigned char color = p_getPieceColor(g_currentPiece.data);
 
+				//Copy pieces to grid
 				for (int x = 0; x < width; x++) {
 					for (int y = 0; y < height; y++) {
 						unsigned char block = p_getBlockAt(&g_currentPiece, x, y);
@@ -115,8 +290,10 @@ void g_fixedUpdate(float deltaTime) {
 					}
 				}
 
+				//"remove" current piece
 				g_currentPiece.blocks = 0x00; // 0000 0000
 
+				//Find any completed rows (if they exist)
 				unsigned char completeLinesFound = G_FALSE;
 				unsigned char curIndex = 0;
 
@@ -133,27 +310,32 @@ void g_fixedUpdate(float deltaTime) {
 						else if (x == G_GRID_CELL_COUNT - 1) {
 							completeLinesFound = G_TRUE;
 							g_completeLinesIndices[curIndex] = y;
+
+							for (int i = 0; i < G_GRID_CELL_COUNT; i++) {
+								p.x = i;
+
+								g_completeLinesData[curIndex][i] = gr_checkGridPos(&p);
+							}
+
 							curIndex++;
 							break;
 						}
 					}
 				}
 
-				unsigned char reason;
-
+				//Decide what to do next
 				if (completeLinesFound) {
-					reason = G_HALT_CLEARED_LINE;
+					g_halt(G_HALT_CLEARED_LINE);
 				}
 				else {
-					reason = G_HALT_CHANGING_PIECE;
+					g_halt(G_HALT_CHANGING_PIECE);
 				}
-
-				g_halt(reason);
 
 				g_placingTimer = 0;
 			}
 
 			break;
+		}
 	}
 }
 
@@ -254,6 +436,7 @@ void g_rotateFallingPiece() {
 	unsigned char width = p_getPieceWidth(newPiece.data);
 	unsigned char height = p_getPieceHeight(newPiece.data);
 
+	//x-value checks
 	if (newPiece.position.x < 0) {
 		newPiece.position.x = 0;
 	}
@@ -261,8 +444,12 @@ void g_rotateFallingPiece() {
 		newPiece.position.x = G_GRID_CELL_COUNT - width;
 	}
 
+	//y-value checks
 	if (!g_checkBelowCurrentPiece() && (newPiece.position.y - height >= 0 || newPiece.position.y - height < 0)) {
 		newPiece.position.y = height - 1;
+	}
+	if (newPiece.position.y >= 2 * G_GRID_CELL_COUNT) {
+		newPiece.position.y = (2 * G_GRID_CELL_COUNT) - 1;
 	}
 
 	for (int y = 0; y < height; y++) {

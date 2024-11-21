@@ -12,6 +12,8 @@
 #include "../render/type.h"
 #include "../render/color.h"
 
+#include "stateManager.h"
+
 #include "block.h"
 #include "grid.h"
 #include "piece.h"
@@ -37,19 +39,18 @@ static unsigned int g_score = 0;
 static unsigned short g_stats[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
 #define G_MAXIMUM_LINES_CLEARABLE 4
-static short g_completeLinesIndices[] = { -1, -1, -1, -1 };
+#define G_NULL_INDEX -1
+static short g_completeLinesIndices[] = { G_NULL_INDEX, G_NULL_INDEX, G_NULL_INDEX, G_NULL_INDEX };
 static unsigned char g_completeLinesData[4][G_GRID_CELL_COUNT];
 
 #define G_HALT_CLEARED_LINE 0
 #define G_HALT_CHANGING_PIECE 1
+#define G_HALT_GAME_END 2
 static unsigned char g_gameHalted = G_FALSE;
 static unsigned char g_haltReason;
 static float g_haltDuration;
 
 static const vec2s g_pieceStartPos = { G_GRID_CELL_COUNT / (float)2, (2 * G_GRID_CELL_COUNT) - 2 };
-
-static unsigned char g_fastFallToggle = G_FALSE;
-static const unsigned char g_fastFallDelay = 1;
 
 static unsigned char g_currentPieceType;
 static Piece g_currentPiece;
@@ -57,10 +58,12 @@ static Piece g_currentPiece;
 static unsigned char g_nextPiece;
 static unsigned char g_heldPiece = P_NULL;
 
-static unsigned char g_fallingDelay = 15;
+static unsigned char g_fallingDelay = 60;
 static unsigned char g_fallingTimer = 0;
 
-static unsigned char g_placingDelay = 15;
+static unsigned char g_fastFallToggle = G_FALSE;
+
+static unsigned char g_placingDelay = 60;
 static unsigned char g_placingTimer = 0;
 
 static unsigned int g_linesCleared = 0;
