@@ -10,6 +10,8 @@
 
 #include "piece.h"
 
+static unsigned char UI_INITIALIZED = 0;
+
 //UI-----------------------------------------------------------------------------------------------------------
 
 static const float UI_BOX_THICKNESS = SCR_WIDTH / 150.0;

@@ -1,5 +1,11 @@
 #include "game.h"
 
+const float G_END_GAME_BLOCK_SIZE = SCR_WIDTH / (float)(sizeof(unsigned char) * 8);
+
+const vec2 G_END_GAME_BLOCKS_START = { (SCR_WIDTH / (float)(sizeof(unsigned char) * 8)) / (float)2, 0 };
+
+const unsigned int G_END_GAME_BLOCKS_VERTICAL_COUNT = SCR_HEIGHT / (float)(SCR_WIDTH / (float)(sizeof(unsigned char) * 8));
+
 void g_init() {
 	//UI
 	ui_init();
@@ -10,48 +16,57 @@ void g_init() {
 	//Piece
 	p_init();
 
-	//General
+	//Init Score
+	g_score = 0;
+
+	//Init Stats
+	for (int i = 0; i < G_STATS_COUNT; i++) {
+		g_stats[i] = 0;
+	}
+
+	//Init Completing Lines
+	for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
+		g_completeLinesIndices[i] = G_NULL_INDEX;
+	}
+
+	g_linesCleared = 0;
+	g_level = 0;
+
+	//Init Game Halts
+	g_gameHalted = G_FALSE;
+
+	//Init Falling Variables
+	g_fallingDelay = 60;
+	g_fallingTimer = 0;
+
+	g_fastFallToggle = G_FALSE;
+
+	g_placingDelay = 60;
+	g_placingTimer = 0;
+
+	//Init Falling Piece
 	g_currentPieceType = g_getRandomPiece();
 	p_createPiece(&g_currentPiece, &g_pieceStartPos, g_currentPieceType, G_FALSE);
 	p_translate(&g_currentPiece, -p_getPieceWidth(g_currentPiece.data) / 2, 0);
 	g_incrementStat(g_currentPieceType);
 
+	//Init Next Piece
 	g_nextPiece = g_getRandomPiece();
 	ui_setNextPiece(g_nextPiece);
 
+	//Init Held Piece
 	g_heldPiece = P_NULL;
 	ui_setHeldPiece(g_heldPiece);
-	
+
 	//Game Over Functionality
-	g_endGameBlocksHeight = SCR_HEIGHT / G_END_GAME_BLOCK_SIZE;
-
-	g_endGameStart.x = G_END_GAME_BLOCK_SIZE / (float)2;
-	g_endGameStart.y = 0;
-
-	g_endGameBlocks = (unsigned char*)malloc(g_endGameBlocksHeight * sizeof(unsigned char));
+	g_endGameBlocks = (unsigned char*)malloc(G_END_GAME_BLOCKS_VERTICAL_COUNT * sizeof(unsigned char));
 	if (g_endGameBlocks == NULL) {
 		printf("ERROR: out of memory\n");
 		exit(-1);
 	}
-	memset(g_endGameBlocks, 0, g_endGameBlocksHeight * sizeof(unsigned char));
-}
+	memset(g_endGameBlocks, 0, G_END_GAME_BLOCKS_VERTICAL_COUNT * sizeof(unsigned char));
 
-void g_reset() {
-	//Reset Score
-
-	//Reset Levels
-
-	//Reset Lines Cleared Indices
-
-	//Reset Grid
-
-	//Reset UI
-
-	//Run General Init Functionality To Init Game State for next Run
-
-	//Reset Game Over Functionality
-
-	//Reset Halts
+	g_endGameMinIndex = 0;
 }
 
 void g_update(float deltaTime) {
@@ -240,8 +255,9 @@ void g_update(float deltaTime) {
 				return;
 			}
 			case G_HALT_GAME_END: {
-				const float ANIMATION_INTERVAL = 0.1f;
-				const float ENDING_INTERVAL = 1.0f;
+				const float PHASE1_ANIMATION_INTERVAL = 0.1f;
+
+				const float PHASE1_ENDING_INTERVAL = 1.0f;
 
 				static float haltTimer = 0;
 
@@ -249,18 +265,19 @@ void g_update(float deltaTime) {
 
 				haltTimer += deltaTime;
 
-				if (curIndex >= g_endGameBlocksHeight && haltTimer >= ENDING_INTERVAL) {
+				if (curIndex >= G_END_GAME_BLOCKS_VERTICAL_COUNT && haltTimer >= PHASE1_ENDING_INTERVAL) {
 					g_gameHalted = G_FALSE;
 					haltTimer = 0;
 					curIndex = 0;
 
-					memset(g_endGameBlocks, 0, g_endGameBlocksHeight * sizeof(unsigned char));
+					memset(g_endGameBlocks, 0, G_END_GAME_BLOCKS_VERTICAL_COUNT * sizeof(unsigned char));
 
 					//Go to End Game Screen
+					sm_changeState(SM_OVER_STATE);
 				}
-				else if (curIndex < g_endGameBlocksHeight && haltTimer >= ANIMATION_INTERVAL) {
+				else if (curIndex < G_END_GAME_BLOCKS_VERTICAL_COUNT && haltTimer >= PHASE1_ANIMATION_INTERVAL) {
 					unsigned int minRow = curIndex;
-					unsigned int maxRow = g_endGameBlocksHeight - 1 - curIndex;
+					unsigned int maxRow = G_END_GAME_BLOCKS_VERTICAL_COUNT - 1 - curIndex;
 
 					unsigned char mask = 0x01;
 
@@ -412,7 +429,7 @@ void g_render() {
 
 	//Render Game Over
 	if (g_gameHalted && g_haltReason == G_HALT_GAME_END) {
-		for (int i = 0; i < g_endGameBlocksHeight; i++) {
+		for (int i = 0; i < G_END_GAME_BLOCKS_VERTICAL_COUNT; i++) {
 			unsigned char mask = 0x01;
 			unsigned char row = g_endGameBlocks[i];
 
@@ -422,8 +439,8 @@ void g_render() {
 				if (value) {
 					vec2 pos;
 
-					pos.x = g_endGameStart.x + (j * G_END_GAME_BLOCK_SIZE);
-					pos.y = g_endGameStart.y + (i * G_END_GAME_BLOCK_SIZE);
+					pos.x = G_END_GAME_BLOCKS_START.x + (j * G_END_GAME_BLOCK_SIZE);
+					pos.y = G_END_GAME_BLOCKS_START.y + (i * G_END_GAME_BLOCK_SIZE);
 
 					b_drawDummyBlock(&pos, G_END_GAME_BLOCK_SIZE, COLOR_INDEX_WHITE);
 				}
@@ -656,6 +673,8 @@ void g_increaseScore(unsigned int additionalScore) {
 }
 
 void g_incrementStat(unsigned char blockType) {
+	if (blockType >= G_STATS_COUNT) return;
+
 	if (g_stats[blockType] + 1 > G_MAXIMUM_STATS) {
 		g_stats[blockType] = (unsigned short)G_MAXIMUM_STATS;
 	}

@@ -20,6 +20,8 @@
 
 #define P_PIECE_COUNT 7
 
+static unsigned char P_INITIALIZED = 0;
+
 typedef unsigned char PieceData;
 
 /*

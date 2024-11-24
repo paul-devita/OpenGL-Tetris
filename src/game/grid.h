@@ -12,6 +12,8 @@
 #define G_GRID_CELL_COUNT 10
 #define GR_NULL_ELEMENT 0xFF
 
+static unsigned char GR_GRID_INITIALIZED = 0;
+
 /*
 Column-major grid that represents blocks placed onto the grid
 

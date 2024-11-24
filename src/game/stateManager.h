@@ -4,11 +4,13 @@
 #include "title.h"
 #include "starting.h"
 #include "game.h"
+#include "gameOver.h"
 
 #define SM_TITLE_STATE 0
 #define SM_STARTING_STATE 1
 #define SM_GAME_STATE 2
 #define SM_PAUSE_STATE 3
+#define SM_OVER_STATE 4
 
 #define SM_TPS 60
 

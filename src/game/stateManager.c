@@ -6,6 +6,9 @@ void sm_init() {
 
 	//Init Game
 	g_init();
+
+	//Init Game Over
+	go_init();
 }
 
 void sm_update(float deltaTime) {
@@ -21,6 +24,9 @@ void sm_update(float deltaTime) {
 			return;
 		case SM_PAUSE_STATE:
 
+			return;
+		case SM_OVER_STATE:
+			go_update(deltaTime);
 			return;
 		default:
 		
@@ -50,6 +56,9 @@ void sm_fixedUpdate(float deltaTime) {
 			case SM_PAUSE_STATE:
 
 				return;
+			case SM_OVER_STATE:
+
+				return;
 			default:
 
 				return;
@@ -73,6 +82,9 @@ void sm_render() {
 		case SM_PAUSE_STATE:
 
 			return;
+		case SM_OVER_STATE:
+			go_render();
+			return;
 		default:
 
 			return;
@@ -92,7 +104,6 @@ void sm_changeState(State newState) {
 			return;
 		case SM_STARTING_STATE:
 			if (newState == SM_GAME_STATE) {
-				g_reset();
 				SM_STATE = SM_GAME_STATE;
 			}
 			else {
@@ -101,31 +112,38 @@ void sm_changeState(State newState) {
 
 			return;
 		case SM_GAME_STATE:
-			if (newState == SM_PAUSE_STATE) {
-				SM_STATE = SM_PAUSE_STATE;
-			}
-			else {
-				printf("WARNING: invalid state change attempted\n");
+			switch (newState) {
+				case SM_PAUSE_STATE:
+					SM_STATE = SM_PAUSE_STATE;
+					break;
+				case SM_OVER_STATE:
+					SM_STATE = SM_OVER_STATE;
+					break;
+				default:
+					printf("WARNING: invalid state change attempted\n");
 			}
 
 			return;
 		case SM_PAUSE_STATE:
-			if (newState == SM_GAME_STATE) {
+			switch (newState) {
+			case SM_GAME_STATE:
 				SM_STATE = SM_GAME_STATE;
-			}
-			else if (newState == SM_STARTING_STATE) {
+				break;
+			case SM_STARTING_STATE:
 				SM_STATE = SM_STARTING_STATE;
-			}
-			else if (newState == SM_TITLE_STATE) {
+				g_init();
+				break;
+			case SM_TITLE_STATE:
 				SM_STATE = SM_TITLE_STATE;
-			}
-			else {
+				g_init();
+				break;
+			default:
 				printf("WARNING: invalid state change attempted\n");
 			}
 
 			return;
 		default:
-
+			printf("WARNING: invalid state passed to sm_changeState\n");
 			return;
 	}
 }

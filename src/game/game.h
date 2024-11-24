@@ -24,10 +24,6 @@
 #include "ui.h"
 
 //General Game Functionality
-#define G_MAXIMUM_SCORE 9999999
-
-#define G_MAXIMUM_STATS 9999
-
 #define G_FALSE 0
 #define G_TRUE 1
 
@@ -39,14 +35,17 @@
 
 #define G_COLOR_COUNT 8
 
-static unsigned int g_score = 0;
+#define G_MAXIMUM_SCORE 9999999
+static unsigned int g_score;
 
-static unsigned short g_stats[] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+#define G_STATS_COUNT 8
+#define G_MAXIMUM_STATS 9999
+static unsigned short g_stats[G_STATS_COUNT];
 
 //Completing Lines
 #define G_MAXIMUM_LINES_CLEARABLE 4
 #define G_NULL_INDEX -1
-static short g_completeLinesIndices[] = { G_NULL_INDEX, G_NULL_INDEX, G_NULL_INDEX, G_NULL_INDEX };
+static short g_completeLinesIndices[G_MAXIMUM_LINES_CLEARABLE];
 static unsigned char g_completeLinesData[4][G_GRID_CELL_COUNT];
 
 //Game Halts
@@ -55,7 +54,6 @@ static unsigned char g_completeLinesData[4][G_GRID_CELL_COUNT];
 #define G_HALT_GAME_END 2
 static unsigned char g_gameHalted = G_FALSE;
 static unsigned char g_haltReason;
-static float g_haltDuration;
 
 //Falling Piece
 static const vec2s g_pieceStartPos = { G_GRID_CELL_COUNT / (float)2, (2 * G_GRID_CELL_COUNT) - 2 };
@@ -64,33 +62,35 @@ static unsigned char g_currentPieceType;
 static Piece g_currentPiece;
 
 static unsigned char g_nextPiece;
-static unsigned char g_heldPiece = P_NULL;
+static unsigned char g_heldPiece;
 
-static unsigned char g_fallingDelay = 60;
-static unsigned char g_fallingTimer = 0;
+static unsigned char g_fallingDelay;
+static unsigned char g_fallingTimer;
 
 static unsigned char g_fastFallToggle = G_FALSE;
 
-static unsigned char g_placingDelay = 60;
-static unsigned char g_placingTimer = 0;
+static unsigned char g_placingDelay;
+static unsigned char g_placingTimer;
 
-static unsigned int g_linesCleared = 0;
+static unsigned int g_linesCleared;
 static unsigned char g_level;
 
 //Game Over Functionality
-static const float G_END_GAME_BLOCK_SIZE = SCR_WIDTH / (float)(sizeof(unsigned char) * 8);
+extern const float G_END_GAME_BLOCK_SIZE;
 
-static vec2 g_endGameStart;
+extern const vec2 G_END_GAME_BLOCKS_START;
 
-static unsigned int g_endGameBlocksHeight;
+extern const unsigned int G_END_GAME_BLOCKS_VERTICAL_COUNT;
 
-static unsigned int g_endGameMinIndex = 0;
+static unsigned int g_endGameMinIndex;
 
-static unsigned char* g_endGameBlocks;
+unsigned char* g_endGameBlocks;
 
+/*
+Instantiates all game-related functionality. Also instantiates all functioanlity related to grid.h, piece.h, and block.h
+Any subsequent calls to this function will reset game-state, effectively starting the game over without re-calculating ui, grid, block, piece, or game data
+*/
 void g_init();
-
-void g_reset();
 
 void g_update(float deltaTime);
 void g_fixedUpdate(float updateDt);

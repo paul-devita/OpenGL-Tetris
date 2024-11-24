@@ -1,10 +1,14 @@
 #include "block.h"
 
 void b_init() {
-	B_BLOCK_TEXTURE = tx_genTexture(B_BLOCK_TEXTURE_PATH, TX_TRUE);
+	if (!B_INITIALIZED) {
+		B_BLOCK_TEXTURE = tx_genTexture(B_BLOCK_TEXTURE_PATH, TX_TRUE);
 
-	B_BLOCK_SCALE.x = GRID_CELL_SIZE;
-	B_BLOCK_SCALE.y = GRID_CELL_SIZE;
+		B_BLOCK_SCALE.x = GRID_CELL_SIZE;
+		B_BLOCK_SCALE.y = GRID_CELL_SIZE;
+
+		B_INITIALIZED = 1;
+	}
 }
 
 void b_drawBlock(vec2* position, unsigned char colorIndex) {

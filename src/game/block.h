@@ -10,6 +10,8 @@
 
 #define B_BLOCK_TEXTURE_PATH "../resources/textures/block.png"
 
+static unsigned char B_INITIALIZED = 0;
+
 static unsigned int B_BLOCK_TEXTURE;
 
 extern const float GRID_CELL_SIZE;

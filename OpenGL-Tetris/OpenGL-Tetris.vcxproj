@@ -136,6 +136,8 @@
     <ClCompile Include="..\dependencies\stb_image.c" />
     <ClCompile Include="..\src\game\block.c" />
     <ClCompile Include="..\src\game\game.c" />
+    <ClCompile Include="..\src\game\gameOver.c" />
+    <ClCompile Include="..\src\game\gamePaused.c" />
     <ClCompile Include="..\src\game\grid.c" />
     <ClCompile Include="..\src\game\piece.c" />
     <ClCompile Include="..\src\game\starting.c" />
@@ -165,6 +167,8 @@
     <ClInclude Include="..\dependencies\include\stb_image.h" />
     <ClInclude Include="..\src\game\block.h" />
     <ClInclude Include="..\src\game\game.h" />
+    <ClInclude Include="..\src\game\gameOver.h" />
+    <ClInclude Include="..\src\game\gamePaused.h" />
     <ClInclude Include="..\src\game\grid.h" />
     <ClInclude Include="..\src\game\piece.h" />
     <ClInclude Include="..\src\game\starting.h" />

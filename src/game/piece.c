@@ -1,114 +1,119 @@
 #include "piece.h"
 
 void p_init() {
-	//I
-		P_I_PIECE.blocks = 0x00; // 0000 0000
 
-		p_setPieceColor(&P_I_PIECE, COLOR_INDEX_BLUE);
+	if (!P_INITIALIZED) {
+		//I
+			P_I_PIECE.blocks = 0x00; // 0000 0000
 
-		const unsigned char I_WIDTH = 4;
-		const unsigned char I_HEIGHT = 1;
+			p_setPieceColor(&P_I_PIECE, COLOR_INDEX_BLUE);
 
-		p_setPieceWidth(&P_I_PIECE, I_WIDTH);
-		p_setPieceHeight(&P_I_PIECE, I_HEIGHT);
+			const unsigned char I_WIDTH = 4;
+			const unsigned char I_HEIGHT = 1;
 
-		for (int i = 0; i < I_WIDTH; i++)
-			p_setBlockAt(&P_I_PIECE, i, I_HEIGHT - 1);
+			p_setPieceWidth(&P_I_PIECE, I_WIDTH);
+			p_setPieceHeight(&P_I_PIECE, I_HEIGHT);
 
-	//J
-		P_J_PIECE.blocks = 0x00; // 0000 0000
+			for (int i = 0; i < I_WIDTH; i++)
+				p_setBlockAt(&P_I_PIECE, i, I_HEIGHT - 1);
 
-		p_setPieceColor(&P_J_PIECE, COLOR_INDEX_TEAL);
+		//J
+			P_J_PIECE.blocks = 0x00; // 0000 0000
 
-		const unsigned char J_WIDTH = 2;
-		const unsigned char J_HEIGHT = 3;
+			p_setPieceColor(&P_J_PIECE, COLOR_INDEX_TEAL);
 
-		p_setPieceWidth(&P_J_PIECE, J_WIDTH);
-		p_setPieceHeight(&P_J_PIECE, J_HEIGHT);
+			const unsigned char J_WIDTH = 2;
+			const unsigned char J_HEIGHT = 3;
 
-		p_setBlockAt(&P_J_PIECE, 1, 0);
-		p_setBlockAt(&P_J_PIECE, 1, 1);
-		p_setBlockAt(&P_J_PIECE, 1, 2);
-		p_setBlockAt(&P_J_PIECE, 0, 2);
+			p_setPieceWidth(&P_J_PIECE, J_WIDTH);
+			p_setPieceHeight(&P_J_PIECE, J_HEIGHT);
 
-	//L
-		P_L_PIECE.blocks = 0x00; // 0000 0000
+			p_setBlockAt(&P_J_PIECE, 1, 0);
+			p_setBlockAt(&P_J_PIECE, 1, 1);
+			p_setBlockAt(&P_J_PIECE, 1, 2);
+			p_setBlockAt(&P_J_PIECE, 0, 2);
 
-		p_setPieceColor(&P_L_PIECE, COLOR_INDEX_ORANGE);
+		//L
+			P_L_PIECE.blocks = 0x00; // 0000 0000
 
-		const unsigned char L_WIDTH = 2;
-		const unsigned char L_HEIGHT = 3;
+			p_setPieceColor(&P_L_PIECE, COLOR_INDEX_ORANGE);
 
-		p_setPieceWidth(&P_L_PIECE, L_WIDTH);
-		p_setPieceHeight(&P_L_PIECE, L_HEIGHT);
+			const unsigned char L_WIDTH = 2;
+			const unsigned char L_HEIGHT = 3;
 
-		p_setBlockAt(&P_L_PIECE, 0, 0);
-		p_setBlockAt(&P_L_PIECE, 0, 1);
-		p_setBlockAt(&P_L_PIECE, 0, 2);
-		p_setBlockAt(&P_L_PIECE, 1, 2);
+			p_setPieceWidth(&P_L_PIECE, L_WIDTH);
+			p_setPieceHeight(&P_L_PIECE, L_HEIGHT);
 
-	//O
-		P_O_PIECE.blocks = 0x00; // 0000 0000
+			p_setBlockAt(&P_L_PIECE, 0, 0);
+			p_setBlockAt(&P_L_PIECE, 0, 1);
+			p_setBlockAt(&P_L_PIECE, 0, 2);
+			p_setBlockAt(&P_L_PIECE, 1, 2);
 
-		p_setPieceColor(&P_O_PIECE, COLOR_INDEX_YELLOW);
+		//O
+			P_O_PIECE.blocks = 0x00; // 0000 0000
 
-		const unsigned char O_SIZE = 2;
+			p_setPieceColor(&P_O_PIECE, COLOR_INDEX_YELLOW);
 
-		p_setPieceWidth(&P_O_PIECE, O_SIZE);
-		p_setPieceHeight(&P_O_PIECE, O_SIZE);
+			const unsigned char O_SIZE = 2;
 
-		p_setBlockAt(&P_O_PIECE, 0, 0);
-		p_setBlockAt(&P_O_PIECE, 0, 1);
-		p_setBlockAt(&P_O_PIECE, 1, 0);
-		p_setBlockAt(&P_O_PIECE, 1, 1);
+			p_setPieceWidth(&P_O_PIECE, O_SIZE);
+			p_setPieceHeight(&P_O_PIECE, O_SIZE);
 
-	//S
-		P_S_PIECE.blocks = 0x00; // 0000 0000
+			p_setBlockAt(&P_O_PIECE, 0, 0);
+			p_setBlockAt(&P_O_PIECE, 0, 1);
+			p_setBlockAt(&P_O_PIECE, 1, 0);
+			p_setBlockAt(&P_O_PIECE, 1, 1);
 
-		p_setPieceColor(&P_S_PIECE, COLOR_INDEX_RED);
+		//S
+			P_S_PIECE.blocks = 0x00; // 0000 0000
 
-		unsigned char S_WIDTH = 3;
-		unsigned char S_HEIGHT = 2;
+			p_setPieceColor(&P_S_PIECE, COLOR_INDEX_RED);
 
-		p_setPieceWidth(&P_S_PIECE, S_WIDTH);
-		p_setPieceHeight(&P_S_PIECE, S_HEIGHT);
+			unsigned char S_WIDTH = 3;
+			unsigned char S_HEIGHT = 2;
 
-		p_setBlockAt(&P_S_PIECE, 1, 0);
-		p_setBlockAt(&P_S_PIECE, 2, 0);
-		p_setBlockAt(&P_S_PIECE, 0, 1);
-		p_setBlockAt(&P_S_PIECE, 1, 1);
+			p_setPieceWidth(&P_S_PIECE, S_WIDTH);
+			p_setPieceHeight(&P_S_PIECE, S_HEIGHT);
 
-	//T
-		P_T_PIECE.blocks = 0x00; // 0000 0000
+			p_setBlockAt(&P_S_PIECE, 1, 0);
+			p_setBlockAt(&P_S_PIECE, 2, 0);
+			p_setBlockAt(&P_S_PIECE, 0, 1);
+			p_setBlockAt(&P_S_PIECE, 1, 1);
 
-		p_setPieceColor(&P_T_PIECE, COLOR_INDEX_PURPLE);
+		//T
+			P_T_PIECE.blocks = 0x00; // 0000 0000
 
-		unsigned char T_WIDTH = 3;
-		unsigned char T_HEIGHT = 2;
+			p_setPieceColor(&P_T_PIECE, COLOR_INDEX_PURPLE);
 
-		p_setPieceWidth(&P_T_PIECE, T_WIDTH);
-		p_setPieceHeight(&P_T_PIECE, T_HEIGHT);
+			unsigned char T_WIDTH = 3;
+			unsigned char T_HEIGHT = 2;
 
-		p_setBlockAt(&P_T_PIECE, 0, 0);
-		p_setBlockAt(&P_T_PIECE, 1, 0);
-		p_setBlockAt(&P_T_PIECE, 2, 0);
-		p_setBlockAt(&P_T_PIECE, 1, 1);
+			p_setPieceWidth(&P_T_PIECE, T_WIDTH);
+			p_setPieceHeight(&P_T_PIECE, T_HEIGHT);
 
-	//Z
-		P_Z_PIECE.blocks = 0x00; // 0000 0000
+			p_setBlockAt(&P_T_PIECE, 0, 0);
+			p_setBlockAt(&P_T_PIECE, 1, 0);
+			p_setBlockAt(&P_T_PIECE, 2, 0);
+			p_setBlockAt(&P_T_PIECE, 1, 1);
 
-		p_setPieceColor(&P_Z_PIECE, COLOR_INDEX_GREEN);
+		//Z
+			P_Z_PIECE.blocks = 0x00; // 0000 0000
 
-		unsigned char Z_WIDTH = 3;
-		unsigned char Z_HEIGHT = 2;
+			p_setPieceColor(&P_Z_PIECE, COLOR_INDEX_GREEN);
 
-		p_setPieceWidth(&P_Z_PIECE, Z_WIDTH);
-		p_setPieceHeight(&P_Z_PIECE, Z_HEIGHT);
+			unsigned char Z_WIDTH = 3;
+			unsigned char Z_HEIGHT = 2;
 
-		p_setBlockAt(&P_Z_PIECE, 0, 0);
-		p_setBlockAt(&P_Z_PIECE, 1, 0);
-		p_setBlockAt(&P_Z_PIECE, 1, 1);
-		p_setBlockAt(&P_Z_PIECE, 2, 1);
+			p_setPieceWidth(&P_Z_PIECE, Z_WIDTH);
+			p_setPieceHeight(&P_Z_PIECE, Z_HEIGHT);
+
+			p_setBlockAt(&P_Z_PIECE, 0, 0);
+			p_setBlockAt(&P_Z_PIECE, 1, 0);
+			p_setBlockAt(&P_Z_PIECE, 1, 1);
+			p_setBlockAt(&P_Z_PIECE, 2, 1);
+
+			P_INITIALIZED = 1;
+	}
 }
 
 void p_createPiece(Piece* piece, vec2s* gridPosition, unsigned char pieceType, unsigned char randomColor) {

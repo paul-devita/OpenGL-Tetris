@@ -117,6 +117,12 @@
     <ClCompile Include="..\src\game\title.c">
       <Filter>Header Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\gameOver.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\gamePaused.c">
+      <Filter>Header Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\include\stb_image.h">
@@ -195,6 +201,12 @@
       <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\title.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\gameOver.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\gamePaused.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
