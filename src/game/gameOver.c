@@ -35,6 +35,10 @@ void go_update(float deltaTime) {
 	}
 }
 
+void go_processInput() {
+
+}
+
 void go_render() {
 	if (!go_transitionFinished) {
 		vec2 pos = go_blocksStart;

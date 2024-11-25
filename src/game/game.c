@@ -238,6 +238,7 @@ void g_update(float deltaTime) {
 
 				return;
 			}
+
 			case G_HALT_CHANGING_PIECE: {
 				const float CHANGING_PIECE_DURATION = 0.5f;
 
@@ -246,18 +247,22 @@ void g_update(float deltaTime) {
 				haltTimer += deltaTime;
 
 				if (haltTimer >= CHANGING_PIECE_DURATION) {
-					g_cycleNextPiece();
-
 					haltTimer = 0;
 					g_gameHalted = G_FALSE;
+
+					g_cycleNextPiece();
 				}
 
 				return;
 			}
-			case G_HALT_GAME_END: {
-				const float PHASE1_ANIMATION_INTERVAL = 0.1f;
 
-				const float PHASE1_ENDING_INTERVAL = 1.0f;
+			case G_HALT_GAME_END: {
+				const float PHASE1_WAITING_INTERVAL = 1.0f;
+				const float PHASE2_ANIMATION_INTERVAL = 0.1f;
+
+				const float PHASE2_ENDING_INTERVAL = 1.0f;
+
+				static unsigned char phase1Finished = G_FALSE;
 
 				static float haltTimer = 0;
 
@@ -265,7 +270,12 @@ void g_update(float deltaTime) {
 
 				haltTimer += deltaTime;
 
-				if (curIndex >= G_END_GAME_BLOCKS_VERTICAL_COUNT && haltTimer >= PHASE1_ENDING_INTERVAL) {
+				if (!phase1Finished && haltTimer >= PHASE1_WAITING_INTERVAL) {
+					haltTimer = 0;
+					phase1Finished = G_TRUE;
+				}
+
+				if (phase1Finished && curIndex >= G_END_GAME_BLOCKS_VERTICAL_COUNT && haltTimer >= PHASE2_ENDING_INTERVAL) {
 					g_gameHalted = G_FALSE;
 					haltTimer = 0;
 					curIndex = 0;
@@ -275,7 +285,7 @@ void g_update(float deltaTime) {
 					//Go to End Game Screen
 					sm_changeState(SM_OVER_STATE);
 				}
-				else if (curIndex < G_END_GAME_BLOCKS_VERTICAL_COUNT && haltTimer >= PHASE1_ANIMATION_INTERVAL) {
+				else if (phase1Finished && curIndex < G_END_GAME_BLOCKS_VERTICAL_COUNT && haltTimer >= PHASE2_ANIMATION_INTERVAL) {
 					unsigned int minRow = curIndex;
 					unsigned int maxRow = G_END_GAME_BLOCKS_VERTICAL_COUNT - 1 - curIndex;
 
@@ -298,8 +308,10 @@ void g_update(float deltaTime) {
 
 				return;
 			}
+
 			default:
 				printf("WARNING: invalid halt reason, resuming game\n");
+				g_gameHalted = G_FALSE;
 				return;
 		}
 	}
@@ -497,6 +509,8 @@ unsigned char g_checkBelowCurrentPiece() {
 }
 
 void g_cycleNextPiece() {
+
+	//Choose and initialize next piece
 	g_currentPieceType = g_nextPiece;
 	p_createPiece(&g_currentPiece, &g_pieceStartPos, g_currentPieceType, G_FALSE);
 
@@ -505,16 +519,29 @@ void g_cycleNextPiece() {
 
 	p_translate(&g_currentPiece, -(width / 2), 0);
 
-	for (int x = 0; x < width; x++) {
-		for (int y = 0; y < height; y++) {
-
-		}
-	}
-
 	g_incrementStat(g_currentPieceType);
 
 	g_nextPiece = g_getRandomPiece();
 	ui_setNextPiece(g_nextPiece);
+
+	//Check if new pieces starts on any existing pieces
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			unsigned char block = p_getBlockAt(&g_currentPiece, x, y);
+
+			if (block) {
+				vec2s pos;
+
+				pos.x = g_currentPiece.position.x + x;
+				pos.y = g_currentPiece.position.y - y;
+
+				if (gr_checkGridPos(&pos) != GR_NULL_ELEMENT) {
+					g_halt(G_HALT_GAME_END);
+					return;
+				}
+			}
+		}
+	}
 }
 
 void g_holdPiece() {

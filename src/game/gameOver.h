@@ -24,6 +24,8 @@ void go_init();
 
 void go_update(float deltaTime);
 
+void go_processInput();
+
 void go_render();
 
 #endif
