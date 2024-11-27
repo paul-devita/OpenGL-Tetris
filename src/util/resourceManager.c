@@ -8,7 +8,7 @@ char* rm_readTextFile(const char* path) {
 	file_ptr = fopen(path, "r");
 
 	if (!file_ptr) {
-		printf("ERROR: failed to read file \"%s\"\n", path);
+		printf("ERROR: rm_readTextFile: failed to read file \"%s\"\n", path);
 		return NULL;
 	}
 
@@ -21,7 +21,7 @@ char* rm_readTextFile(const char* path) {
 		dest = (char *)malloc(len * sizeof(char));
 
 		if (dest == NULL) {
-			printf("ERROR: unable to allocate memory\n");
+			printf("ERROR: rm_readTextFile: unable to allocate memory\n");
 			return NULL;
 		}
 
@@ -41,7 +41,7 @@ char* rm_readTextFile(const char* path) {
 			dest = (char*)realloc(dest, len * sizeof(char));
 
 			if (!dest) {
-				printf("ERROR: unable to allocate memory\n");
+				printf("ERROR: rm_readTextFile: unable to allocate memory\n");
 				free(old_block);
 				return NULL;
 			}
@@ -54,7 +54,7 @@ char* rm_readTextFile(const char* path) {
 		dest = (char*)realloc(dest, (len + 1) * sizeof(char));
 
 		if (!dest) {
-			printf("ERROR: unable to allocate memory\n");
+			printf("ERROR: rm_readTextFile: unable to allocate memory\n");
 			free(old_block);
 			return NULL;
 		}
@@ -80,7 +80,8 @@ Image rm_readImageFile(const char* path, const unsigned char alpha) {
 	unsigned char* data = stbi_load(path, width, height, nrChannels, 0);
 
 	if (!data) {
-		fprintf(stderr, "ERROR: unable to read image data\n");
+		fprintf(stderr, "ERROR: rm_readImageFile: unable to read image data\n");
+		result.data = NULL;
 		return result;
 	}
 

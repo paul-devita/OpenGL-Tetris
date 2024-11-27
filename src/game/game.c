@@ -7,6 +7,7 @@ const vec2 G_END_GAME_BLOCKS_START = { (SCR_WIDTH / (float)(sizeof(unsigned char
 const unsigned int G_END_GAME_BLOCKS_VERTICAL_COUNT = SCR_HEIGHT / (float)(SCR_WIDTH / (float)(sizeof(unsigned char) * 8));
 
 void g_init() {
+
 	//UI
 	ui_init();
 	//Grid
@@ -133,10 +134,10 @@ void g_update(float deltaTime) {
 						g_level = newLevel;
 
 						if (g_level >= 1 && g_level <= 10) {
-							g_fallingTimer -= 4;
+							g_fallingDelay -= 4;
 						}
 						else if (g_level == 13 || g_level == 16 || g_level == 19 || g_level == 24 || g_level == 29) {
-							g_fallingTimer -= 4;
+							g_fallingDelay -= 4;
 						}
 					}
 
@@ -316,7 +317,7 @@ void g_update(float deltaTime) {
 		}
 	}
 
-	g_processGameInput();
+	g_processGameInput(deltaTime);
 }
 
 void g_fixedUpdate(float deltaTime) {
@@ -628,6 +629,7 @@ void g_rotateFallingPiece() {
 		newPiece.position.y = height - 1;
 	}
 
+	//check all valid blocks
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			unsigned char block = p_getBlockAt(&newPiece, x, y);
@@ -712,11 +714,14 @@ void g_incrementStat(unsigned char blockType) {
 	ui_updateStatsText(blockType, g_stats[blockType]);
 }
 
-void g_processGameInput() {
+void g_processGameInput(float deltaTime) {
+	static const float HORIZONTAL_MOVE_FRAME_DELAY = 0.3f;
+
+	static float horizontalMoveTimer = 0;
+
 	//Set if a key is down, held, or up
 	static unsigned char rKey = 0;
 	static unsigned char eKey = 0;
-	static unsigned char wKey = 0;
 	static unsigned char sKey = 0;
 	static unsigned char aKey = 0;
 	static unsigned char dKey = 0;
@@ -753,23 +758,6 @@ void g_processGameInput() {
 		eKey = G_FALSE;
 	}
 
-	//W Key
-	if (!wKey && win_checkKey(GLFW_KEY_W)) {
-		//Key Down Event
-
-		g_halt(G_HALT_GAME_END);
-
-		wKey = G_TRUE;
-	}
-	else if (wKey && win_checkKey(GLFW_KEY_W)) {
-		//Key Held Event
-	}
-	else if (wKey && !win_checkKey(GLFW_KEY_W)) {
-		//Key Up Event
-
-		wKey = G_FALSE;
-	}
-
 	//S Key
 	if (!sKey && win_checkKey(GLFW_KEY_S)) {
 		//Key Down Event
@@ -797,9 +785,18 @@ void g_processGameInput() {
 	}
 	else if (aKey && win_checkKey(GLFW_KEY_A)) {
 		//Key Held Event
+
+		horizontalMoveTimer += deltaTime;
+
+		if (horizontalMoveTimer >= HORIZONTAL_MOVE_FRAME_DELAY) {
+			g_horizontalFallingPieceMovement(G_LEFT);
+			horizontalMoveTimer = HORIZONTAL_MOVE_FRAME_DELAY / (float)2;
+		}
 	}
 	else if (aKey && !win_checkKey(GLFW_KEY_A)) {
 		//Key Up Event
+
+		horizontalMoveTimer = 0;
 
 		aKey = G_FALSE;
 	}
@@ -814,9 +811,18 @@ void g_processGameInput() {
 	}
 	else if (dKey && win_checkKey(GLFW_KEY_D)) {
 		//Key Held Event
+		
+		horizontalMoveTimer += deltaTime;
+
+		if (horizontalMoveTimer >= HORIZONTAL_MOVE_FRAME_DELAY) {
+			g_horizontalFallingPieceMovement(G_RIGHT);
+			horizontalMoveTimer = HORIZONTAL_MOVE_FRAME_DELAY / (float)2;
+		}
 	}
 	else if (dKey && !win_checkKey(GLFW_KEY_D)) {
 		//Key Up Event
+
+		horizontalMoveTimer = 0;
 
 		dKey = G_FALSE;
 	}

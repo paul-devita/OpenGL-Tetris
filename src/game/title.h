@@ -8,45 +8,66 @@
 
 #include "../math/vec2.h"
 
-//TITLE STATE
-#define G_START_ANIMATION_INTERVAL_UP 2.0
-#define G_START_ANIMATION_INTERVAL_DOWN 0.5
+#include "../render/texture.h"
 
-static unsigned char g_start_pressStartToggle = 1;
+#define TI_FALSE 0
+#define TI_TRUE 1
 
 //Title Text
 static const char* G_START_TITLE_TEXT = "tetris";
 
-static const float G_START_TITLE_THICKNESS = SCR_WIDTH / 50.0;
+static const float G_START_TITLE_THICKNESS = SCR_WIDTH / (float)35;
 
-static float G_START_TITLE_WIDTH = 0;
-static float G_START_TITLE_HEIGHT = 0;
-static float G_START_TITLE_SPACING = 0;
-static float G_START_TITLE_LETTER_WIDTH = 0;
+static const float G_START_TITLE_SPACING = SCR_WIDTH / (float)60;
 
-static vec2 G_START_TITLE_POSITION;
+static const vec2 G_START_TITLE_POSITION = { SCR_WIDTH / (float)2, 3 * SCR_HEIGHT / (float)10 };
 static vec2 G_START_TITLE_CHAR_SCALE;
 
-//Press Start Text
-static const char* G_START_PRESS_TEXT = "Press Enter To Play";
+//Title Button State
+static const float TI_BUTTON_TEXT_THICKNESS = SCR_WIDTH / (float)150;
+static const float TI_BUTTON_CHAR_SPACING = SCR_WIDTH / (float)150;
 
-static const float G_START_PRESS_THICKNESS = SCR_WIDTH / 500.0;
+#define TI_BUTTON_CHAR_SCALE_X SCR_WIDTH / (float)25
+#define TI_BUTTON_CHAR_SCALE_Y SCR_HEIGHT / (float)25
+static const vec2 TI_BUTTON_CHAR_SCALE = { TI_BUTTON_CHAR_SCALE_X, TI_BUTTON_CHAR_SCALE_Y };
 
-static float G_START_PRESS_WIDTH = 0;
-static float G_START_PRESS_HEIGHT = 0;
-static float G_START_PRESS_SPACING = 0;
-static float G_START_PRESS_LETTER_WIDTH = 0;
+//Start Button
+static const unsigned char* TI_START_BUTTON_TEXT = "Start Game";
+static const vec2 TI_START_BUTTON_POS = { SCR_WIDTH / (float)2, (3 * SCR_HEIGHT / (float)4) - TI_BUTTON_CHAR_SCALE_Y };
 
-static vec2 G_START_PRESS_POSITION;
-static vec2 G_START_PRESS_CHAR_SCALE;
+//Quit Button
+static const unsigned char* TI_QUIT_BUTTON_TEXT = "Quit Game";
+static const vec2 TI_QUIT_BUTTON_POS = { SCR_WIDTH / (float)2, (3 * SCR_HEIGHT / (float)4) + TI_BUTTON_CHAR_SCALE_Y };
 
+//Button Selection
+static const unsigned char* TI_BUTTON_SELECTOR_PATH = "../resources/textures/selection.png";
+
+static unsigned int TI_BUTTON_SELECTOR_TEXTURE_ID;
+
+#define TI_SELECTION_VISIBILITY_INTERVAL 0.5
+static float ti_selectionTimer = 0;
+static unsigned char ti_selectionVisibilityToggle = 1;
+
+#define TI_BUTTON_START 0
+#define TI_BUTTON_QUIT 1
+typedef struct {
+	vec2* pos;
+	struct TitleButtonState* next;
+	struct TitleButtonState* prev;
+	unsigned int length;
+	unsigned char id;
+} TitleButtonState;
+
+static const vec2 TI_BUTTON_SELECTOR_SCALE = { SCR_HEIGHT / (float)15, SCR_HEIGHT / (float)15 };
+
+static TitleButtonState* ti_buttonCurrent;
 
 void ti_init();
 
 void ti_update(float deltaTime);
 
-static void ti_proccessInput();
-
 void ti_render();
+
+void ti_processInput();
 
 #endif

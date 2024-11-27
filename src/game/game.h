@@ -115,6 +115,6 @@ void g_increaseScore(unsigned int additionalScore);
 
 void g_incrementStat(unsigned char block);
 
-void g_processGameInput();
+void g_processGameInput(float deltaTime);
 
 #endif

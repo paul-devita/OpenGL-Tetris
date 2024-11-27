@@ -3,6 +3,11 @@
 unsigned int tx_genTexture(const char* path, unsigned char alpha) {
     Image image = rm_readImageFile(path, alpha);
 
+    if (!image.data) {
+        printf("ERROR: tx_genTexture failed: failed to load image data\n");
+        return 0;
+    }
+
 	unsigned int result;
 
 	glGenTextures(1, &result);
