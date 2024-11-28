@@ -10,15 +10,15 @@ void ti_init() {
 	G_START_TITLE_CHAR_SCALE.y = SCR_HEIGHT / (float)4;
 
 	//Init Button State
-	TitleButtonState* buttonData = malloc(2 * sizeof(TitleButtonState));
+	ButtonSelector* buttonData = malloc(2 * sizeof(ButtonSelector));
 
 	if (buttonData == NULL) {
 		printf("ERROR: out of memory\n");
 		exit(-1);
 	}
 
-	TitleButtonState* startButton = &buttonData[0];
-	TitleButtonState* quitButton = &buttonData[1];
+	ButtonSelector* startButton = &buttonData[0];
+	ButtonSelector* quitButton = &buttonData[1];
 
 	//Start Button
 	unsigned int startButtonLength = 0;
@@ -49,25 +49,12 @@ void ti_init() {
 	quitButton->id = TI_BUTTON_QUIT;
 
 	//Button Current
-	TI_BUTTON_SELECTOR_TEXTURE_ID = tx_genTexture(TI_BUTTON_SELECTOR_PATH, TI_TRUE);
-
 	ti_buttonCurrent = startButton;
 }
 
-void ti_update(float udt) {
+void ti_update(float deltaTime) {
 
-	ti_selectionTimer -= udt;
-
-	if (ti_selectionTimer <= 0) {
-		if (ti_selectionVisibilityToggle) {
-			ti_selectionVisibilityToggle = U_FALSE;
-		}
-		else {
-			ti_selectionVisibilityToggle = U_TRUE;
-		}
-
-		ti_selectionTimer = TI_SELECTION_VISIBILITY_INTERVAL;
-	}
+	bt_updateVisibilityToggle(deltaTime, &ti_selectionVisibilityToggle);
 
 	ti_processInput();
 }
@@ -82,8 +69,8 @@ void ti_render() {
 	//Render Quit Button
 	tp_drawString(TI_QUIT_BUTTON_POS, TI_BUTTON_CHAR_SCALE, COLOR_WHITE, TI_BUTTON_TEXT_THICKNESS, TI_BUTTON_CHAR_SPACING, TP_NO_SPACING, TP_ALIGNMENT_CENTER, TI_QUIT_BUTTON_TEXT);
 
-	if (ti_buttonCurrent != NULL && ti_selectionVisibilityToggle) {
-		const vec2 s = { TI_BUTTON_CHAR_SCALE_Y, TI_BUTTON_CHAR_SCALE_Y };
+	if (ti_selectionVisibilityToggle) {
+		static const vec2 s = { TI_BUTTON_CHAR_SCALE_Y, TI_BUTTON_CHAR_SCALE_Y };
 
 		vec2 p;
 
@@ -95,19 +82,19 @@ void ti_render() {
 			float dx = (TI_BUTTON_CHAR_SCALE.x / (float)2) + ((length / 2 ) * (TI_BUTTON_CHAR_SCALE.x + TI_BUTTON_CHAR_SPACING)) + TI_BUTTON_CHAR_SCALE.y;
 
 			p.x = ti_buttonCurrent->pos->x - dx;
-			qd_drawTexturedRect(TI_BUTTON_SELECTOR_TEXTURE_ID, &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = ti_buttonCurrent->pos->x + dx;
-			qd_drawTexturedRect(TI_BUTTON_SELECTOR_TEXTURE_ID, &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 		else {
 			float dx = (TI_BUTTON_CHAR_SPACING / (float)2) + (((length / 2) - 1) * TI_BUTTON_CHAR_SPACING) + ((length / 2) * TI_BUTTON_CHAR_SCALE.x) + TI_BUTTON_CHAR_SCALE.y;
 
 			p.x = ti_buttonCurrent->pos->x - dx;
-			qd_drawTexturedRect(TI_BUTTON_SELECTOR_TEXTURE_ID, &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = ti_buttonCurrent->pos->x + dx;
-			qd_drawTexturedRect(TI_BUTTON_SELECTOR_TEXTURE_ID, &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 	}
 }
@@ -163,8 +150,7 @@ void ti_processInput() {
 
 		ti_buttonCurrent = ti_buttonCurrent->prev;
 
-		ti_selectionVisibilityToggle = TI_TRUE;
-		ti_selectionTimer = TI_SELECTION_VISIBILITY_INTERVAL;
+		bt_restartVisibility(&ti_selectionVisibilityToggle);
 
 		wKey = TI_FALSE;
 		upKey = TI_FALSE;
@@ -185,8 +171,7 @@ void ti_processInput() {
 
 		ti_buttonCurrent = ti_buttonCurrent->next;
 
-		ti_selectionVisibilityToggle = TI_TRUE;
-		ti_selectionTimer = TI_SELECTION_VISIBILITY_INTERVAL;
+		bt_restartVisibility(&ti_selectionVisibilityToggle);
 
 		sKey = TI_FALSE;
 		downKey = TI_FALSE;

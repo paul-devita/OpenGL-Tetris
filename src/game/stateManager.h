@@ -5,6 +5,7 @@
 #include "starting.h"
 #include "game.h"
 #include "gameOver.h"
+#include "gamePaused.h"
 
 #define SM_TITLE_STATE 0
 #define SM_STARTING_STATE 1

@@ -153,6 +153,7 @@
     <ClCompile Include="..\src\render\shader.c" />
     <ClCompile Include="..\src\render\texture.c" />
     <ClCompile Include="..\src\render\type.c" />
+    <ClCompile Include="..\src\util\button.c" />
     <ClCompile Include="..\src\util\random.c" />
     <ClCompile Include="..\src\util\resourceManager.c" />
     <ClCompile Include="..\src\util\time.c" />
@@ -183,6 +184,7 @@
     <ClInclude Include="..\src\render\shader.h" />
     <ClInclude Include="..\src\render\texture.h" />
     <ClInclude Include="..\src\render\type.h" />
+    <ClInclude Include="..\src\util\button.h" />
     <ClInclude Include="..\src\util\random.h" />
     <ClInclude Include="..\src\util\resourceManager.h" />
     <ClInclude Include="..\src\util\time.h" />

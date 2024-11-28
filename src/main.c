@@ -6,6 +6,7 @@
 #include "util/window.h"
 #include "util/time.h"
 #include "util/random.h"
+#include "util/button.h"
 
 #include "render/quad.h"
 
@@ -16,6 +17,7 @@ int main(int argc, char* argv[]) {
 	//init header files
 	qd_init();
 	r_init();
+	bt_init();
 	sm_init();
 	tm_initTime();
 

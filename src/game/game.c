@@ -720,11 +720,13 @@ void g_processGameInput(float deltaTime) {
 	static float horizontalMoveTimer = 0;
 
 	//Set if a key is down, held, or up
-	static unsigned char rKey = 0;
-	static unsigned char eKey = 0;
-	static unsigned char sKey = 0;
-	static unsigned char aKey = 0;
-	static unsigned char dKey = 0;
+	static unsigned char rKey = G_FALSE;
+	static unsigned char eKey = G_FALSE;
+	static unsigned char sKey = G_FALSE;
+	static unsigned char aKey = G_FALSE;
+	static unsigned char dKey = G_FALSE;
+
+	static unsigned char escapeKey = G_FALSE;
 
 	//R Key
 	if (!rKey && win_checkKey(GLFW_KEY_R)) {
@@ -825,5 +827,22 @@ void g_processGameInput(float deltaTime) {
 		horizontalMoveTimer = 0;
 
 		dKey = G_FALSE;
+	}
+
+	//Escape Key
+	if (!escapeKey && win_checkKey(GLFW_KEY_ESCAPE)) {
+		//Key Down Event
+
+		escapeKey = G_TRUE;
+	}
+	else if (escapeKey && win_checkKey(GLFW_KEY_ESCAPE)) {
+		//Key Held Event
+	}
+	else if (escapeKey && !win_checkKey(GLFW_KEY_ESCAPE)) {
+		//Key Up Event
+
+		sm_changeState(SM_PAUSE_STATE);
+
+		escapeKey = G_FALSE;
 	}
 }

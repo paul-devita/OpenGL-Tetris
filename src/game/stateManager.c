@@ -9,6 +9,9 @@ void sm_init() {
 
 	//Init Game Over
 	go_init();
+
+	//Init Game Paused
+	gp_init();
 }
 
 void sm_update(float deltaTime) {
@@ -23,7 +26,7 @@ void sm_update(float deltaTime) {
 			g_update(deltaTime);
 			return;
 		case SM_PAUSE_STATE:
-
+			gp_update(deltaTime);
 			return;
 		case SM_OVER_STATE:
 			go_update(deltaTime);
@@ -80,7 +83,7 @@ void sm_render() {
 			g_render();
 			return;
 		case SM_PAUSE_STATE:
-
+			gp_render();
 			return;
 		case SM_OVER_STATE:
 			go_render();

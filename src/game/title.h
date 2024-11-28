@@ -5,6 +5,7 @@
 
 #include "../util/window.h"
 #include "../util/util.h"
+#include "../util/button.h"
 
 #include "../math/vec2.h"
 
@@ -40,27 +41,11 @@ static const unsigned char* TI_QUIT_BUTTON_TEXT = "Quit Game";
 static const vec2 TI_QUIT_BUTTON_POS = { SCR_WIDTH / (float)2, (3 * SCR_HEIGHT / (float)4) + TI_BUTTON_CHAR_SCALE_Y };
 
 //Button Selection
-static const unsigned char* TI_BUTTON_SELECTOR_PATH = "../resources/textures/selection.png";
-
-static unsigned int TI_BUTTON_SELECTOR_TEXTURE_ID;
-
-#define TI_SELECTION_VISIBILITY_INTERVAL 0.5
-static float ti_selectionTimer = 0;
 static unsigned char ti_selectionVisibilityToggle = 1;
 
 #define TI_BUTTON_START 0
 #define TI_BUTTON_QUIT 1
-typedef struct {
-	vec2* pos;
-	struct TitleButtonState* next;
-	struct TitleButtonState* prev;
-	unsigned int length;
-	unsigned char id;
-} TitleButtonState;
-
-static const vec2 TI_BUTTON_SELECTOR_SCALE = { SCR_HEIGHT / (float)15, SCR_HEIGHT / (float)15 };
-
-static TitleButtonState* ti_buttonCurrent;
+static ButtonSelector* ti_buttonCurrent;
 
 void ti_init();
 
