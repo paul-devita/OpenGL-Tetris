@@ -128,16 +128,28 @@ void g_update(float deltaTime) {
 					g_linesCleared += numRowsCompleted;
 
 					//Update Level and Difficulty
-					unsigned char newLevel = g_linesCleared / 10;
+					unsigned char newLevel = g_linesCleared / (unsigned int)10;
 
 					if (newLevel != g_level) {
 						g_level = newLevel;
 
-						if (g_level >= 1 && g_level <= 10) {
-							g_fallingDelay -= 4;
+						if (g_level == 1) {
+							g_fallingDelay -= 12;
 						}
-						else if (g_level == 13 || g_level == 16 || g_level == 19 || g_level == 24 || g_level == 29) {
-							g_fallingDelay -= 4;
+						if (g_level == 2) {
+							g_fallingDelay -= 8;
+						}
+						if (g_level == 3) {
+							g_fallingDelay -= 6;
+						}
+						if (g_level >= 4 && g_level <= 10) {
+							g_fallingDelay -= 3;
+						}
+						if (g_level == 13 || g_level == 16 || g_level == 19) {
+							g_level -= 4;
+						}
+						if (g_level == 29) {
+							g_level -= 1;
 						}
 					}
 

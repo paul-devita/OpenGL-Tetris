@@ -101,7 +101,7 @@ void sm_changeState(State newState) {
 				SM_STATE = SM_STARTING_STATE;
 			}
 			else {
-				printf("WARNING: invalid state change attempted\n");
+				printf("WARNING: sm_changeState: invalid state change attempted\n");
 			}
 
 			return;
@@ -110,7 +110,7 @@ void sm_changeState(State newState) {
 				SM_STATE = SM_GAME_STATE;
 			}
 			else {
-				printf("WARNING: invalid state change attempted\n");
+				printf("WARNING: sm_changeState: invalid state change attempted\n");
 			}
 
 			return;
@@ -123,30 +123,42 @@ void sm_changeState(State newState) {
 					SM_STATE = SM_OVER_STATE;
 					break;
 				default:
-					printf("WARNING: invalid state change attempted\n");
+					printf("WARNING: sm_changeState: invalid state change attempted\n");
 			}
 
 			return;
 		case SM_PAUSE_STATE:
 			switch (newState) {
-			case SM_GAME_STATE:
-				SM_STATE = SM_GAME_STATE;
-				break;
+				case SM_GAME_STATE:
+					SM_STATE = SM_GAME_STATE;
+					break;
+				case SM_STARTING_STATE:
+					SM_STATE = SM_STARTING_STATE;
+					g_init();
+					break;
+				case SM_TITLE_STATE:
+					SM_STATE = SM_TITLE_STATE;
+					g_init();
+					break;
+				default:
+					printf("WARNING: sm_changeState: invalid state change attempted\n");
+				}
+
+			return;
+		case SM_OVER_STATE:
+			switch (newState) {
 			case SM_STARTING_STATE:
 				SM_STATE = SM_STARTING_STATE;
-				g_init();
 				break;
 			case SM_TITLE_STATE:
 				SM_STATE = SM_TITLE_STATE;
-				g_init();
 				break;
 			default:
-				printf("WARNING: invalid state change attempted\n");
+				printf("WARNING: sm_changeState: invalid state change attempted\n");
 			}
-
 			return;
 		default:
-			printf("WARNING: invalid state passed to sm_changeState\n");
+			printf("WARNING: sm_changeState: invalid state passed to sm_changeState\n");
 			return;
 	}
 }
