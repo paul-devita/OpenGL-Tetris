@@ -174,19 +174,19 @@ void g_update(float deltaTime) {
 						g_level = newLevel;
 
 						if (g_level == 1) {
-							g_fallingDelay -= 12;
+							g_fallingDelay -= 8;
 						}
 						if (g_level == 2) {
-							g_fallingDelay -= 8;
+							g_fallingDelay -= 7;
 						}
 						if (g_level == 3) {
 							g_fallingDelay -= 6;
 						}
 						if (g_level >= 4 && g_level <= 10) {
-							g_fallingDelay -= 3;
+							g_fallingDelay -= 5;
 						}
 						if (g_level == 13 || g_level == 16 || g_level == 19) {
-							g_level -= 4;
+							g_level -= 1;
 						}
 						if (g_level == 29) {
 							g_level -= 1;
