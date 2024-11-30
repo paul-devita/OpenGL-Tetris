@@ -42,7 +42,7 @@ void g_init() {
 
 	g_fastFallToggle = G_FALSE;
 
-	g_placingDelay = 60;
+	g_placingDelay = 45;
 	g_placingTimer = 0;
 
 	//Init Falling Piece
@@ -74,20 +74,60 @@ void g_update(float deltaTime) {
 	if (g_gameHalted) {
 		switch (g_haltReason) {
 			case G_HALT_CLEARED_LINE: {
-				const float PHASE_DURATION = 0.5f;
-				const unsigned char MAX_NUM_PHASES = 4;
+				static const float DISAPPEAR_INTERVAL = 0.1f;
+				static const float ENDING_INTERVAL = 0.4f;
+				static const float WAITING_INTERVAL = 0.2f;
+				static float haltTimer = 0.1f;
 
-				static unsigned char numOfPhases = 0;
+				static unsigned char indicesInitialized = G_FALSE;
+				static unsigned char animationFinished = G_FALSE;
+				
+				static short minIndex = 0;
+				static short maxIndex = 0;
 
-				static unsigned char phaseToggle = G_FALSE;
-				static unsigned char whitePhaseTriggered = G_FALSE;
-				static unsigned char colorPhaseTriggered = G_FALSE;
+				if (!indicesInitialized) {
+					if (G_GRID_CELL_COUNT % 2 == 0) { //Even
+						maxIndex = G_GRID_CELL_COUNT / (int)2;
+						minIndex = maxIndex - 1;
+					}
+					else { //Odd
+						maxIndex = G_GRID_CELL_COUNT / (int)2;
+						minIndex = maxIndex;
+					}
 
-				static float phaseTimer = 0;
+					indicesInitialized = G_TRUE;
+				}
 
-				phaseTimer += deltaTime;
+				haltTimer += deltaTime;
 
-				if (numOfPhases >= MAX_NUM_PHASES) {
+				//Animation Functionality
+				if (minIndex >= 0 && haltTimer >= DISAPPEAR_INTERVAL && !animationFinished) {
+					//Set each index to GR_NULL_ELEMENT
+					for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
+						short index = g_completeLinesIndices[i];
+
+						if (index != G_NULL_INDEX) {
+							vec2s gridPos;
+
+							gridPos.x = minIndex;
+							gridPos.y = index;
+
+							gr_updateGrid(&gridPos, GR_NULL_ELEMENT);
+
+							gridPos.x = maxIndex;
+
+							gr_updateGrid(&gridPos, GR_NULL_ELEMENT);
+						}
+					}
+
+					haltTimer = 0;
+
+					minIndex--;
+					maxIndex++;
+				}
+
+				//Ending Functionality
+				else if (minIndex < 0 && haltTimer >= ENDING_INTERVAL && !animationFinished) {
 					unsigned char numRowsCompleted = 0;
 
 					//Sort indices so they are in descending order
@@ -174,86 +214,27 @@ void g_update(float deltaTime) {
 						break;
 					}
 
-					g_increaseScore(additionalScore);
+					haltTimer = 0;
+					animationFinished = G_TRUE;
+				}
 
-					phaseToggle = G_FALSE;
-					whitePhaseTriggered = G_FALSE;
-					colorPhaseTriggered = G_FALSE;
+				//Wait to continue
+				else if (animationFinished && haltTimer >= WAITING_INTERVAL) {
+					indicesInitialized = G_FALSE;
+					animationFinished = G_FALSE;
 
-					phaseTimer = 0;
-					numOfPhases = 0;
+					haltTimer = DISAPPEAR_INTERVAL;
 
 					g_gameHalted = G_FALSE;
 
 					g_halt(G_HALT_CHANGING_PIECE);
-
-					return;
-				}
-
-				if (!phaseToggle) {
-					if (!whitePhaseTriggered) {
-						for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
-							if (g_completeLinesIndices[i] != -1) {
-								short yVal = g_completeLinesIndices[i];
-
-								for (int x = 0; x < G_GRID_CELL_COUNT; x++) {
-									vec2s p;
-
-									p.x = x;
-									p.y = yVal;
-
-									gr_updateGrid(&p, COLOR_INDEX_WHITE);
-								}
-							}
-						}
-
-						whitePhaseTriggered = G_TRUE;
-					}
-
-					if (phaseTimer >= PHASE_DURATION) {
-						phaseToggle = G_TRUE;
-						whitePhaseTriggered = G_FALSE;
-
-						numOfPhases++;
-						phaseTimer = 0;
-					}
-				}
-				else {
-					if (!colorPhaseTriggered) {
-						for (int i = 0; i < G_MAXIMUM_LINES_CLEARABLE; i++) {
-							if (g_completeLinesIndices[i] != -1) {
-								short yVal = g_completeLinesIndices[i];
-
-								for (int x = 0; x < G_GRID_CELL_COUNT; x++) {
-									unsigned char color = g_completeLinesData[i][x];
-
-									vec2s p;
-
-									p.x = x;
-									p.y = yVal;
-
-									gr_updateGrid(&p, color);
-								}
-							}
-						}
-
-						colorPhaseTriggered = G_TRUE;
-					}
-
-					if (phaseTimer >= PHASE_DURATION) {
-						phaseToggle = G_FALSE;
-						colorPhaseTriggered = G_FALSE;
-
-						numOfPhases++;
-						phaseTimer = 0;
-					}
 				}
 
 				return;
 			}
 
 			case G_HALT_CHANGING_PIECE: {
-				const float CHANGING_PIECE_DURATION = 0.5f;
+				const float CHANGING_PIECE_DURATION = 0.3f;
 
 				static float haltTimer = 0;
 
@@ -651,6 +632,9 @@ void g_rotateFallingPiece() {
 
 				pos.x = newPiece.position.x + x;
 				pos.y = newPiece.position.y - y;
+
+				if (pos.y >= 2 * G_GRID_CELL_COUNT)
+					continue;
 
 				unsigned char gridVal = gr_checkGridPos(&pos);
 
