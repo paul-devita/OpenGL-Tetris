@@ -105,6 +105,8 @@ unsigned char g_getRandomPiece();
 Returns G_TRUE if there are no obstructions present below the piece*/
 unsigned char g_checkBelowCurrentPiece();
 
+unsigned char g_checkPiece(Piece* piece);
+
 void g_cycleNextPiece();
 void g_holdPiece();
 

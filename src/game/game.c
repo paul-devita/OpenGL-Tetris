@@ -197,22 +197,24 @@ void g_update(float deltaTime) {
 					unsigned int additionalScore = 0;
 
 					switch (numRowsCompleted) {
-					case 1:
-						additionalScore = 40 * (g_level + 1);
-						break;
-					case 2:
-						additionalScore = 100 * (g_level + 1);
-						break;
-					case 3:
-						additionalScore = 300 * (g_level + 1);
-						break;
-					case 4:
-						additionalScore = 1200 * (g_level + 1);
-						break;
-					default:
-						printf("WARNING: invalid number of lines cleared\n");
-						break;
+						case 1:
+							additionalScore = 40 * (g_level + 1);
+							break;
+						case 2:
+							additionalScore = 100 * (g_level + 1);
+							break;
+						case 3:
+							additionalScore = 300 * (g_level + 1);
+							break;
+						case 4:
+							additionalScore = 1200 * (g_level + 1);
+							break;
+						default:
+							printf("WARNING: invalid number of lines cleared\n");
+							break;
 					}
+
+					g_increaseScore(additionalScore);
 
 					haltTimer = 0;
 					animationFinished = G_TRUE;
@@ -327,7 +329,6 @@ void g_fixedUpdate(float deltaTime) {
 			if (g_fastFallToggle)
 				fallingDelay = 0;
 
-			g_placingTimer = 0;
 			g_fallingTimer++;
 
 			if (g_fallingTimer >= fallingDelay) {
@@ -502,6 +503,42 @@ unsigned char g_checkBelowCurrentPiece() {
 	return G_TRUE;
 }
 
+unsigned char g_checkPiece(Piece* piece) {
+
+	unsigned char height = p_getPieceHeight(piece->data);
+	unsigned char width = p_getPieceWidth(piece->data);
+
+	//check all valid blocks
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			unsigned char block = p_getBlockAt(piece, x, y);
+
+			if (block) {
+				vec2s pos;
+
+				pos.x = piece->position.x + x;
+				pos.y = piece->position.y - y;
+
+				if (pos.y >= 2 * G_GRID_CELL_COUNT)
+					continue;
+
+				if (pos.y < 0)
+					return G_FALSE;
+
+				if (pos.x > G_GRID_CELL_COUNT || pos.x < 0)
+					return G_FALSE;
+
+				unsigned char gridVal = gr_checkGridPos(&pos);
+
+				if (gridVal != GR_NULL_ELEMENT)
+					return G_FALSE;
+			}
+		}
+	}
+
+	return G_TRUE;
+}
+
 void g_cycleNextPiece() {
 
 	//Choose and initialize next piece
@@ -618,28 +655,50 @@ void g_rotateFallingPiece() {
 	}
 
 	//y-value checks
-	if (!g_checkBelowCurrentPiece() && (newPiece.position.y - height >= 0 || newPiece.position.y - height < 0)) {
+	if (!g_checkBelowCurrentPiece() && (g_currentPiece.position.y - p_getPieceHeight(g_currentPiece.data) + 1 <= 0)) {
 		newPiece.position.y = height - 1;
 	}
+	else if (!g_checkBelowCurrentPiece()) {
+		Piece temp = newPiece;
 
-	//check all valid blocks
+		unsigned char oldHeight = p_getPieceHeight(g_currentPiece.data);
+		short dy;
+
+		if (oldHeight > height) {
+			dy = -1;
+		}
+		else {
+			dy = 1;
+		}
+
+		for (int i = 0; i < abs(height - p_getPieceHeight(g_currentPiece.data)); i++) {
+			p_translate(&temp, 0, dy);
+
+			if (g_checkPiece(&temp)) {
+				g_currentPiece = temp;
+				return;
+			}
+		}
+	}
+
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
-			unsigned char block = p_getBlockAt(&newPiece, x, y);
+			vec2s pos;
 
-			if (block) {
-				vec2s pos;
+			pos.x = newPiece.position.x + x;
+			pos.y = newPiece.position.y - y;
 
-				pos.x = newPiece.position.x + x;
-				pos.y = newPiece.position.y - y;
+			if (pos.y >= 2 * G_GRID_CELL_COUNT)
+				continue;
 
-				if (pos.y >= 2 * G_GRID_CELL_COUNT)
-					continue;
+			if (pos.y < 0)
+				return G_FALSE;
 
-				unsigned char gridVal = gr_checkGridPos(&pos);
+			if (pos.x > G_GRID_CELL_COUNT || pos.x < 0)
+				return G_FALSE;
 
-				if (gridVal != GR_NULL_ELEMENT)
-					return;
+			if (gr_checkGridPos(&pos) != GR_NULL_ELEMENT) {
+				return;
 			}
 		}
 	}
@@ -674,6 +733,9 @@ void g_horizontalFallingPieceMovement(unsigned char direction) {
 
 				pos.x = g_currentPiece.position.x + x + dx;
 				pos.y = g_currentPiece.position.y - y;
+
+				if (pos.y >= 2 * G_GRID_CELL_COUNT)
+					continue;
 
 				unsigned char gridVal = gr_checkGridPos(&pos);
 
