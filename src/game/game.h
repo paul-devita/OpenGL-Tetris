@@ -46,7 +46,6 @@ static unsigned short g_stats[G_STATS_COUNT];
 #define G_MAXIMUM_LINES_CLEARABLE 4
 #define G_NULL_INDEX -1
 static short g_completeLinesIndices[G_MAXIMUM_LINES_CLEARABLE];
-static unsigned char g_completeLinesData[4][G_GRID_CELL_COUNT];
 
 //Game Halts
 #define G_HALT_CLEARED_LINE 0
@@ -56,7 +55,7 @@ static unsigned char g_gameHalted = G_FALSE;
 static unsigned char g_haltReason;
 
 //Falling Piece
-static const vec2s g_pieceStartPos = { G_GRID_CELL_COUNT / (float)2, (2 * G_GRID_CELL_COUNT) - 2 };
+static const vec2s g_pieceStartPos = { G_GRID_CELL_COUNT / 2, (2 * G_GRID_CELL_COUNT) - 2 };
 
 static unsigned char g_currentPieceType;
 static Piece g_currentPiece;

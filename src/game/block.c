@@ -12,13 +12,13 @@ void b_init() {
 }
 
 void b_drawBlock(vec2* position, unsigned char colorIndex) {
-	vec3* color = c_getColorByIndex(colorIndex);
+	const vec3* color = c_getColorByIndex(colorIndex);
 
 	qd_drawTexturedRect(B_BLOCK_TEXTURE, position, &B_BLOCK_SCALE, 0, color);
 }
 
 void b_drawDummyBlock(vec2* position, float blockSize, unsigned char colorIndex) {
-	vec3* color = c_getColorByIndex(colorIndex);
+	const vec3* color = c_getColorByIndex(colorIndex);
 
 	vec2 scale;
 

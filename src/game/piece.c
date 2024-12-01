@@ -308,7 +308,7 @@ unsigned char p_getDefaultPieceColor(unsigned char pieceType) {
 		return COLOR_INDEX_GREEN;
 	default:
 		printf("WARNING: invalid piece type passed to p_getDefaultPieceColor\n");
-		return;
+		return 0xFF;
 	}
 }
 
@@ -318,7 +318,7 @@ void p_translate(Piece* piece, short dx, short dy) {
 }
 
 void p_rotate(Piece* piece) {
-	unsigned short newBlocks = 0x0000; // 00000000 00000000
+	unsigned char newBlocks = 0x00; // 00000000
 
 	unsigned char oldWidth = p_getPieceWidth(piece->data);
 	unsigned char oldHeight = p_getPieceHeight(piece->data);

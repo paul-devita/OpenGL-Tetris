@@ -68,7 +68,7 @@ void qd_init() {
 	sh_modifyShaderUniformMatrix4x4(solidShaderID, "ortho", &ortho);
 }
 
-void qd_drawTexturedRect(unsigned int textureID, vec2* position, vec2* scale, float rotation_deg, vec3* color) {
+void qd_drawTexturedRect(unsigned int textureID, vec2* position, vec2* scale, float rotation_deg, const vec3* color) {
 	sh_useShaderProgram(texShaderID);
 
 	mat4 model = IDENTITY_M4;
@@ -76,7 +76,7 @@ void qd_drawTexturedRect(unsigned int textureID, vec2* position, vec2* scale, fl
 	vec3 p_t2 = { position->x, position->y, (float)1 };
 
 	vec3 s_s1 = { scale->x, scale->y, (float)1 };
-	vec3 s_t1 = { -scale->x / (double)2, -scale->y / (double)2, (float)0 };
+	vec3 s_t1 = { -scale->x / (float)2, -scale->y / (float)2, (float)0 };
 
 	model = m4_translate(&model, p_t2); //t2
 	model = m4_rotate(&model, rotation_deg, AXIS_Z_V3);
@@ -101,7 +101,7 @@ void qd_drawSolidRect(vec2 position, vec2 scale, float rotation_deg, vec3 color)
 
 	model = m4_translate(&model, v3_new(position.x, position.y, (float) 1));
 	model = m4_rotate(&model, rotation_deg, AXIS_Z_V3);
-	model = m4_translate(&model, v3_new(-scale.x / (double) 2, -scale.y / (double) 2, (float) 0));
+	model = m4_translate(&model, v3_new(-scale.x / (float) 2, -scale.y / (float) 2, (float) 0));
 	model = m4_scale(&model, v3_new(scale.x, scale.y, (float) 1));
 
 	sh_modifyShaderUniformMatrix4x4(solidShaderID, "model", &model);

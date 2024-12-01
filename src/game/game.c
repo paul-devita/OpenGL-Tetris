@@ -4,7 +4,7 @@ const float G_END_GAME_BLOCK_SIZE = SCR_WIDTH / (float)(sizeof(unsigned char) * 
 
 const vec2 G_END_GAME_BLOCKS_START = { (SCR_WIDTH / (float)(sizeof(unsigned char) * 8)) / (float)2, 0 };
 
-const unsigned int G_END_GAME_BLOCKS_VERTICAL_COUNT = SCR_HEIGHT / (float)(SCR_WIDTH / (float)(sizeof(unsigned char) * 8));
+const unsigned int G_END_GAME_BLOCKS_VERTICAL_COUNT = (unsigned int)(SCR_HEIGHT / (float)(SCR_WIDTH / (float)(sizeof(unsigned char) * 8)));
 
 void g_init() {
 
@@ -47,7 +47,7 @@ void g_init() {
 
 	//Init Falling Piece
 	g_currentPieceType = g_getRandomPiece();
-	p_createPiece(&g_currentPiece, &g_pieceStartPos, g_currentPieceType, G_FALSE);
+	p_createPiece(&g_currentPiece, (vec2s*)(&g_pieceStartPos), g_currentPieceType, G_FALSE);
 	p_translate(&g_currentPiece, -p_getPieceWidth(g_currentPiece.data) / 2, 0);
 	g_incrementStat(g_currentPieceType);
 
@@ -394,12 +394,6 @@ void g_fixedUpdate(float deltaTime) {
 							completeLinesFound = G_TRUE;
 							g_completeLinesIndices[curIndex] = y;
 
-							for (int i = 0; i < G_GRID_CELL_COUNT; i++) {
-								p.x = i;
-
-								g_completeLinesData[curIndex][i] = gr_checkGridPos(&p);
-							}
-
 							curIndex++;
 							break;
 						}
@@ -436,7 +430,7 @@ void g_render() {
 
 	//Render Game Over
 	if (g_gameHalted && g_haltReason == G_HALT_GAME_END) {
-		for (int i = 0; i < G_END_GAME_BLOCKS_VERTICAL_COUNT; i++) {
+		for (unsigned int i = 0; i < G_END_GAME_BLOCKS_VERTICAL_COUNT; i++) {
 			unsigned char mask = 0x01;
 			unsigned char row = g_endGameBlocks[i];
 
@@ -482,8 +476,8 @@ unsigned char g_checkBelowCurrentPiece() {
 		unsigned char lowestY = 0;
 
 		for (short y = height - 1; y >= 0; y--) {
-			if (p_getBlockAt(&g_currentPiece, x, y)) {
-				lowestY = y;
+			if (p_getBlockAt(&g_currentPiece, (unsigned char)x, (unsigned char)y)) {
+				lowestY = (unsigned char)y;
 				break;
 			}
 		}
@@ -491,7 +485,7 @@ unsigned char g_checkBelowCurrentPiece() {
 		vec2s gridPos;
 
 		gridPos.x = g_currentPiece.position.x + x;
-		gridPos.y = g_currentPiece.position.y - lowestY - 1;
+		gridPos.y = g_currentPiece.position.y - (short)lowestY - 1;
 
 		unsigned char gridVal = gr_checkGridPos(&gridPos);
 
@@ -543,7 +537,7 @@ void g_cycleNextPiece() {
 
 	//Choose and initialize next piece
 	g_currentPieceType = g_nextPiece;
-	p_createPiece(&g_currentPiece, &g_pieceStartPos, g_currentPieceType, G_FALSE);
+	p_createPiece(&g_currentPiece, (vec2s*)(&g_pieceStartPos), g_currentPieceType, G_FALSE);
 
 	unsigned char width = p_getPieceWidth(g_currentPiece.data);
 	unsigned char height = p_getPieceHeight(g_currentPiece.data);
@@ -692,10 +686,10 @@ void g_rotateFallingPiece() {
 				continue;
 
 			if (pos.y < 0)
-				return G_FALSE;
+				return;
 
 			if (pos.x > G_GRID_CELL_COUNT || pos.x < 0)
-				return G_FALSE;
+				return;
 
 			if (gr_checkGridPos(&pos) != GR_NULL_ELEMENT) {
 				return;

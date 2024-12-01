@@ -14,14 +14,14 @@ static unsigned char UI_INITIALIZED = 0;
 
 //UI-----------------------------------------------------------------------------------------------------------
 
-static const float UI_BOX_THICKNESS = SCR_WIDTH / 150.0;
+static const float UI_BOX_THICKNESS = SCR_WIDTH / (float)150;
 
-static const float UI_TEXT_HEIGHT = SCR_HEIGHT / 40.0;
+static const float UI_TEXT_HEIGHT = SCR_HEIGHT / (float)40;
 
-static const float UI_TEXT_THICKNESS_STANDARD = SCR_WIDTH / 350.0;
-static const float UI_TEXT_THICKNESS_BOLD = SCR_WIDTH / 250.0;
+static const float UI_TEXT_THICKNESS_STANDARD = SCR_WIDTH / (float)350;
+static const float UI_TEXT_THICKNESS_BOLD = SCR_WIDTH / (float)250;
 
-static const float UI_TEXT_CHAR_SPACING = SCR_WIDTH / 200.0;
+static const float UI_TEXT_CHAR_SPACING = SCR_WIDTH / (float)200;
 
 //Score Box-----------------------------------------------------------------
 #define UI_GAME_SCORE_TEXT_LENGTH 7
@@ -74,9 +74,9 @@ static unsigned char ui_heldPiece = P_NULL;
 
 static const char* UI_STATS_TITLE_TEXT = "stats";
 
-static const float UI_STATS_ELEMENT_SPACING = SCR_HEIGHT / 64.0;
+static const float UI_STATS_ELEMENT_SPACING = SCR_HEIGHT / (float)64;
 
-static const vec2 UI_STATS_ELEMENT_SCALE = { (3 * SCR_WIDTH) / 20.0, (9 * (SCR_HEIGHT / 2.0)) / 112.0 - (6 * SCR_HEIGHT / 64.0) / 7.0 };
+static const vec2 UI_STATS_ELEMENT_SCALE = { (3 * SCR_WIDTH) / (float)20, (9 * (SCR_HEIGHT / (float)2)) / (float)112 - (6 * SCR_HEIGHT / (float)64) / (float)7 };
 
 static float UI_STATS_ELEMENT_BLOCK_SIZE;
 

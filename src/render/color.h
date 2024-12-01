@@ -35,6 +35,6 @@ extern const vec3 COLOR_WHITE;
 extern const vec3 COLOR_GRAY;
 #define COLOR_INDEX_GRAY 9
 
-vec3* c_getColorByIndex(unsigned char index);
+const vec3* c_getColorByIndex(unsigned char index);
 
 #endif

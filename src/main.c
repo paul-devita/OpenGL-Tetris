@@ -25,9 +25,9 @@ int main(int argc, char* argv[]) {
 	while (!glfwWindowShouldClose(window)) {
 		tm_updateDeltaTime();
 
-		sm_update(tm_deltaTime());
+		sm_update((float)tm_deltaTime());
 
-		sm_fixedUpdate(tm_deltaTime());
+		sm_fixedUpdate((float)tm_deltaTime());
 
 		sm_render();
 		

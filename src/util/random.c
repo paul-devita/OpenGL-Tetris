@@ -1,7 +1,7 @@
 #include "random.h"
 
 void r_init() {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 }
 
 int r_randomIntInRange(int lower, int upper) {

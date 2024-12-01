@@ -11,7 +11,7 @@ const vec3 COLOR_TEAL = { 0.000f, 1.000f, 0.761f };
 const vec3 COLOR_WHITE = { 1.0f, 1.0f, 1.0f };
 const vec3 COLOR_GRAY = { 0.472f, 0.472f, 0.472f };
 
-vec3* c_getColorByIndex(unsigned char index)
+const vec3* c_getColorByIndex(unsigned char index)
 {
 	switch (index) {
 		case COLOR_INDEX_BLUE: 

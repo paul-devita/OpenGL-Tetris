@@ -3,7 +3,7 @@
 void gp_init() {
 	unsigned int titleTextLength = 0;
 
-	for (char* c = GP_TITLE_TEXT; *c != '\0'; c++)
+	for (int i = 0; GP_TITLE_TEXT[i] != '\0'; i++)
 		titleTextLength++;
 
 	GP_TITLE_CHAR_SCALE.x = (GP_TITLE_WIDTH - ((titleTextLength - 1) * GP_TITLE_CHAR_THICKNESS)) / titleTextLength;
@@ -23,12 +23,12 @@ void gp_init() {
 
 	//Resume Button
 	unsigned int resumeButtonLength = 0;
-	for (char* c = GP_BUTTON_RESUME_TEXT; *c != '\0'; c++)
+	for (int i = 0; GP_BUTTON_RESUME_TEXT[i] != '\0'; i++)
 		resumeButtonLength++;
 
 	resumeButton->length = resumeButtonLength;
 
-	resumeButton->pos = &GP_RESUME_POSITION;
+	resumeButton->pos = (vec2*)(&GP_RESUME_POSITION);
 
 	resumeButton->next = restartButton;
 	resumeButton->prev = quitButton;
@@ -39,12 +39,12 @@ void gp_init() {
 
 	//Restart Button
 	unsigned int restartButtonLength = 0;
-	for (char* c = GP_RESTART_TEXT; *c != '\0'; c++)
+	for (int i = 0; GP_RESTART_TEXT[i] != '\0'; i++)
 		restartButtonLength++;
 
 	restartButton->length = restartButtonLength;
 
-	restartButton->pos = &GP_RESTART_POSITION;
+	restartButton->pos = (vec2*)(&GP_RESTART_POSITION);
 
 	restartButton->next = quitButton;
 	restartButton->prev = resumeButton;
@@ -53,12 +53,12 @@ void gp_init() {
 
 	//Quit Button
 	unsigned int quitButtonLength = 0;
-	for (char* c = GP_QUIT_TEXT; *c != '\0'; c++)
+	for (int i = 0; GP_QUIT_TEXT[i] != '\0'; i++)
 		quitButtonLength++;
 
 	quitButton->length = quitButtonLength;
 
-	quitButton->pos = &GP_QUIT_POSITION;
+	quitButton->pos = (vec2*)(&GP_QUIT_POSITION);
 
 	quitButton->next = resumeButton;
 	quitButton->prev = restartButton;
@@ -102,19 +102,19 @@ void gp_render() {
 			float dx = (GP_BUTTON_CHAR_SCALE.x / (float)2) + ((length / 2) * (GP_BUTTON_CHAR_SCALE.x + GP_BUTTON_TEXT_THICKNESS)) + GP_BUTTON_CHAR_SCALE.y;
 
 			p.x = gp_currentButton->pos->x - dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = gp_currentButton->pos->x + dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 		else {
 			float dx = (GP_BUTTON_TEXT_THICKNESS / (float)2) + (((length / 2) - 1) * GP_BUTTON_TEXT_THICKNESS) + ((length / 2) * GP_BUTTON_CHAR_SCALE.x) + GP_BUTTON_CHAR_SCALE.y;
 
 			p.x = gp_currentButton->pos->x - dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = gp_currentButton->pos->x + dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 	}
 }

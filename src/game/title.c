@@ -4,7 +4,8 @@ void ti_init() {
 	//Init Title Values
 	unsigned int G_START_TITLE_TEXT_LENGTH = 0;
 
-	for (unsigned char* c = G_START_TITLE_TEXT; *c != TP_NULL; c++, G_START_TITLE_TEXT_LENGTH++) {}
+	for (int i = 0; G_START_TITLE_TEXT[i] != '\0'; i++)
+		G_START_TITLE_TEXT_LENGTH++;
 
 	G_START_TITLE_CHAR_SCALE.x = ((7 * SCR_WIDTH / (float)8) - (G_START_TITLE_TEXT_LENGTH - 1) * G_START_TITLE_SPACING) / G_START_TITLE_TEXT_LENGTH;
 	G_START_TITLE_CHAR_SCALE.y = SCR_HEIGHT / (float)4;
@@ -22,12 +23,12 @@ void ti_init() {
 
 	//Start Button
 	unsigned int startButtonLength = 0;
-	for (char* c = TI_START_BUTTON_TEXT; *c != '\0'; c++)
+	for (int i = 0; TI_START_BUTTON_TEXT[i] != '\0'; i++)
 		startButtonLength++;
 
 	startButton->length = startButtonLength;
 
-	startButton->pos = &TI_START_BUTTON_POS;
+	startButton->pos = (vec2*)(&TI_START_BUTTON_POS);
 
 	startButton->next = quitButton;
 	startButton->prev = quitButton;
@@ -36,12 +37,12 @@ void ti_init() {
 
 	//Quit Button
 	unsigned int quitButtonLength = 0;
-	for (char* c = TI_QUIT_BUTTON_TEXT; *c != '\0'; c++)
+	for (int i =0; TI_START_BUTTON_TEXT[i] != '\0'; i++)
 		quitButtonLength++;
 
 	quitButton->length = quitButtonLength;
 
-	quitButton->pos = &TI_QUIT_BUTTON_POS;
+	quitButton->pos = (vec2*)(&TI_QUIT_BUTTON_POS);
 
 	quitButton->next = startButton;
 	quitButton->prev = startButton;
@@ -82,19 +83,19 @@ void ti_render() {
 			float dx = (TI_BUTTON_CHAR_SCALE.x / (float)2) + ((length / 2 ) * (TI_BUTTON_CHAR_SCALE.x + TI_BUTTON_CHAR_SPACING)) + TI_BUTTON_CHAR_SCALE.y;
 
 			p.x = ti_buttonCurrent->pos->x - dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = ti_buttonCurrent->pos->x + dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 		else {
 			float dx = (TI_BUTTON_CHAR_SPACING / (float)2) + (((length / 2) - 1) * TI_BUTTON_CHAR_SPACING) + ((length / 2) * TI_BUTTON_CHAR_SCALE.x) + TI_BUTTON_CHAR_SCALE.y;
 
 			p.x = ti_buttonCurrent->pos->x - dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = ti_buttonCurrent->pos->x + dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 	}
 }

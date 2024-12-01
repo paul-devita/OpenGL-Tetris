@@ -8,7 +8,7 @@ void go_init() {
 
 	//Title
 	unsigned int titleTextLength = 0;
-	for (char* c = GO_TITLE_TEXT; *c != '\0'; c++)
+	for (int i = 0; GO_TITLE_TEXT[i] != '\0'; i++)
 		titleTextLength++;
 
 	GO_TITLE_CHAR_SCALE.x = (GO_TITLE_WIDTH - ((titleTextLength - 1) * GO_TITLE_CHAR_THICKNESS)) / titleTextLength;
@@ -32,7 +32,7 @@ void go_init() {
 
 	restartButton->length = restartButtonLength;
 
-	restartButton->pos = &GO_RESTART_POSITION;
+	restartButton->pos = (vec2*)(&GO_RESTART_POSITION);
 
 	restartButton->next = quitButton;
 	restartButton->prev = quitButton;
@@ -43,12 +43,12 @@ void go_init() {
 
 	//Quit Button
 	unsigned int quitButtonLength = 0;
-	for (char* c = GO_QUIT_TEXT; *c != '\0'; c++)
+	for (int i = 0; GO_QUIT_TEXT[i] != '\0'; i++)
 		quitButtonLength++;
 
 	quitButton->length = quitButtonLength;
 
-	quitButton->pos = &GO_QUIT_POSITION;
+	quitButton->pos = (vec2*)(&GO_QUIT_POSITION);
 
 	quitButton->next = restartButton;
 	quitButton->prev = restartButton;
@@ -120,19 +120,19 @@ void go_render() {
 			float dx = (GO_BUTTON_CHAR_SCALE.x / (float)2) + ((length / 2) * (GO_BUTTON_CHAR_SCALE.x + GO_BUTTON_TEXT_THICKNESS)) + GO_BUTTON_CHAR_SCALE.y;
 
 			p.x = go_currentSelection->pos->x - dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = go_currentSelection->pos->x + dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 		else {
 			float dx = (GO_BUTTON_TEXT_THICKNESS / (float)2) + (((length / 2) - 1) * GO_BUTTON_TEXT_THICKNESS) + ((length / 2) * GO_BUTTON_CHAR_SCALE.x) + GO_BUTTON_CHAR_SCALE.y;
 
 			p.x = go_currentSelection->pos->x - dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 0, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 0, c_getColorByIndex(COLOR_INDEX_WHITE));
 
 			p.x = go_currentSelection->pos->x + dx;
-			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, &s, 180, c_getColorByIndex(COLOR_INDEX_WHITE));
+			qd_drawTexturedRect(bt_getSelectorTextureID(), &p, (vec2*)(&s), 180, c_getColorByIndex(COLOR_INDEX_WHITE));
 		}
 	}
 
@@ -141,7 +141,7 @@ void go_render() {
 
 		vec2 pos = go_blocksStart;
 
-		for (int i = 0; i < G_END_GAME_BLOCKS_VERTICAL_COUNT; i++) {
+		for (unsigned int i = 0; i < G_END_GAME_BLOCKS_VERTICAL_COUNT; i++) {
 			for (int j = 0; j < (int)(sizeof(unsigned char) * 8); j++) {
 				b_drawDummyBlock(&pos, G_END_GAME_BLOCK_SIZE, COLOR_INDEX_WHITE);
 
